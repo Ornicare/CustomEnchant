@@ -30,7 +30,7 @@ public class CustomEnchantLoader extends JavaPlugin{
 	 */
 	public void onEnable() {
 		protocolManager = ProtocolLibrary.getProtocolManager();
-
+		
 		// Disable all sound effects
 		/*protocolManager.addPacketListener(
 		  new PacketAdapter(this, ConnectionSide.SERVER_SIDE, 

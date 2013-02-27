@@ -11,18 +11,22 @@ import net.minecraft.server.v1_4_R1.NBTTagCompound;
 import net.minecraft.server.v1_4_R1.NBTTagList;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_4_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
@@ -55,6 +59,66 @@ public class DamageHandler implements Listener {
 		
 	}
 	
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onProjectileHitEvent(ProjectileHitEvent event) {
+		Projectile shooter = event.getEntity();
+		ItemStack item;
+		
+		if(Storage.arrowAndBowCorrelation.containsKey(shooter.getUniqueId())) {
+			item = CraftItemStack.asNMSCopy(Storage.arrowAndBowCorrelation.get(shooter.getUniqueId()));
+			Map<Short, Short> enchList = getCustomEnchantmentList(item);
+			if (enchList.containsKey((short) 1)) { 
+				doFakeExplosion(shooter.getLocation(), enchList.get((short) 1));
+				
+				//for(int x = -1; x < 1; x++) {
+					//for(int y = -1; y < 1; y++) {
+							//Location tempLoc = shooter.getLocation().add(new Vector(x,y,0));
+							//doFakeExplosion(tempLoc, enchList.get((short) 1));
+					//}	
+				//}
+				
+				int radius = 2 + enchList.get((short) 1);
+				
+				//determine arrow damage
+				double damage = Math.max(1,(shooter.getVelocity().length()-1))*2 + Math.random();
+				if(item.getEnchantments()!=null) {
+					for(int i = 0; i<item.getEnchantments().size();i++) {
+						if(((NBTTagCompound)item.getEnchantments().get(i)).getShort("id")==(short) 48) {
+							damage=damage*1.5+0.25*(((NBTTagCompound)item.getEnchantments().get(i)).getShort("id")-1);
+						}
+					}
+				}
+				//plugin.getServer().broadcastMessage(""+damage);
+				
+				/*//in order to create the explosion, report it to the neraby in range entity.
+				Entity nearbyEnt = null;
+				double distanceNEnt = Double.MAX_VALUE;
+				for (Entity ent : shooter.getNearbyEntities(radius, radius,
+						radius)) {
+					if (ent instanceof LivingEntity) {
+						double distance = Math.max(shooter.getLocation().distance(ent.getLocation()), 1);
+						if(nearbyEnt==null || distance<distanceNEnt) {
+							nearbyEnt = ent;
+							distanceNEnt = distance;
+						}
+						
+					}
+				}*/
+				
+				//The arrow explode.
+				onEntityDamage(new EntityDamageByEntityEvent(shooter, shooter, DamageCause.PROJECTILE, (int) damage));
+				
+				shooter.remove();
+				
+				
+				
+			}
+		}
+		
+		
+		
+	}
+	
 	
 	
 	@EventHandler(priority = EventPriority.NORMAL)
@@ -62,6 +126,7 @@ public class DamageHandler implements Listener {
 		if (event.isCancelled()) {
 			return;
 		}
+
 		Entity damager = processDamageEvent(event);
 		
 		// String name;
@@ -74,6 +139,7 @@ public class DamageHandler implements Listener {
 			if (event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
 				if(Storage.arrowAndBowCorrelation.containsKey(damager.getUniqueId())) {
 					item = CraftItemStack.asNMSCopy(Storage.arrowAndBowCorrelation.get(damager.getUniqueId()));
+					//plugin.getServer().broadcastMessage("2+"+event.getDamage());
 				} 
 				else {
 					return;
@@ -87,71 +153,102 @@ public class DamageHandler implements Listener {
 			// dname = damager.getClass().getSimpleName();
 			
 			Map<Short, Short> enchList = getCustomEnchantmentList(item);
-			LivingEntity damaged = (LivingEntity) event.getEntity();
-
+			Entity baseEnt = event.getEntity();
+			
+	
 			// for(Short i : enchList.keySet())
 			// CustomEnchantLoader.LOGGER.severe(i+"  "+enchList.get(i));
 
-			if (enchList.containsKey((short) 0)) {
-				damaged.addPotionEffect(new PotionEffect(
-						PotionEffectType.POISON, 100 * enchList.get((short) 0),
-						enchList.get((short) 0)));
+			try {
+				LivingEntity damaged = (LivingEntity) baseEnt;
+				if (enchList.containsKey((short) 0)) {
+					damaged.addPotionEffect(new PotionEffect(
+							PotionEffectType.POISON, 100 * enchList.get((short) 0),
+							enchList.get((short) 0)));
+				}
 			}
+			catch(Exception e) {}
 			if (enchList.containsKey((short) 1)) {
-				int radius = 3 * enchList.get((short) 1);
-				for (Entity ent : damaged.getNearbyEntities(radius, radius,
+				int radius = 2 + enchList.get((short) 1);
+				for (Entity ent : baseEnt.getNearbyEntities(radius, radius,
 						radius)) {
 					if (ent instanceof LivingEntity) {
 						LivingEntity entLV = (LivingEntity) ent;
-						if (!entLV.equals(damaged) && !entLV.equals(damager)) {
-							double distance = Math.max(damaged.getLocation()
+						if (!entLV.equals(baseEnt) && !entLV.equals(damager)) {
+							double distance = Math.max(baseEnt.getLocation()
 									.distance(entLV.getLocation()), 1);
 							entLV.damage((int) (event.getDamage() / distance));
-							// trouver solution
+							/*// trouver solution
 							if (enchList.containsKey((short) 0)) {
 								entLV.addPotionEffect(new PotionEffect(
 										PotionEffectType.POISON,
 										(int) (100 * enchList.get((short) 0) / distance),
 										enchList.get((short) 0) - 1));
-							}
+							}*/
 						}
 					}
 				}
 
-				PacketContainer fakeExplosion = CustomEnchantLoader.protocolManager
-						.createPacket(Packets.Server.EXPLOSION);
+				
 
 				// create a fake explosion paquet
-				fakeExplosion.getDoubles()
-						.write(0, damaged.getLocation().getX())
-						.write(1, damaged.getLocation().getY() + 1.25)
-						.write(2, damaged.getLocation().getZ());
-				fakeExplosion.getFloat().write(0,
-						1.0F * enchList.get((short) 1));
-				try {
-					// Send it to all players within a 50 range
-					for (Entity ent : damaged.getNearbyEntities(50, 50, 50)) {
-						if (ent instanceof LivingEntity) {
-							LivingEntity entLV = (LivingEntity) ent;
-							if (entLV instanceof Player) {
-								CustomEnchantLoader.protocolManager
-										.sendServerPacket((Player) entLV,
-												fakeExplosion);
-							}
-						}
-					}
-					if (damaged instanceof Player)
-						CustomEnchantLoader.protocolManager.sendServerPacket(
-								(Player) damaged, fakeExplosion);
-					damager.getWorld().playSound(damaged.getLocation(),
-							Sound.EXPLODE, 10, 1);
-				} catch (Exception e) {
-				}
-
+				doFakeExplosion(baseEnt.getLocation(), enchList.get((short) 1));
+				
 			}
 			// plugin.getServer().broadcastMessage(dname + " a tapé " + name);
 		}
 	}
+
+	/*private void doFakeExplosion(Entity damaged, int radius) {
+		PacketContainer fakeExplosion = CustomEnchantLoader.protocolManager.createPacket(Packets.Server.EXPLOSION);
+		fakeExplosion.getDoubles()
+		.write(0, damaged.getLocation().getX())
+		.write(1, damaged.getLocation().getY() + 1.25)
+		.write(2, damaged.getLocation().getZ());
+		fakeExplosion.getFloat().write(0,(float) radius);
+		try {
+			// Send it to all players within a 50 range
+			for (Entity ent : damaged.getNearbyEntities(50, 50, 50)) {
+				if (ent instanceof LivingEntity) {
+					LivingEntity entLV = (LivingEntity) ent;
+					if (entLV instanceof Player) {
+						CustomEnchantLoader.protocolManager
+								.sendServerPacket((Player) entLV,
+										fakeExplosion);
+					}
+				}
+			}
+			damaged.getWorld().playSound(damaged.getLocation(),
+					Sound.EXPLODE, 10, 1);
+		} catch (Exception e) {
+		}
+		
+	}*/
+	
+	private void doFakeExplosion(Location location, int radius) {
+		PacketContainer fakeExplosion = CustomEnchantLoader.protocolManager.createPacket(Packets.Server.EXPLOSION);
+		
+		fakeExplosion.getDoubles()
+		.write(0, location.getX())
+		.write(1, location.getY() + 1.25)
+		.write(2, location.getZ());
+		fakeExplosion.getFloat().write(0,(float) radius);
+		
+		try {
+			
+			// Send it to all players within a 100 range
+			for (Player player : plugin.getServer().getWorld(location.getWorld().getName()).getPlayers()) {
+
+						if(player.getLocation().distance(location)<100) CustomEnchantLoader.protocolManager.sendServerPacket(player,fakeExplosion);
+			}
+			location.getWorld().playSound(location,
+					Sound.EXPLODE, 10, 1);
+		} catch (Exception e) {
+		}
+		
+	}
+
+
 
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onEnchantItemEvent(EnchantItemEvent event) {
