@@ -1,0 +1,4 @@
+depend: [ProtocolLib,PowerNBT]
+name: CustomEnchant
+main: fr.ornicare.loader.CustomEnchantLoader
+version: 1.4.7
