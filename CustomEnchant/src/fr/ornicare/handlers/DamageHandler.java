@@ -124,10 +124,10 @@ public class DamageHandler implements Listener {
 				
 			}
 			
-			if (enchList.containsKey((short) 2)) { 
+			/*if (enchList.containsKey((short) 2)) { 
 				//just to teleport.
 				onEntityDamage(new EntityDamageByEntityEvent(shooter, shooter, DamageCause.PROJECTILE, 0));
-			}
+			}*/
 		}
 		
 		
@@ -196,6 +196,7 @@ public class DamageHandler implements Listener {
 			}
 			catch(Exception e) {}
 			
+			
 			try {
 				//new Thread(){public void run(){}};
 				LivingEntity damaged = (LivingEntity) baseEnt;
@@ -207,12 +208,12 @@ public class DamageHandler implements Listener {
 			}
 			catch(Exception e) {}
 			
-			if (enchList.containsKey((short) 2)) {
+			/*if (enchList.containsKey((short) 2)) {*/
 				
 				/*
 				 * After a short delay teleport all entities in <radius> to the projectile
 				 */
-				final Entity baseEnt2 = baseEnt;
+			/*final Entity baseEnt2 = baseEnt;
 				final Entity damager2 = damager;
 				final int radius = 3*enchList.get((short) 2);
 				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
@@ -230,12 +231,12 @@ public class DamageHandler implements Listener {
 						
 					}
 				},(long) (20+Math.random()*100));
-				/*for (Entity ent : baseEnt.getNearbyEntities(radius, radius,radius)) {
+				*//*for (Entity ent : baseEnt.getNearbyEntities(radius, radius,radius)) {
 					if (!ent.equals(damager)) {
 						ent.teleport(damager, TeleportCause.PLUGIN);
 					}
 				}*/
-			}
+			/*}*/
 			
 			
 			if (enchList.containsKey((short) 1)) {
