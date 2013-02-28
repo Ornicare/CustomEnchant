@@ -6,13 +6,17 @@ import java.util.List;
 import java.util.Map;
 
 import me.dpohvar.powernbt.nbt.NBTContainerItem;
+import net.minecraft.server.v1_4_R1.EntityCreeper;
+import net.minecraft.server.v1_4_R1.EntityLiving;
 import net.minecraft.server.v1_4_R1.ItemStack;
 import net.minecraft.server.v1_4_R1.NBTTagCompound;
 import net.minecraft.server.v1_4_R1.NBTTagList;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.craftbukkit.v1_4_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_4_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -27,10 +31,13 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 import com.comphenix.protocol.Packets;
 import com.comphenix.protocol.events.PacketContainer;
@@ -53,8 +60,11 @@ public class DamageHandler implements Listener {
 	public void onEntityShootBowEvent(EntityShootBowEvent event) {
 		Entity shooter = event.getEntity();
 		if(shooter instanceof LivingEntity) {
-			LivingEntity shooterLV = (LivingEntity) shooter;
-			Storage.arrowAndBowCorrelation.put(event.getProjectile().getUniqueId(),  ((LivingEntity) shooterLV).getEquipment().getItemInHand());
+			//LivingEntity shooterLV = (LivingEntity) shooter;
+			Storage.arrowAndBowCorrelation.put(event.getProjectile().getUniqueId(),  event.getBow());
+			/*if(event.getProjectile() instanceof Projectile) {
+				Projectile arrow = (Projectile) event.getProjectile();
+			}*/
 		}
 		
 	}
@@ -77,7 +87,7 @@ public class DamageHandler implements Listener {
 					//}	
 				//}
 				
-				int radius = 2 + enchList.get((short) 1);
+				//int radius = 2 + enchList.get((short) 1);
 				
 				//determine arrow damage
 				double damage = Math.max(1,(shooter.getVelocity().length()-1))*2 + Math.random();
@@ -113,6 +123,11 @@ public class DamageHandler implements Listener {
 				
 				
 			}
+			
+			if (enchList.containsKey((short) 2)) { 
+				//just to teleport.
+				onEntityDamage(new EntityDamageByEntityEvent(shooter, shooter, DamageCause.PROJECTILE, 0));
+			}
 		}
 		
 		
@@ -139,6 +154,7 @@ public class DamageHandler implements Listener {
 			if (event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
 				if(Storage.arrowAndBowCorrelation.containsKey(damager.getUniqueId())) {
 					item = CraftItemStack.asNMSCopy(Storage.arrowAndBowCorrelation.get(damager.getUniqueId()));
+					Storage.arrowAndBowCorrelation.remove(damager.getUniqueId());
 					//plugin.getServer().broadcastMessage("2+"+event.getDamage());
 				} 
 				else {
@@ -168,6 +184,60 @@ public class DamageHandler implements Listener {
 				}
 			}
 			catch(Exception e) {}
+			
+			
+			try {
+				LivingEntity damaged = (LivingEntity) baseEnt;
+				if (enchList.containsKey((short) 4)) {
+					damaged.addPotionEffect(new PotionEffect(
+							PotionEffectType.SLOW, 100 * enchList.get((short) 4),
+							enchList.get((short) 4)));
+				}
+			}
+			catch(Exception e) {}
+			
+			try {
+				//new Thread(){public void run(){}};
+				LivingEntity damaged = (LivingEntity) baseEnt;
+				if (enchList.containsKey((short) 5)) {
+					damaged.addPotionEffect(new PotionEffect(
+							PotionEffectType.BLINDNESS, 100 * enchList.get((short) 5),
+							enchList.get((short) 5)));
+				}
+			}
+			catch(Exception e) {}
+			
+			if (enchList.containsKey((short) 2)) {
+				
+				/*
+				 * After a short delay teleport all entities in <radius> to the projectile
+				 */
+				final Entity baseEnt2 = baseEnt;
+				final Entity damager2 = damager;
+				final int radius = 3*enchList.get((short) 2);
+				plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+					
+					@Override
+					public void run() {
+						for (Entity ent : baseEnt2.getNearbyEntities(radius, radius,radius)) {
+							if (!ent.equals(damager2) && ent instanceof LivingEntity) {
+								ent.teleport(damager2, TeleportCause.PLUGIN);
+							}
+						}
+						//visual effect
+						for(int i = 0;i<10;i++) damager2.getWorld().playEffect(damager2.getLocation().add(new Vector(0, 1, 0)), Effect.POTION_BREAK, 2, 200);
+						
+						
+					}
+				},(long) (20+Math.random()*100));
+				/*for (Entity ent : baseEnt.getNearbyEntities(radius, radius,radius)) {
+					if (!ent.equals(damager)) {
+						ent.teleport(damager, TeleportCause.PLUGIN);
+					}
+				}*/
+			}
+			
+			
 			if (enchList.containsKey((short) 1)) {
 				int radius = 2 + enchList.get((short) 1);
 				for (Entity ent : baseEnt.getNearbyEntities(radius, radius,
@@ -177,7 +247,16 @@ public class DamageHandler implements Listener {
 						if (!entLV.equals(baseEnt) && !entLV.equals(damager)) {
 							double distance = Math.max(baseEnt.getLocation()
 									.distance(entLV.getLocation()), 1);
+							
 							entLV.damage((int) (event.getDamage() / distance));
+							//if(damager instanceof Projectile) {
+								//entLV.damage((int) (event.getDamage() / distance),((Projectile)damager).getShooter());
+							//}
+							//else {
+							//PB BOUCLAGE
+								//entLV.damage((int) (event.getDamage() / distance),(Entity) new EntityCreeper(((CraftWorld)damager.getWorld()).getHandle()));
+							//}
+							
 							/*// trouver solution
 							if (enchList.containsKey((short) 0)) {
 								entLV.addPotionEffect(new PotionEffect(
@@ -233,6 +312,7 @@ public class DamageHandler implements Listener {
 		.write(1, location.getY() + 1.25)
 		.write(2, location.getZ());
 		fakeExplosion.getFloat().write(0,(float) radius);
+		
 		
 		try {
 			
@@ -365,7 +445,8 @@ public class DamageHandler implements Listener {
 		if(Math.random() < 0.02*cost/30*5) {
 			me.dpohvar.powernbt.nbt.NBTTagCompound enchantment  = new me.dpohvar.powernbt.nbt.NBTTagCompound();
 			enchantment.set("id", new me.dpohvar.powernbt.nbt.NBTTagShort((short)1));
-			short level = (short)Math.max(cost/10*Math.random(),1);
+			
+			short level = (short)Math.max(cost/10.*Math.random(),1);
 			enchantment.set("lvl", new me.dpohvar.powernbt.nbt.NBTTagShort(level));
 			enchantmentList.add(enchantment);
 			

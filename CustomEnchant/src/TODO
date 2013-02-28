@@ -2,3 +2,8 @@ rewrit entLV.damage((int) (event.getDamage() / distance)); : call a damage event
 infiltrator arrow
 slow arrow
 soul eater sword
+
+si explosif : 
+ pas de fire ni potion
+ 
+ et vis versa.
