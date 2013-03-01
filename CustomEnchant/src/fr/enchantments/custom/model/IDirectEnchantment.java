@@ -1,6 +1,6 @@
 package fr.enchantments.custom.model;
 
-public interface IDirectEnchantment extends IEnchantment{
+public interface IDirectEnchantment {
 	
 	/**
 	 * Action to perform on hit
