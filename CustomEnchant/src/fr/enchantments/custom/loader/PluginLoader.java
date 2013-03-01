@@ -3,6 +3,8 @@ package fr.enchantments.custom.loader;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import fr.enchantments.custom.listener.ActionListener;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,7 +31,7 @@ public class PluginLoader extends JavaPlugin {
         //Loading message
         LOGGER.log(Level.INFO, CONFIG.getString("Loading_Message"));
 
-        //this.getServer().getPluginManager().registerEvents(new DamageHandler(this), this);
+        this.getServer().getPluginManager().registerEvents(new ActionListener(this), this);
     }
 
 }

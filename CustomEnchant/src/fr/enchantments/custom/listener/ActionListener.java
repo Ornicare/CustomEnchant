@@ -5,6 +5,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -12,14 +13,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.enchantments.custom.helper.EnchantementHelper;
+import fr.enchantments.custom.loader.PluginLoader;
 import fr.enchantments.custom.storage.Storage;
 
-public class ActionListener {
+public class ActionListener implements Listener{
 	
-	@SuppressWarnings("unused")
-	private JavaPlugin plugin;
+	private PluginLoader plugin;
 	
-	public ActionListener(JavaPlugin plugin) {
+	public ActionListener(PluginLoader plugin) {
 		this.plugin = plugin;
 	}
 	
@@ -48,6 +49,10 @@ public class ActionListener {
 	 */
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onProjectileHitEvent(ProjectileHitEvent event) {
+		//Test
+		this.plugin.getServer().broadcastMessage("ProjectileHitEvent");
+		
+		
 		Projectile shooter = event.getEntity();
 		if(Storage.ARROWOWNER.containsKey(shooter.getUniqueId())) {
 			//TODO transmit to the factory.
@@ -62,6 +67,9 @@ public class ActionListener {
 	 */
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onEntityDamage(EntityDamageEvent event) {
+		//Test
+		this.plugin.getServer().broadcastMessage("EntityDamageEvent");
+		
 		Entity damagee = event.getEntity();
 		if(damagee instanceof LivingEntity) {
 			//TODO transmit to the factory.
