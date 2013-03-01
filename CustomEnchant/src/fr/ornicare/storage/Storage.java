@@ -6,6 +6,9 @@ import java.util.UUID;
 
 import org.bukkit.inventory.ItemStack;
 
-public abstract class Storage {
+public abstract class Storage
+{
+    // Ceci est un test
+
 	public static Map<UUID,ItemStack> arrowAndBowCorrelation = new HashMap<UUID,ItemStack>();
 }
