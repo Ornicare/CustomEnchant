@@ -6,8 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class PluginLoader extends JavaPlugin
-{
+public class PluginLoader extends JavaPlugin {
 
     public static Logger LOGGER;
     public static FileConfiguration CONFIG;
