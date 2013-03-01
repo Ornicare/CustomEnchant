@@ -181,6 +181,7 @@ public class DamageHandler implements Listener {
 					damaged.addPotionEffect(new PotionEffect(
 							PotionEffectType.POISON, 100 * enchList.get((short) 0),
 							enchList.get((short) 0)));
+					damaged.getWorld().playEffect(damaged.getLocation().add(new Vector(0, 1, 0)), Effect.POTION_BREAK, 4, 200);
 				}
 			}
 			catch(Exception e) {}
@@ -192,6 +193,7 @@ public class DamageHandler implements Listener {
 					damaged.addPotionEffect(new PotionEffect(
 							PotionEffectType.SLOW, 100 * enchList.get((short) 4),
 							enchList.get((short) 4)));
+					damaged.getWorld().playEffect(damaged.getLocation().add(new Vector(0, 1, 0)), Effect.POTION_BREAK, 8, 200);
 				}
 			}
 			catch(Exception e) {}
@@ -204,6 +206,7 @@ public class DamageHandler implements Listener {
 					damaged.addPotionEffect(new PotionEffect(
 							PotionEffectType.BLINDNESS, 100 * enchList.get((short) 5),
 							enchList.get((short) 5)));
+					damaged.getWorld().playEffect(damaged.getLocation().add(new Vector(0, 1, 0)), Effect.POTION_BREAK, 8, 200);
 				}
 			}
 			catch(Exception e) {}
