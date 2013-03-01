@@ -8,6 +8,7 @@ import org.bukkit.Material;
 public abstract class CommonEnchantment implements IEnchantment{
 	
 	private List<Material> authorizedItems = new ArrayList<Material>();
+	private int maxLevel;
 
 	public List<Material> getAuthorizedItems() {
 		return authorizedItems;
@@ -16,4 +17,10 @@ public abstract class CommonEnchantment implements IEnchantment{
 	public void addAuthorizedItems(Material... authorizedItems) {
 		for(Material m : authorizedItems) this.authorizedItems.add(m);
 	}
+
+	
+	public int getLevel() {
+		return maxLevel;
+	}
+
 }

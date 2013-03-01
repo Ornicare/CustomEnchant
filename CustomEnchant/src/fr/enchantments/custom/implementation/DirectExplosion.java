@@ -9,6 +9,7 @@ public class DirectExplosion extends CommonEnchantment implements IDirectEnchant
 	@Override
 	public void onHitEntity() {
 		// TODO Auto-generated method stub
+		//Mouhaha
 		
 	}
 
