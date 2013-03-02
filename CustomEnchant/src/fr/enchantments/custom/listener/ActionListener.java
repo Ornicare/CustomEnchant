@@ -71,6 +71,7 @@ public class ActionListener implements Listener{
 	 */
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onEntityDamage(EntityDamageEvent event) {
+		//TODO CraftArrow is not Living !
         // 1] Cool fields declarations
         if ( !(event.getEntity() instanceof LivingEntity) ) { return; }
         LivingEntity entityVictim = (LivingEntity)event.getEntity();

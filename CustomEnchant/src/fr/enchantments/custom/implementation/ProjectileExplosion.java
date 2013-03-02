@@ -32,11 +32,11 @@ public class ProjectileExplosion extends CommonEnchantment implements IZoneEffec
      * @param projectileEntity : The projectile entity ! Hell Yeah !
      */
 	@Override
-	public void onProjectileHit(ItemStack projectileShooter, Entity projectileEntity) {
+	public void onProjectileHit(ItemStack projectileShooter, Entity projectileEntity, short level) {
 		// TODO Auto-generated method stub
 		
 		//test
-		projectileEntity.getWorld().createExplosion(projectileEntity.getLocation(), 3, false);
+		projectileEntity.getWorld().createExplosion(projectileEntity.getLocation(), level, false);
 	}
 
 }

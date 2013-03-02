@@ -16,6 +16,7 @@ public interface IZoneEffectEnchantment
      *
      * @param projectileShooter : The projectile that was shot
      * @param projectileEntity : The projectile entity ! Hell Yeah !
+     * @param short1 
      */
-	public void onProjectileHit(ItemStack projectileShooter, Entity projectileEntity);
+	public void onProjectileHit(ItemStack projectileShooter, Entity projectileEntity, short level);
 }

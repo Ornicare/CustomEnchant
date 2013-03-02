@@ -28,7 +28,7 @@ public class AddEnchantCommand implements CommandExecutor
 
             try
             {
-            	EnchantmentHelper.addCustomEnchant(handledItemStack, new ProjectileExplosion("Explosion", 0, 10), 30);
+            	EnchantmentHelper.addCustomEnchant(handledItemStack, new ProjectileExplosion("Explosion", 1, 10), 30);
             	commandSender.sendMessage(ChatColor.RED + "Enchantement ajouté !");
             }
             catch ( Throwable t ) { commandSender.sendMessage(ChatColor.RED + "Erreur lors de la tentative d'enchantement !"); }

@@ -1,15 +1,20 @@
 package fr.enchantments.custom.factory;
 
+import fr.enchantments.custom.helper.EnchantmentHelper;
+import fr.enchantments.custom.loader.PluginLoader;
 import fr.enchantments.custom.model.CommonEnchantment;
 import fr.enchantments.custom.model.IDirectEnchantment;
 import fr.enchantments.custom.model.IEnchantment;
 import fr.enchantments.custom.model.IZoneEffectEnchantment;
+import fr.enchantments.custom.storage.Storage;
+
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * That awesome class collects :
@@ -42,6 +47,8 @@ public class ListenerRegistrationFactory
      */
     public void projectileHitSomething(ItemStack projectileShooter, Entity projectileEntity)
     {
+    	Map<Short,Short> shooterEnchantments = EnchantmentHelper.getCustomEnchantmentList(projectileShooter);
+    	
         for ( IEnchantment actualEnchantment : enchantmentList )
         {
             // 1] Skip if the enchantment does not implements the correct interface
@@ -54,8 +61,10 @@ public class ListenerRegistrationFactory
             // |   O==========================> |    |   KABOOM !
             // |_____|                           \__/       ( Yes, that is the Earth !... )
             //                                                ( I'm an awesome artist, huh ? ... no ? :( )
-
-            ((IZoneEffectEnchantment)actualEnchantment).onProjectileHit(projectileShooter, projectileEntity);
+            
+            if(shooterEnchantments.containsKey(actualEnchantment.getId())) {
+            	((IZoneEffectEnchantment)actualEnchantment).onProjectileHit(projectileShooter, projectileEntity, shooterEnchantments.get(actualEnchantment.getId()));
+            }
         }
     }
 
