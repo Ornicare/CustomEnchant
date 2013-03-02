@@ -3,6 +3,7 @@ package fr.enchantments.custom.loader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import fr.enchantments.custom.commands.AddEnchantCommand;
 import fr.enchantments.custom.commands.TestCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -49,6 +50,7 @@ public class PluginLoader extends JavaPlugin {
         LOGGER.log(Level.INFO, "Initialisation des hookers terminée !");
 
         this.getCommand("setitemname").setExecutor(new TestCommand(this));
+        this.getCommand("addenchant").setExecutor(new AddEnchantCommand(this));
     }
 
 }

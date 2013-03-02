@@ -7,3 +7,7 @@ commands:
       description: Ceci est une commande demonstration.
       permission: customenchantdebug.setitemname
       usage: /setitemname [player]
+   addenchant:
+      description: Ceci est une commande demonstration.
+      permission: customenchantdebug.setitemname
+      usage: /addenchant

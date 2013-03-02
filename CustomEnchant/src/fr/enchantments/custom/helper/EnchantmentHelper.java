@@ -9,11 +9,15 @@ import me.dpohvar.powernbt.nbt.NBTContainerItem;
 import me.dpohvar.powernbt.nbt.NBTTagCompound;
 import me.dpohvar.powernbt.nbt.NBTTagList;
 import me.dpohvar.powernbt.nbt.NBTTagShort;
+import net.minecraft.server.v1_4_R1.NBTTagString;
+
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_4_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 
+import fr.enchantments.custom.loader.PluginLoader;
 import fr.enchantments.custom.model.IEnchantment;
 
 /**
@@ -72,6 +76,9 @@ public abstract class EnchantmentHelper {
      * @param cost The enchantment cost
      */
 	public static void addCustomEnchant(ItemStack item, IEnchantment enchantment, int cost) {
+		
+		//TODO : erase previous enchant if it already exists
+		
 		//Get the NBT version of the item
 		NBTContainerItem container = new NBTContainerItem(item);
 		
@@ -89,7 +96,7 @@ public abstract class EnchantmentHelper {
 		//test if it have already "customenchant" tag
 		NBTTagList existingCustomEnchant = container.getTag().getList("customenchant");
 		if (existingCustomEnchant == null) existingCustomEnchant = new NBTTagList("customenchant");
-		
+	
 		//add and save it
 		existingCustomEnchant.add(enchantmentNBT);
 		container.getTag().set("customenchant",existingCustomEnchant);
@@ -120,17 +127,26 @@ public abstract class EnchantmentHelper {
      */
     public static void addLoreToItem(ItemStack itemStack, String rawTextToAdd)
     {
-        // Get item's metadata & lore
-        ItemMeta itemMetadata = itemStack.getItemMeta();
-        List<String> itemLore = itemMetadata.getLore();
-
-        // Add the custom name to it
-        if ( itemLore == null ) { itemLore = new ArrayList<String>(); }
-        itemLore.add(rawTextToAdd);
-
-        // Push the modified lore & metadata in the item
-        itemMetadata.setLore(itemLore);
-        itemStack.setItemMeta(itemMetadata);
+    	//Get the NBT version of the item
+    	NBTContainerItem container = new NBTContainerItem(itemStack);
+    	
+    	//If it doesn't have any tag, create it.
+    	if(container.getTag()==null) container.setTag(new NBTTagCompound("tag"));
+    	
+    	
+    	NBTTagCompound display = container.getTag().getCompound("display");
+    	if (display == null) display = new NBTTagCompound("display");
+    	
+    	NBTTagList Lore = display.getList("Lore");
+    	if (Lore == null) Lore = new NBTTagList("Lore");
+    	
+    	NBTTagString loreToadd = new NBTTagString("",rawTextToAdd);
+    	
+    	Lore.add(loreToadd);
+    	
+    	display.set("Lore", Lore);
+    	
+		container.getTag().set("display",display);
     }
 	
 	
