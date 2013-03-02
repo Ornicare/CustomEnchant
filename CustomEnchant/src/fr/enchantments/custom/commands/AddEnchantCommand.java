@@ -7,9 +7,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import fr.enchantments.custom.factory.ListenerRegistrationFactory;
 import fr.enchantments.custom.helper.EnchantmentHelper;
-import fr.enchantments.custom.implementation.ProjectileExplosion;
 import fr.enchantments.custom.loader.PluginLoader;
+import fr.enchantments.custom.model.IEnchantment;
 
 public class AddEnchantCommand implements CommandExecutor
 {
@@ -22,17 +23,28 @@ public class AddEnchantCommand implements CommandExecutor
     {
         if ( !(commandSender instanceof Player) ) { return true; }
 
+        if(args.length>0) {
+        	Player playerSender = (Player)commandSender;
+            ItemStack handledItemStack = playerSender.getItemInHand();
 
-        Player playerSender = (Player)commandSender;
-        ItemStack handledItemStack = playerSender.getItemInHand();
+                try
+                {
+                	IEnchantment enchantment = ListenerRegistrationFactory.listenerFactory.getEnchantementById(Short.parseShort(args[0]));
+                	if(enchantment!=null) {
+                		if(args.length>1) {
+                    		EnchantmentHelper.addCustomEnchantWithLevel(handledItemStack, enchantment, Short.parseShort(args[1]));
+                    	}
+                    	else {
+                    		EnchantmentHelper.addCustomEnchant(handledItemStack, enchantment, 30);
+                    	}
+                    	commandSender.sendMessage(ChatColor.RED + "Enchantement ajouté !");
+                	}
+                }
+                catch ( Throwable t ) { commandSender.sendMessage(ChatColor.RED + "Erreur lors de la tentative d'enchantement !"); }
 
-            try
-            {
-            	EnchantmentHelper.addCustomEnchant(handledItemStack, new ProjectileExplosion("Explosion", 1, 10), 30);
-            	commandSender.sendMessage(ChatColor.RED + "Enchantement ajouté !");
-            }
-            catch ( Throwable t ) { commandSender.sendMessage(ChatColor.RED + "Erreur lors de la tentative d'enchantement !"); }
-
-        return true;
+            return true;
+        }
+        commandSender.sendMessage(ChatColor.RED + "Erreur lors de la tentative d'enchantement !");
+        return false;
     }
 }

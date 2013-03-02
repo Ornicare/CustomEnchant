@@ -68,19 +68,29 @@ public abstract class EnchantmentHelper {
      * @param enchantment The enchantment that will be added to the
      * @param cost The enchantment cost
      */
-	public static void addCustomEnchant(ItemStack item, IEnchantment enchantment, int cost) {
+	public static void addCustomEnchant(ItemStack item, IEnchantment enchantment, int cost) {	
+		//Get an enchantment level
+		short level = enchantment.getLevel(cost);
 		
+		addCustomEnchantWithLevel(item, enchantment, level);
+	}
+
+	/**
+	 * Set an enchantment by using a level
+	 * 
+	 * @param item
+	 * @param enchantment
+	 * @param level
+	 */
+	public static void addCustomEnchantWithLevel(ItemStack item, IEnchantment enchantment, short level) {
 		//erase previous enchant if it already exists
 		if(getCustomEnchantmentList(item).containsKey(enchantment.getId())) {
-			modifyCustomEnchant(item,enchantment,cost);
+			modifyCustomEnchantByUsingLevel(item,enchantment,level);
 			return;
 		}
 		
 		//Get the NBT version of the item
 		NBTContainerItem container = new NBTContainerItem(item);
-		
-		//Get an enchantment level
-		short level = enchantment.getLevel(cost);
 		
 		//Create the NBT version of the enchantment
 		NBTTagCompound enchantmentNBT  = new NBTTagCompound();
@@ -101,23 +111,21 @@ public abstract class EnchantmentHelper {
 		// Add the corresponding lore
         String romanLevel = new RomanNumeral(level).toString();
         addLoreToItem(item, ChatColor.GRAY, enchantment, romanLevel);
+		
 	}
 
-	
-	/**
-	 * Modify the level of an already existing enchant.
-	 * 
-     * @param item The <code>ItemStack</code> to enchant
-     * @param enchantment The enchantment that will be added to the
-     * @param cost The enchantment cost
-	 */
-    private static void modifyCustomEnchant(ItemStack item,IEnchantment enchantment, int cost) {
+    /**
+     * Set <code>enchantment</code> to <code>level</code> for <code>item</code>
+     * 
+     * @param item
+     * @param enchantment
+     * @param level
+     */
+    public static void modifyCustomEnchantByUsingLevel(ItemStack item, IEnchantment enchantment, short level) {
+
     	//Get the NBT version of the item
 		NBTContainerItem container = new NBTContainerItem(item);
-		
-		//Get an enchantment level
-		short level = enchantment.getLevel(cost);
-		
+
 		NBTTagList existingCustomEnchant = container.getTag().getList("customenchant");
 		String oldRomanLevel = null;
 		for (int i=0;i<existingCustomEnchant.size();i++) {
@@ -138,9 +146,14 @@ public abstract class EnchantmentHelper {
         String romanLevel = new RomanNumeral(level).toString();
         delItemLore(item, ChatColor.GRAY + enchantment.getName() + " " + oldRomanLevel);
         addLoreToItem(item, ChatColor.GRAY, enchantment, romanLevel);
-		
 	}
 
+	/**
+     * Try to remove <code>loreToRemove</code> from <code>itemStack</code> Lore.
+     * 
+     * @param itemStack
+     * @param loreToRemove
+     */
 	private static void delItemLore(ItemStack itemStack, String loreToRemove) {
 		//Get the NBT version of the item
     	NBTContainerItem container = new NBTContainerItem(itemStack);

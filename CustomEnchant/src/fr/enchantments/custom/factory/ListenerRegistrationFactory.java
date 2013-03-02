@@ -86,5 +86,13 @@ public class ListenerRegistrationFactory
             ((IDirectEnchantment) actualEnchantment).onEntityHit(entityShooter, entityVictim);
         }
     }
+    
+    public IEnchantment getEnchantementById(short id) {
+    	for ( IEnchantment actualEnchantment : enchantmentList )
+        {
+    		if(actualEnchantment.getId()==id) return actualEnchantment;
+        }
+    	return null;
+    }
 
 }
