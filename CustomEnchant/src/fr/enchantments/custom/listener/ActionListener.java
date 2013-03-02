@@ -1,6 +1,5 @@
 package fr.enchantments.custom.listener;
 
-import fr.enchantments.custom.helper.EnchantmentHelper;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -12,7 +11,7 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 
-import fr.enchantments.custom.factory.ListenerRegistrationFactory;
+import fr.enchantments.custom.helper.EnchantmentHelper;
 import fr.enchantments.custom.loader.PluginLoader;
 import fr.enchantments.custom.storage.Storage;
 
@@ -60,7 +59,7 @@ public class ActionListener implements Listener{
         ItemStack projectileShooter = Storage.ARROWOWNER.get(projectile.getUniqueId());
 
         // 3] Hell yeah ! Now we can do cool things !
-        ListenerRegistrationFactory.listenerFactory.projectileHitSomething(projectileShooter, event.getEntity());
+        plugin.getFactory().projectileHitSomething(projectileShooter, event.getEntity());
 	}
 	
 	
@@ -95,7 +94,7 @@ public class ActionListener implements Listener{
         if ( !EnchantmentHelper.haveSpecificEnchant(weaponUsed) ) { return; }
 
         // 3] Send all that shit to the factory of hell
-        ListenerRegistrationFactory.listenerFactory.entityHit(entityInflicter, entityVictim);
+        plugin.getFactory().entityHit(entityInflicter, entityVictim);
 	}
 
 }

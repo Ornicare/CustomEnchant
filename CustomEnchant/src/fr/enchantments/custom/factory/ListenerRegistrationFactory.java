@@ -1,20 +1,18 @@
 package fr.enchantments.custom.factory;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.inventory.ItemStack;
+
 import fr.enchantments.custom.helper.EnchantmentHelper;
-import fr.enchantments.custom.loader.PluginLoader;
 import fr.enchantments.custom.model.CommonEnchantment;
 import fr.enchantments.custom.model.IDirectEnchantment;
 import fr.enchantments.custom.model.IEnchantment;
 import fr.enchantments.custom.model.IZoneEffectEnchantment;
-import fr.enchantments.custom.storage.Storage;
-
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Entity;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * That awesome class collects :
@@ -26,9 +24,9 @@ import java.util.Map;
 public class ListenerRegistrationFactory
 {
 
-    public static ListenerRegistrationFactory listenerFactory;
-    private ListenerRegistrationFactory() { }
-    public static void initializeListenerFactory() { listenerFactory = new ListenerRegistrationFactory(); }
+    //public static ListenerRegistrationFactory listenerFactory;
+    public ListenerRegistrationFactory() { }
+    //public static void initializeListenerFactory() { listenerFactory = new ListenerRegistrationFactory(); }
 
     private List<IEnchantment> enchantmentList = new ArrayList<IEnchantment>();
 

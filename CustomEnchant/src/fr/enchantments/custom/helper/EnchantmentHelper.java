@@ -2,9 +2,7 @@ package fr.enchantments.custom.helper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
-import me.dpohvar.powernbt.nbt.NBTBase;
 import me.dpohvar.powernbt.nbt.NBTContainerItem;
 import me.dpohvar.powernbt.nbt.NBTTagCompound;
 import me.dpohvar.powernbt.nbt.NBTTagList;
@@ -12,10 +10,8 @@ import me.dpohvar.powernbt.nbt.NBTTagShort;
 import me.dpohvar.powernbt.nbt.NBTTagString;
 
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_4_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
-import fr.enchantments.custom.loader.PluginLoader;
 import fr.enchantments.custom.model.IEnchantment;
 
 /**

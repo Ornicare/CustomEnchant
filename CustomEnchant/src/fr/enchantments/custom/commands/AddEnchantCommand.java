@@ -7,7 +7,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import fr.enchantments.custom.factory.ListenerRegistrationFactory;
 import fr.enchantments.custom.helper.EnchantmentHelper;
 import fr.enchantments.custom.loader.PluginLoader;
 import fr.enchantments.custom.model.IEnchantment;
@@ -29,7 +28,7 @@ public class AddEnchantCommand implements CommandExecutor
 
                 try
                 {
-                	IEnchantment enchantment = ListenerRegistrationFactory.listenerFactory.getEnchantementById(Short.parseShort(args[0]));
+                	IEnchantment enchantment = plugin.getFactory().getEnchantementById(Short.parseShort(args[0]));
                 	if(enchantment!=null) {
                 		if(args.length>1) {
                     		EnchantmentHelper.addCustomEnchantWithLevel(handledItemStack, enchantment, Short.parseShort(args[1]));
@@ -39,6 +38,7 @@ public class AddEnchantCommand implements CommandExecutor
                     	}
                     	commandSender.sendMessage(ChatColor.RED + "Enchantement ajouté !");
                 	}
+                	else {commandSender.sendMessage(ChatColor.RED + "Enchantement non trouvé !");}
                 }
                 catch ( Throwable t ) { commandSender.sendMessage(ChatColor.RED + "Erreur lors de la tentative d'enchantement !"); }
 

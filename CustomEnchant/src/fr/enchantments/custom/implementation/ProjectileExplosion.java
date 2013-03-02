@@ -1,6 +1,5 @@
 package fr.enchantments.custom.implementation;
 
-import org.bukkit.craftbukkit.v1_4_R1.CraftWorld;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 
@@ -34,9 +33,9 @@ public class ProjectileExplosion extends CommonEnchantment implements IZoneEffec
 	@Override
 	public void onProjectileHit(ItemStack projectileShooter, Entity projectileEntity, short level) {
 		// TODO Auto-generated method stub
-		
-		//test
+	
 		projectileEntity.getWorld().createExplosion(projectileEntity.getLocation(), level, false);
+		projectileEntity.remove();
 	}
 
 }
