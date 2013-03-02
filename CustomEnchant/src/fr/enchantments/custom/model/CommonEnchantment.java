@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.bukkit.Material;
 
+import com.sun.org.apache.bcel.internal.generic.RETURN;
+
 import fr.enchantments.custom.helper.MathHelper;
 
 
@@ -19,6 +21,11 @@ public abstract class CommonEnchantment implements IEnchantment{
 	 * List of materials who can accept this enchant
 	 */
 	private List<Material> authorizedItems = new ArrayList<Material>();
+	
+	/**
+	 * The list of enchantments which cannot be found with this
+	 */
+	private List<IEnchantment> incompatibleCombination;
 	
 	/**
 	 * Enchantment id
@@ -64,6 +71,10 @@ public abstract class CommonEnchantment implements IEnchantment{
 
 	public String getName() {
 		return name;
+	}
+	
+	public List<IEnchantment> getIncompatibleCombination() {
+		return incompatibleCombination;
 	}
 	
 	public CommonEnchantment(String name, short id, short maxLevel) {

@@ -14,4 +14,6 @@ public interface IEnchantment {
 
 	public short getLevel(int cost);
 	
+	public List<IEnchantment> getIncompatibleCombination();
+	
 }

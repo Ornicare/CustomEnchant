@@ -11,10 +11,10 @@ import fr.enchantments.custom.model.IDirectEnchantment;
  * @author Antoine
  *
  */
-public class DirectExplosion extends CommonEnchantment implements IDirectEnchantment{
+public class DirectAdminExplosion extends CommonEnchantment implements IDirectEnchantment{
 
 
-	public DirectExplosion(String name, int id, int maxLevel) {
+	public DirectAdminExplosion(String name, int id, int maxLevel) {
 		super(name, (short) id, (short) maxLevel);
 	}
 

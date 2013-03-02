@@ -11,8 +11,8 @@ import com.comphenix.protocol.ProtocolManager;
 
 import fr.enchantments.custom.commands.AddEnchantCommand;
 import fr.enchantments.custom.factory.ListenerRegistrationFactory;
-import fr.enchantments.custom.implementation.DirectExplosion;
-import fr.enchantments.custom.implementation.ProjectileExplosion;
+import fr.enchantments.custom.implementation.DirectAdminExplosion;
+import fr.enchantments.custom.implementation.ProjectileAdminExplosion;
 import fr.enchantments.custom.listener.ActionListener;
 
 public class PluginLoader extends JavaPlugin {
@@ -43,8 +43,8 @@ public class PluginLoader extends JavaPlugin {
         // 2] Initialize Enchantments Classes/Instances
         pluginLogger.log(Level.INFO, "Enchantments' loading");
         
-        factory.registerEnchantment(new DirectExplosion("Explosive", 0, 2));
-        factory.registerEnchantment(new ProjectileExplosion("Explosive", 1, 2));
+        factory.registerEnchantment(new DirectAdminExplosion("AdminExplosive", 0, 2));
+        factory.registerEnchantment(new ProjectileAdminExplosion("AdminExplosive", 1, 2));
 
         // 2] Initialize Hookers & Blabla
         pluginLogger.log(Level.INFO, "Hook's loading");

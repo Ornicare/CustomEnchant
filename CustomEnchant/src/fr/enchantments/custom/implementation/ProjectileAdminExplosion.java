@@ -12,7 +12,7 @@ import fr.enchantments.custom.model.IZoneEffectEnchantment;
  * @author Ornicare
  *
  */
-public class ProjectileExplosion extends CommonEnchantment implements IZoneEffectEnchantment{
+public class ProjectileAdminExplosion extends CommonEnchantment implements IZoneEffectEnchantment{
 
     /**
      *
@@ -20,7 +20,7 @@ public class ProjectileExplosion extends CommonEnchantment implements IZoneEffec
      * @param enchantmentID The ID of the enchantment
      * @param maxLevel The maximum level of the enchantment
      */
-	public ProjectileExplosion(String enchantmentName, int enchantmentID, int maxLevel) {
+	public ProjectileAdminExplosion(String enchantmentName, int enchantmentID, int maxLevel) {
 		super(enchantmentName, (short) enchantmentID, (short) maxLevel);
 	}
 
