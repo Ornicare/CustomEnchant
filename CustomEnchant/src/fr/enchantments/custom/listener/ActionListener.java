@@ -58,6 +58,8 @@ public class ActionListener implements Listener{
         if ( !Storage.ARROWOWNER.containsKey(projectile.getUniqueId()) ) { return; }
         ItemStack projectileShooter = Storage.ARROWOWNER.get(projectile.getUniqueId());
 
+        //Supress the registration
+        Storage.ARROWOWNER.remove(projectile.getUniqueId());
         // 3] Hell yeah ! Now we can do cool things !
         plugin.getFactory().projectileHitSomething(projectileShooter, event.getEntity());
 	}
