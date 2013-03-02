@@ -150,7 +150,7 @@ public abstract class EnchantmentHelper {
      * @param itemStack
      * @param loreToRemove
      */
-	private static void delItemLore(ItemStack itemStack, String loreToRemove) {
+	public static void delItemLore(ItemStack itemStack, String loreToRemove) {
 		//Get the NBT version of the item
     	NBTContainerItem container = new NBTContainerItem(itemStack);
     	
