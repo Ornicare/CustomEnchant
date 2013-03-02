@@ -1,13 +1,20 @@
 package fr.enchantments.custom.listener;
 
+<<<<<<< HEAD
 import fr.enchantments.custom.factory.ListenerRegistrationFactory;
 import org.bukkit.craftbukkit.v1_4_R1.inventory.CraftItemStack;
+=======
+import org.bukkit.entity.Entity;
+>>>>>>> Fonctionnal version
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+<<<<<<< HEAD
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+=======
+>>>>>>> Fonctionnal version
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;

@@ -1,5 +1,8 @@
 package fr.enchantments.custom.implementation;
 
+import org.bukkit.entity.Entity;
+import org.bukkit.inventory.ItemStack;
+
 import fr.enchantments.custom.model.CommonEnchantment;
 import fr.enchantments.custom.model.IZoneEffectEnchantment;
 
@@ -12,7 +15,8 @@ import fr.enchantments.custom.model.IZoneEffectEnchantment;
 public class ProjectileExplosion extends CommonEnchantment implements IZoneEffectEnchantment{
 
 	@Override
-	public void onProjectileHit() {
+	public void onProjectileHit(ItemStack projectileShooter,
+			Entity projectileEntity) {
 		// TODO Auto-generated method stub
 		
 	}
