@@ -8,4 +8,9 @@ public abstract class EnchantementHelper {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	public static boolean haveSpecificEnchant(net.minecraft.server.v1_4_R1.ItemStack bow) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
