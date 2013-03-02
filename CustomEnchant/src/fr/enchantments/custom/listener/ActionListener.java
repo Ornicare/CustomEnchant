@@ -1,5 +1,6 @@
 package fr.enchantments.custom.listener;
 
+import fr.enchantments.custom.helper.EnchantmentHelper;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -12,7 +13,6 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 
 import fr.enchantments.custom.factory.ListenerRegistrationFactory;
-import fr.enchantments.custom.helper.EnchantementHelper;
 import fr.enchantments.custom.loader.PluginLoader;
 import fr.enchantments.custom.storage.Storage;
 
@@ -39,7 +39,7 @@ public class ActionListener implements Listener{
         if ( projectileShooter == null ) { return; }
 
         // 3] Skip non-enchanted items... obviously...
-		if ( !EnchantementHelper.haveSpecificEnchant(projectileShooter) ) { return; }
+		if ( !EnchantmentHelper.haveSpecificEnchant(projectileShooter) ) { return; }
 
         // 4] And then do the cool things !
 	    Storage.ARROWOWNER.put(event.getProjectile().getUniqueId(), projectileShooter);
@@ -91,7 +91,7 @@ public class ActionListener implements Listener{
         else { weaponUsed = entityInflicter.getEquipment().getItemInHand(); }
 
         // 4] Verify Enchantment
-        if ( !EnchantementHelper.haveSpecificEnchant(weaponUsed) ) { return; }
+        if ( !EnchantmentHelper.haveSpecificEnchant(weaponUsed) ) { return; }
 
         // 3] Send all that shit to the factory of hell
         ListenerRegistrationFactory.listenerFactory.entityHit(entityInflicter, entityVictim);

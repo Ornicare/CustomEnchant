@@ -6,7 +6,7 @@ import fr.enchantments.custom.model.IDirectEnchantment;
 
 
 /**
- * Explosion enchantement for direct weapons
+ * Explosion enchantment for direct weapons
  * 
  * @author Antoine
  *

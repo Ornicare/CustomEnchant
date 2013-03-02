@@ -14,7 +14,7 @@ public interface IZoneEffectEnchantment
      * Enchantment's really A-W-E-S-O-M-E things to do when the projectile hit something A-W-F-U-L
      * OH MY GOD, JAVADOCS ARE AMAZING ! Trololo.
      *
-     * @param projectileShooter : The projectile that was shot... =(    (yeah, that's sad)
+     * @param projectileShooter : The projectile that was shot
      * @param projectileEntity : The projectile entity ! Hell Yeah !
      */
 	public void onProjectileHit(ItemStack projectileShooter, Entity projectileEntity);

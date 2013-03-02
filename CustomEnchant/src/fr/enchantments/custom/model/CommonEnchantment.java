@@ -49,7 +49,7 @@ public abstract class CommonEnchantment implements IEnchantment{
 	}
 
 	/**
-	 * Get a level to this enchantement
+	 * Get a level to this enchantment
 	 * 
 	 * @return An integer between 1 and <code>maxLevel</code>
 	 */

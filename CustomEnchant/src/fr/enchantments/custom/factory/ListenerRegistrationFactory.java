@@ -2,6 +2,7 @@ package fr.enchantments.custom.factory;
 
 import fr.enchantments.custom.model.CommonEnchantment;
 import fr.enchantments.custom.model.IDirectEnchantment;
+import fr.enchantments.custom.model.IEnchantment;
 import fr.enchantments.custom.model.IZoneEffectEnchantment;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Entity;
@@ -12,7 +13,7 @@ import java.util.List;
 
 /**
  * That awesome class collects :
- *     - All the enchantements, and register them
+ *     - All the enchantments, and register them
  *     - All the required game events, and send them to the previously registered enchantments
  *
  * I love cats !
@@ -24,12 +25,12 @@ public class ListenerRegistrationFactory
     private ListenerRegistrationFactory() { }
     public static void initializeListenerFactory() { listenerFactory = new ListenerRegistrationFactory(); }
 
-    private List<CommonEnchantment> enchantmentList = new ArrayList<CommonEnchantment>();
+    private List<IEnchantment> enchantmentList = new ArrayList<IEnchantment>();
 
     /**
-     * Register The Enchantement In The Storage DataBase... and then... NOTHING ! MWAHAHAHAHA !
+     * Register The Enchantment In The Storage DataBase... and then... NOTHING ! MWAHAHAHAHA !
      *
-     * @param enchantmentToRegister : The Enchantement To Register In The DataBase
+     * @param enchantmentToRegister : The Enchantment To Register In The DataBase
      */
     public void registerEnchantment(CommonEnchantment enchantmentToRegister) { enchantmentList.add(enchantmentToRegister); }
 
@@ -41,7 +42,7 @@ public class ListenerRegistrationFactory
      */
     public void projectileHitSomething(ItemStack projectileShooter, Entity projectileEntity)
     {
-        for ( CommonEnchantment actualEnchantment : enchantmentList )
+        for ( IEnchantment actualEnchantment : enchantmentList )
         {
             // 1] Skip if the enchantment does not implements the correct interface
             if ( !(actualEnchantment instanceof IZoneEffectEnchantment) ) { continue; }
@@ -67,7 +68,7 @@ public class ListenerRegistrationFactory
      */
     public void entityHit(LivingEntity entityShooter, LivingEntity entityVictim)
     {
-        for ( CommonEnchantment actualEnchantment : enchantmentList )
+        for ( IEnchantment actualEnchantment : enchantmentList )
         {
             // 1] Skip if the enchantment does not implements the correct interface
             if ( !(actualEnchantment instanceof IDirectEnchantment) ) { continue; }

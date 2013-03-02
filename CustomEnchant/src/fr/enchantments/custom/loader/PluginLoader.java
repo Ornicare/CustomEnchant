@@ -1,7 +1,9 @@
 package fr.enchantments.custom.loader;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import fr.enchantments.custom.commands.TestCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -12,7 +14,6 @@ import fr.enchantments.custom.factory.ListenerRegistrationFactory;
 import fr.enchantments.custom.implementation.DirectExplosion;
 import fr.enchantments.custom.implementation.ProjectileExplosion;
 import fr.enchantments.custom.listener.ActionListener;
-import fr.enchantments.custom.logger.LoggerManager;
 
 public class PluginLoader extends JavaPlugin {
 
@@ -32,20 +33,22 @@ public class PluginLoader extends JavaPlugin {
         this.saveDefaultConfig();
 
         // 2] Registering the logger and its config file
-        LoggerManager.setLogger(this.getLogger());
+        LOGGER  = this.getLogger();
         CONFIG = this.getConfig();
 
         // 2] Initialize Enchantments Classes/Instances
-        LoggerManager.log("Initialisation des enchantements...");
+        LOGGER.log(Level.INFO, "Initialisation des enchantments...");
         ListenerRegistrationFactory.initializeListenerFactory();
         ListenerRegistrationFactory.listenerFactory.registerEnchantment(new DirectExplosion("Explosive", 0, 2));
         ListenerRegistrationFactory.listenerFactory.registerEnchantment(new ProjectileExplosion("Explosive", 1, 2));
-        LoggerManager.log("Initialisation des enchantements terminée !");
+        LOGGER.log(Level.INFO, "Initialisation des enchantments terminée !");
 
         // 2] Initialize Hookers & Blabla
-        LoggerManager.log("Initialisation des hookers...");
+        LOGGER.log(Level.INFO, "Initialisation des hookers...");
         this.getServer().getPluginManager().registerEvents(new ActionListener(this), this);
-        LoggerManager.log("Initialisation des hookers terminée !");
+        LOGGER.log(Level.INFO, "Initialisation des hookers terminée !");
+
+        this.getCommand("setitemname").setExecutor(new TestCommand(this));
     }
 
 }
