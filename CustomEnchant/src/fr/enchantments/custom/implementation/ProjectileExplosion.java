@@ -14,8 +14,8 @@ import fr.enchantments.custom.model.IZoneEffectEnchantment;
  */
 public class ProjectileExplosion extends CommonEnchantment implements IZoneEffectEnchantment{
 
-	public ProjectileExplosion(String name, short id) {
-		super(name, id);
+	public ProjectileExplosion(String name, int id, int maxLevel) {
+		super(name, (short) id, (short) maxLevel);
 	}
 
 	@Override

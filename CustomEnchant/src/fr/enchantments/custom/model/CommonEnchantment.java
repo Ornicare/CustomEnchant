@@ -33,7 +33,7 @@ public abstract class CommonEnchantment implements IEnchantment{
 	/**
 	 * Max level of this enchant
 	 */
-	private int maxLevel;
+	private short maxLevel;
 	
 	public List<Material> getAuthorizedItems() {
 		return authorizedItems;
@@ -53,7 +53,8 @@ public abstract class CommonEnchantment implements IEnchantment{
 	 * 
 	 * @return An integer between 1 and <code>maxLevel</code>
 	 */
-	public int getLevel() {
+	public short getLevel(int cost) {
+		//TODO return a level using the cost
 		return MathHelper.randomize(maxLevel);
 	}
 
@@ -65,9 +66,10 @@ public abstract class CommonEnchantment implements IEnchantment{
 		return name;
 	}
 	
-	public CommonEnchantment(String name, short id) {
+	public CommonEnchantment(String name, short id, short maxLevel) {
 		this.name = name;
 		this.id = id;
+		this.maxLevel = maxLevel;
 	}
 
 

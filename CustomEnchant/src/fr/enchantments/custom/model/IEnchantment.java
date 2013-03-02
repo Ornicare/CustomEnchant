@@ -11,5 +11,7 @@ public interface IEnchantment {
 	public short getId();
 
 	public String getName();
+
+	public short getLevel(int cost);
 	
 }

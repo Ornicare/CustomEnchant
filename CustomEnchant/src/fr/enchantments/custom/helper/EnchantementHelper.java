@@ -55,9 +55,12 @@ public abstract class EnchantementHelper {
 		return customEnchant;
 	}
 	
-	public static void addCustomEnchant(ItemStack item, IEnchantment enchantment, short level) {
+	public static void addCustomEnchant(ItemStack item, IEnchantment enchantment, int cost) {
 		//get the nbt version of the item
 		NBTContainerItem con = new NBTContainerItem(item);
+		
+		//get an enchantment level
+		short level = enchantment.getLevel(cost);
 		
 		//create the nbt version of the enchantment
 		NBTTagCompound enchantmentNBT  = new me.dpohvar.powernbt.nbt.NBTTagCompound();

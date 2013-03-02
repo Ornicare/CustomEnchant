@@ -14,8 +14,8 @@ import fr.enchantments.custom.model.IDirectEnchantment;
 public class DirectExplosion extends CommonEnchantment implements IDirectEnchantment{
 
 
-	public DirectExplosion(String name, short id) {
-		super(name, id);
+	public DirectExplosion(String name, int id, int maxLevel) {
+		super(name, (short) id, (short) maxLevel);
 	}
 
 	@Override

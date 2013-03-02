@@ -38,8 +38,8 @@ public class PluginLoader extends JavaPlugin {
         // 2] Initialize Enchantments Classes/Instances
         LoggerManager.log("Initialisation des enchantements...");
         ListenerRegistrationFactory.initializeListenerFactory();
-        ListenerRegistrationFactory.listenerFactory.registerEnchantment(new DirectExplosion("Explosive",(short) 0));
-        ListenerRegistrationFactory.listenerFactory.registerEnchantment(new ProjectileExplosion("Explosive",(short) 1));
+        ListenerRegistrationFactory.listenerFactory.registerEnchantment(new DirectExplosion("Explosive", 0, 2));
+        ListenerRegistrationFactory.listenerFactory.registerEnchantment(new ProjectileExplosion("Explosive", 1, 2));
         LoggerManager.log("Initialisation des enchantements terminée !");
 
         // 2] Initialize Hookers & Blabla
