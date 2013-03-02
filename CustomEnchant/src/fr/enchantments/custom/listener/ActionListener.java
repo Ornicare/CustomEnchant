@@ -81,15 +81,15 @@ public class ActionListener implements Listener{
         if ( entityVictim == null || entityInflicter == null ) { return; }
 
         // 3] Get the tool used to spread death
-        net.minecraft.server.v1_4_R1.ItemStack weaponUsed;
+        ItemStack weaponUsed;
         if ( event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE )
         {
             if ( !Storage.ARROWOWNER.containsKey(entityInflicter.getUniqueId()) ) { return; }
 
-            weaponUsed = CraftItemStack.asNMSCopy(Storage.ARROWOWNER.get(entityInflicter.getUniqueId()));
+            weaponUsed = Storage.ARROWOWNER.get(entityInflicter.getUniqueId());
             Storage.ARROWOWNER.remove(entityInflicter.getUniqueId());
         }
-        else { weaponUsed = CraftItemStack.asNMSCopy(entityInflicter.getEquipment().getItemInHand()); }
+        else { weaponUsed = entityInflicter.getEquipment().getItemInHand(); }
 
         // 4] Verify Enchantment
         if ( !EnchantementHelper.haveSpecificEnchant(weaponUsed) ) { return; }
@@ -97,6 +97,5 @@ public class ActionListener implements Listener{
         // 3] Send all that shit to the factory of hell
         ListenerRegistrationFactory.listenerFactory.entityHit(entityInflicter, entityVictim);
 	}
-
 
 }

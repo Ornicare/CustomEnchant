@@ -14,6 +14,10 @@ import fr.enchantments.custom.model.IDirectEnchantment;
 public class DirectExplosion extends CommonEnchantment implements IDirectEnchantment{
 
 
+	public DirectExplosion(String name, short id) {
+		super(name, id);
+	}
+
 	@Override
 	public void onEntityHit(LivingEntity entityInflicter,
 			LivingEntity entityVictim) {

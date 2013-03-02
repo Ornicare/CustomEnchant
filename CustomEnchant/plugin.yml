@@ -1,3 +1,4 @@
+depend: [ProtocolLib,PowerNBT]
 name: CustomEnchant
 main: fr.enchantments.custom.loader.PluginLoader
 version: 1.4.7

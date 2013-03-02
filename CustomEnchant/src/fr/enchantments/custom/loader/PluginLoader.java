@@ -1,29 +1,32 @@
 package fr.enchantments.custom.loader;
 
-import fr.enchantments.custom.factory.ListenerRegistrationFactory;
-import fr.enchantments.custom.implementation.DirectExplosion;
-import fr.enchantments.custom.implementation.ProjectileExplosion;
-import fr.enchantments.custom.logger.LoggerManager;
+import java.util.logging.Logger;
+
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import fr.enchantments.custom.listener.ActionListener;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import fr.enchantments.custom.factory.ListenerRegistrationFactory;
+import fr.enchantments.custom.implementation.DirectExplosion;
+import fr.enchantments.custom.implementation.ProjectileExplosion;
+import fr.enchantments.custom.listener.ActionListener;
+import fr.enchantments.custom.logger.LoggerManager;
 
 public class PluginLoader extends JavaPlugin {
 
     public static Logger LOGGER;
     public static FileConfiguration CONFIG;
-    // public static ProtocolManager protocolManager;
+    public static ProtocolManager protocolManager;
 
     /**
      * Actions to perform on plugin load.
      */
     public void onEnable()
     {
-        // protocolManager = ProtocolLibrary.getProtocolManager();
+    	//Used to modify packets
+        protocolManager = ProtocolLibrary.getProtocolManager();
 
         // 1] If the config file doesn't exists, create it.
         this.saveDefaultConfig();
@@ -35,8 +38,8 @@ public class PluginLoader extends JavaPlugin {
         // 2] Initialize Enchantments Classes/Instances
         LoggerManager.log("Initialisation des enchantements...");
         ListenerRegistrationFactory.initializeListenerFactory();
-        ListenerRegistrationFactory.listenerFactory.registerEnchantment(new DirectExplosion());
-        ListenerRegistrationFactory.listenerFactory.registerEnchantment(new ProjectileExplosion());
+        ListenerRegistrationFactory.listenerFactory.registerEnchantment(new DirectExplosion("Explosive",(short) 0));
+        ListenerRegistrationFactory.listenerFactory.registerEnchantment(new ProjectileExplosion("Explosive",(short) 1));
         LoggerManager.log("Initialisation des enchantements terminée !");
 
         // 2] Initialize Hookers & Blabla

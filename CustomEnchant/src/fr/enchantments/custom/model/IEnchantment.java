@@ -7,5 +7,9 @@ import org.bukkit.Material;
 public interface IEnchantment {
 
 	public List<Material> getAuthorizedItems();
+
+	public short getId();
+
+	public String getName();
 	
 }

@@ -14,6 +14,10 @@ import fr.enchantments.custom.model.IZoneEffectEnchantment;
  */
 public class ProjectileExplosion extends CommonEnchantment implements IZoneEffectEnchantment{
 
+	public ProjectileExplosion(String name, short id) {
+		super(name, id);
+	}
+
 	@Override
 	public void onProjectileHit(ItemStack projectileShooter,
 			Entity projectileEntity) {

@@ -21,6 +21,16 @@ public abstract class CommonEnchantment implements IEnchantment{
 	private List<Material> authorizedItems = new ArrayList<Material>();
 	
 	/**
+	 * Enchantment id
+	 */
+	private short id;
+	
+	/**
+	 * Enchantment's name
+	 */
+	private String name;
+	
+	/**
 	 * Max level of this enchant
 	 */
 	private int maxLevel;
@@ -46,5 +56,19 @@ public abstract class CommonEnchantment implements IEnchantment{
 	public int getLevel() {
 		return MathHelper.randomize(maxLevel);
 	}
+
+	public short getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+	
+	public CommonEnchantment(String name, short id) {
+		this.name = name;
+		this.id = id;
+	}
+
 
 }
