@@ -1,6 +1,6 @@
 package fr.enchantments.custom.model;
 
-public interface IProjectileEnchantment {
+public interface IZoneEffectEnchantment {
 	
 	/**
 	 * Action to perform on projectile hit

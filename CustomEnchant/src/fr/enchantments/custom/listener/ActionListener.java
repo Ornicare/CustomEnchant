@@ -10,7 +10,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.enchantments.custom.helper.EnchantementHelper;
 import fr.enchantments.custom.loader.PluginLoader;
@@ -47,7 +46,7 @@ public class ActionListener implements Listener{
 	 * 
 	 * @param event
 	 */
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.NORMAL)
 	public void onProjectileHitEvent(ProjectileHitEvent event) {
 		//Test
 		this.plugin.getServer().broadcastMessage("ProjectileHitEvent");
