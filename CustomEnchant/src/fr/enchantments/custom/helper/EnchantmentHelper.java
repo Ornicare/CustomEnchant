@@ -44,8 +44,14 @@ public abstract class EnchantmentHelper {
 		if(item==null) return customEnchant;
 		
 		//If it doesn't have a tag, return
+		//TODO error in case of mob damage player &&  workexplosion doesn't
 		NBTContainerItem container = new NBTContainerItem(item);
-		if(container.getTag()==null) return customEnchant;
+		try {
+			if(container.getTag()==null) return customEnchant;
+		}
+		catch(Throwable e) {
+			return customEnchant;
+		}
 		
 		//test if it have already "customenchant" tag
 		NBTTagList existingCustomEnchant = container.getTag().getList("customenchant");
