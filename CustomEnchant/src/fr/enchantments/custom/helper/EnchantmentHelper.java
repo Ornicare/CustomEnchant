@@ -37,8 +37,11 @@ public abstract class EnchantmentHelper {
      * @return Map<enchantmentID, enchantmentLevel>
      */
 	public static Map<Short, Short> getCustomEnchantmentList(ItemStack item) {
+		
 		// Map<enchantmentID, enchantmentLevel>
 		Map<Short, Short> customEnchant = new HashMap<Short, Short>();
+		
+		if(item==null) return customEnchant;
 		
 		//If it doesn't have a tag, return
 		NBTContainerItem container = new NBTContainerItem(item);

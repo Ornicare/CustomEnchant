@@ -73,15 +73,19 @@ public class ListenerRegistrationFactory
      * @param entityShooter : The entity that shoot the second one, he's the bad guy D:
      * @param entityVictim : The entity that was shot by the first one, he's the victim :D
      */
-    public void entityHit(LivingEntity entityShooter, LivingEntity entityVictim)
+    public void entityHit(LivingEntity entityShooter, LivingEntity entityVictim, int damage)
     {
+    	Map<Short,Short> damagerEnchantments = EnchantmentHelper.getCustomEnchantmentList(entityShooter.getEquipment().getItemInHand());
+    	
         for ( IEnchantment actualEnchantment : enchantmentList )
         {
             // 1] Skip if the enchantment does not implements the correct interface
             if ( !(actualEnchantment instanceof IDirectEnchantment) ) { continue; }
 
             // 2] AND THEN...I.. no no, this time i'm not gonna draw a super-lazor of the death.
-            ((IDirectEnchantment) actualEnchantment).onEntityHit(entityShooter, entityVictim);
+            if(damagerEnchantments.containsKey(actualEnchantment.getId())) {
+            	((IDirectEnchantment)actualEnchantment).onEntityHit(entityShooter, entityVictim, damagerEnchantments.get(actualEnchantment.getId()), damage);
+            }
         }
     }
     

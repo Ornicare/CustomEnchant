@@ -72,12 +72,25 @@ public class ActionListener implements Listener{
 	 */
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onEntityDamage(EntityDamageEvent event) {
+		
 		//TODO CraftArrow is not Living !
         // 1] Cool fields declarations
         if ( !(event.getEntity() instanceof LivingEntity) ) { return; }
         LivingEntity entityVictim = (LivingEntity)event.getEntity();
         LivingEntity entityInflicter = ( event instanceof EntityDamageByEntityEvent ) ? (LivingEntity)((EntityDamageByEntityEvent)event).getDamager() : null;
 
+        
+		//Test if it's an ignore event.
+        String eventId;
+        if(entityInflicter!=null) {
+        	eventId = entityVictim.getUniqueId().toString()+entityInflicter.getUniqueId().toString();
+        	if(Storage.IGNOREEVENTS.contains(eventId)) {
+    			Storage.IGNOREEVENTS.remove(eventId);
+    			return;
+    		}
+        }
+		
+		
         // 2] Verification : does the fundamentals of physics are falling down ?
         if ( entityVictim == null || entityInflicter == null ) { return; }
 
@@ -96,7 +109,7 @@ public class ActionListener implements Listener{
         if ( !EnchantmentHelper.haveSpecificEnchant(weaponUsed) ) { return; }
 
         // 3] Send all that shit to the factory of hell
-        plugin.getFactory().entityHit(entityInflicter, entityVictim);
+        plugin.getFactory().entityHit(entityInflicter, entityVictim, event.getDamage());
 	}
 
 }

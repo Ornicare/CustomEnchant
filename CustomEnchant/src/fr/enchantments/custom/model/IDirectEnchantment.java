@@ -15,5 +15,5 @@ public interface IDirectEnchantment {
      * @param entityInflicter : The cool bad guy.
      * @param entityVictim : The sad victim.
 	 */
-	public void onEntityHit(LivingEntity entityInflicter, LivingEntity entityVictim);
+	public void onEntityHit(LivingEntity entityInflicter, LivingEntity entityVictim, short level, int damage);
 }
