@@ -114,7 +114,7 @@ public abstract class EnchantmentHelper {
 		container.getTag().set("customenchant",existingCustomEnchant);
 		
 		// Add the corresponding lore
-        String romanLevel = new RomanNumeral(level).toString();
+        String romanLevel = level>3999?Integer.toString(level):new RomanNumeral(level).toString();
         addLoreToItem(item, ChatColor.GRAY, enchantment, romanLevel);
 		
 	}
@@ -148,7 +148,7 @@ public abstract class EnchantmentHelper {
 		container.getTag().set("customenchant",existingCustomEnchant);
 		
 		// Modify the corresponding lore
-        String romanLevel = new RomanNumeral(level).toString();
+        String romanLevel = level>3999?Integer.toString(level):new RomanNumeral(level).toString();
         delItemLore(item, ChatColor.GRAY + enchantment.getName() + " " + oldRomanLevel);
         addLoreToItem(item, ChatColor.GRAY, enchantment, romanLevel);
 	}

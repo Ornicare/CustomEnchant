@@ -3,6 +3,14 @@ package fr.enchantments.custom.loader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import fr.enchantments.custom.implementation.DirectRider;
+import fr.enchantments.custom.implementation.DirectSpinUp;
+import fr.enchantments.custom.implementation.DirectStarvation;
+import fr.enchantments.custom.implementation.ProjectileBlocDispatcher;
+import fr.enchantments.custom.implementation.ProjectileBlocExchanger;
+import fr.enchantments.custom.implementation.ProjectileCompressor;
+import fr.enchantments.custom.implementation.ProjectileKick;
+import fr.enchantments.custom.implementation.ProjectileStarvation;
 import fr.enchantments.custom.implementation.Projectile_BaseBowL;
 import fr.enchantments.custom.implementation.Projectile_OmgWTFPop;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -52,7 +60,15 @@ public class PluginLoader extends JavaPlugin {
         factory.registerEnchantment(new ProjectileAdminExplosion("AdminExplosive", 1, 2));
         factory.registerEnchantment(new Projectile_BaseBowL("Base-Bow-L", 2, 1));
         factory.registerEnchantment(new Projectile_OmgWTFPop("oMg PoP", 3, 1));
-
+        factory.registerEnchantment(new ProjectileBlocDispatcher("Blocks dispatchers", 4, 1));
+        factory.registerEnchantment(new ProjectileBlocExchanger("Blocks exchanger", 5, 1));
+        factory.registerEnchantment(new ProjectileCompressor("Compressor", 6, 10));
+        factory.registerEnchantment(new DirectSpinUp("Spin up", 7, 10));
+        factory.registerEnchantment(new DirectStarvation("Starvation", 8, 10));
+        factory.registerEnchantment(new ProjectileStarvation("Starvation", 9, 10));
+        factory.registerEnchantment(new ProjectileKick("Kick", 10, 10));
+        factory.registerEnchantment(new DirectRider("Rider", 11, 1));
+        
         // 2] Initialize Hookers & Blabla
         pluginLogger.log(Level.INFO, "Hook's loading");
         this.getServer().getPluginManager().registerEvents(new ActionListener(this), this);

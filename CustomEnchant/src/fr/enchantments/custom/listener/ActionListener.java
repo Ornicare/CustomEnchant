@@ -1,5 +1,6 @@
 package fr.enchantments.custom.listener;
 
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -13,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.enchantments.custom.helper.EnchantmentHelper;
 import fr.enchantments.custom.loader.PluginLoader;
+import fr.enchantments.custom.runnables.RunnableDeadProjectileRemover;
 import fr.enchantments.custom.storage.Storage;
 
 public class ActionListener implements Listener{
@@ -57,9 +59,10 @@ public class ActionListener implements Listener{
         // 2] Verification : does the fundamentals of physics are falling down ?
         if ( !Storage.ARROWOWNER.containsKey(projectile.getUniqueId()) ) { return; }
         ItemStack projectileShooter = Storage.ARROWOWNER.get(projectile.getUniqueId());
-
-        //Supress the registration
-        Storage.ARROWOWNER.remove(projectile.getUniqueId());
+        
+        //Delay the suppression of the registration
+        new RunnableDeadProjectileRemover(projectile).runTaskLater(plugin, 20);
+        
         // 3] Hell yeah ! Now we can do cool things !
         plugin.getFactory().projectileHitSomething(projectileShooter, event.getEntity());
 	}
@@ -77,8 +80,23 @@ public class ActionListener implements Listener{
         // 1] Cool fields declarations
         if ( !(event.getEntity() instanceof LivingEntity) ) { return; }
         LivingEntity entityVictim = (LivingEntity)event.getEntity();
-        LivingEntity entityInflicter = ( event instanceof EntityDamageByEntityEvent ) ? (LivingEntity)((EntityDamageByEntityEvent)event).getDamager() : null;
-
+        
+        LivingEntity entityInflicter = null;
+        Projectile projectile = null;
+        
+        if(event instanceof EntityDamageByEntityEvent) {
+        	Entity tempEntityInflicter = ((EntityDamageByEntityEvent)event).getDamager();
+        	if(tempEntityInflicter instanceof Projectile) {
+        		entityInflicter = ((Projectile) tempEntityInflicter).getShooter();
+        		projectile = (Projectile) tempEntityInflicter;
+            }
+            else if(tempEntityInflicter instanceof LivingEntity){
+            	entityInflicter = (LivingEntity) tempEntityInflicter;
+            }
+        }
+        
+        
+        
         
 		//Test if it's an ignore event.
         String eventId;
@@ -90,7 +108,7 @@ public class ActionListener implements Listener{
     		}
         }
 		
-		
+
         // 2] Verification : does the fundamentals of physics are falling down ?
         if ( entityVictim == null || entityInflicter == null ) { return; }
 
@@ -98,10 +116,10 @@ public class ActionListener implements Listener{
         ItemStack weaponUsed;
         if ( event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE )
         {
-            if ( !Storage.ARROWOWNER.containsKey(entityInflicter.getUniqueId()) ) { return; }
-
-            weaponUsed = Storage.ARROWOWNER.get(entityInflicter.getUniqueId());
-            Storage.ARROWOWNER.remove(entityInflicter.getUniqueId());
+            if ( !Storage.ARROWOWNER.containsKey(projectile.getUniqueId()) ) { return; }
+            
+            weaponUsed = Storage.ARROWOWNER.get(projectile.getUniqueId());
+            Storage.ARROWOWNER.remove(projectile.getUniqueId());
         }
         else { weaponUsed = entityInflicter.getEquipment().getItemInHand(); }
 

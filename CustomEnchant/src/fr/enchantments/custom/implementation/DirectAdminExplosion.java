@@ -1,5 +1,4 @@
 package fr.enchantments.custom.implementation;
-import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 
@@ -26,12 +25,10 @@ public class DirectAdminExplosion extends CommonEnchantment implements IDirectEn
 	public void onEntityHit(LivingEntity entityInflicter, LivingEntity entityVictim, short level, int damage) {
 		
 		ExplosionHelper.doFakeExplosion(entityVictim.getLocation(), level);
-		Location victimLocation = entityVictim.getLocation();
 		
-		for(Entity ent : entityVictim.getNearbyEntities(victimLocation.getX(),victimLocation.getY(),victimLocation.getZ())) {
+		for(Entity ent : entityVictim.getNearbyEntities(level,level,level)) {
 			if(!ent.equals(entityInflicter) && ent instanceof LivingEntity) {
 				LivingEntity entLV = (LivingEntity) ent;
-				if(entLV.getLocation().distance(entityVictim.getLocation())>level) continue;
 				//Following damages to entLV by entityInflicter do not check enchantment
 				Storage.IGNOREEVENTS.add(entLV.getUniqueId().toString()+entityInflicter.getUniqueId().toString());
 				entLV.damage(damage,entityInflicter);
