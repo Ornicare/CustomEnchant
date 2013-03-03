@@ -3,6 +3,8 @@ package fr.enchantments.custom.loader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import fr.enchantments.custom.implementation.Projectile_BaseBowL;
+import fr.enchantments.custom.implementation.Projectile_OmgWTFPop;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -19,14 +21,17 @@ public class PluginLoader extends JavaPlugin {
 
     private Logger pluginLogger;
     private FileConfiguration config;
-    private ProtocolManager protocolManager;
+    public static ProtocolManager protocolManager;
     private ListenerRegistrationFactory factory;
+    public static PluginLoader pluginLoader;
 
     /**
      * Actions to perform on plugin load.
      */
     public void onEnable()
     {
+        pluginLoader = this;
+
     	//Used to modify packets
         protocolManager = ProtocolLibrary.getProtocolManager();
 
@@ -45,6 +50,8 @@ public class PluginLoader extends JavaPlugin {
         
         factory.registerEnchantment(new DirectAdminExplosion("AdminExplosive", 0, 2));
         factory.registerEnchantment(new ProjectileAdminExplosion("AdminExplosive", 1, 2));
+        factory.registerEnchantment(new Projectile_BaseBowL("Base-Bow-L", 2, 1));
+        factory.registerEnchantment(new Projectile_OmgWTFPop("oMg PoP", 3, 1));
 
         // 2] Initialize Hookers & Blabla
         pluginLogger.log(Level.INFO, "Hook's loading");
