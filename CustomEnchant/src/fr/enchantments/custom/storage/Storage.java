@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public abstract class Storage {
 	public static Map<UUID,ItemStack> ARROWOWNER = new HashMap<UUID,ItemStack>();
+	public static Map<Player,ItemStack> SNOWBALLOWNER = new HashMap<Player,ItemStack>();
 	public static List<String> IGNOREEVENTS = new ArrayList<String>();
 }

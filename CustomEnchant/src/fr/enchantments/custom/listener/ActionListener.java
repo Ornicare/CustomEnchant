@@ -1,20 +1,26 @@
 package fr.enchantments.custom.listener;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import fr.enchantments.custom.helper.EnchantmentHelper;
 import fr.enchantments.custom.loader.PluginLoader;
 import fr.enchantments.custom.runnables.RunnableDeadProjectileRemover;
+import fr.enchantments.custom.runnables.RunnableDeadSnowBallRemover;
 import fr.enchantments.custom.storage.Storage;
 
 public class ActionListener implements Listener{
@@ -55,10 +61,25 @@ public class ActionListener implements Listener{
 	public void onProjectileHitEvent(ProjectileHitEvent event) {
         // 1]  Cool Fields Declaration
         Projectile projectile = event.getEntity();
-
+        ItemStack projectileShooter;
+        
+        
+        //Snowball case
+        if(event.getEntity().getType()==EntityType.SNOWBALL) {
+        	if(Storage.SNOWBALLOWNER.containsKey(event.getEntity().getShooter())) {
+        		projectileShooter = Storage.SNOWBALLOWNER.get(event.getEntity().getShooter());
+        		plugin.getFactory().projectileHitSomething(projectileShooter, event.getEntity());
+        		
+        		//Delay the suppression of the registration
+                new RunnableDeadSnowBallRemover((Player) event.getEntity().getShooter()).runTaskLater(plugin, 20);
+        		return;
+        	}
+        }
+        
+        
         // 2] Verification : does the fundamentals of physics are falling down ?
         if ( !Storage.ARROWOWNER.containsKey(projectile.getUniqueId()) ) { return; }
-        ItemStack projectileShooter = Storage.ARROWOWNER.get(projectile.getUniqueId());
+        projectileShooter = Storage.ARROWOWNER.get(projectile.getUniqueId());
         
         //Delay the suppression of the registration
         new RunnableDeadProjectileRemover(projectile).runTaskLater(plugin, 20);
@@ -66,6 +87,14 @@ public class ActionListener implements Listener{
         // 3] Hell yeah ! Now we can do cool things !
         plugin.getFactory().projectileHitSomething(projectileShooter, event.getEntity());
 	}
+	
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onPlayerInteractEvent(PlayerInteractEvent event) {
+		if(event.getItem().getType()==Material.SNOW_BALL && (event.getAction()==Action.RIGHT_CLICK_AIR || event.getAction()==Action.RIGHT_CLICK_BLOCK)) {
+			Storage.SNOWBALLOWNER.put(event.getPlayer(), event.getPlayer().getItemInHand());
+		}
+	}
+	
 	
 	
 	/**
@@ -113,18 +142,25 @@ public class ActionListener implements Listener{
         if ( entityVictim == null || entityInflicter == null ) { return; }
 
         // 3] Get the tool used to spread death
-        ItemStack weaponUsed;
+        ItemStack weaponUsed = null;
         if ( event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE )
         {
-            if ( !Storage.ARROWOWNER.containsKey(projectile.getUniqueId()) ) { return; }
+        	if(projectile.getType()==EntityType.SNOWBALL) {
+            	if(Storage.SNOWBALLOWNER.containsKey(projectile.getShooter())) {
+            		weaponUsed = Storage.SNOWBALLOWNER.get(projectile.getShooter());
+            	}
+            }
+        	else {
+        		if ( !Storage.ARROWOWNER.containsKey(projectile.getUniqueId()) ) { return; }
+                
+                weaponUsed = Storage.ARROWOWNER.get(projectile.getUniqueId());
+        	}
             
-            weaponUsed = Storage.ARROWOWNER.get(projectile.getUniqueId());
-            Storage.ARROWOWNER.remove(projectile.getUniqueId());
         }
         else { weaponUsed = entityInflicter.getEquipment().getItemInHand(); }
 
         // 4] Verify Enchantment
-        if ( !EnchantmentHelper.haveSpecificEnchant(weaponUsed) ) { return; }
+        if (weaponUsed ==null || !EnchantmentHelper.haveSpecificEnchant(weaponUsed) ) { return; }
 
         // 3] Send all that shit to the factory of hell
         plugin.getFactory().entityHit(entityInflicter, entityVictim, event.getDamage());
