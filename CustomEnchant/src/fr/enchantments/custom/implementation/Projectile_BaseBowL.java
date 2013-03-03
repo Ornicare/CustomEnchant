@@ -46,17 +46,21 @@ public class Projectile_BaseBowL extends CommonEnchantment implements IZoneEffec
             if ( !(shooter instanceof Player) ) { return; }
 
             Block blockShot = ProjectileHelper.getBlockShotByProjectile(projectileEntity);
-            if ( blockShot == null ) { return; }
+            if ( blockShot == null /*|| blockShot.getType() == Material.BEDROCK*/ ) { return; }
 
             //PluginLoader.pluginLoader.getServer().broadcastMessage("HOME RUN ! [2]");
 
-            Vector directionVector = blockShot.getLocation().toVector().subtract(((Arrow)projectileEntity).getShooter().getLocation().toVector());
+            Vector directionVector = blockShot.getLocation().toVector().subtract(((Arrow)projectileEntity).getShooter().getLocation().toVector().add(new Vector(0, 1, 0)));
             directionVector.setY(Math.abs(directionVector.getBlockY()));
             directionVector = directionVector.normalize().multiply(0.9999D);
 
-            FallingBlock fallingBlock = blockShot.getWorld().spawnFallingBlock(blockShot.getLocation(), blockShot.getType(), (byte)0);
+            FallingBlock fallingBlock = blockShot.getWorld().spawnFallingBlock(blockShot.getLocation(), blockShot.getType(), blockShot.getData());
             fallingBlock.setVelocity(directionVector);
             fallingBlock.setDropItem(false);
+
+            // fallingBlock.setPassenger(shooter);
+            // shooter.setPassenger(shooter);
+            // fallingBlock.setPassenger(fallingBlock);
             
 
             blockShot.setType(Material.AIR);
