@@ -36,9 +36,9 @@ public class AddEnchantCommand implements CommandExecutor
                     	else {
                     		EnchantmentHelper.addCustomEnchant(handledItemStack, enchantment, 30);
                     	}
-                    	commandSender.sendMessage(ChatColor.RED + "Enchantement ajoutÃ© !");
+                    	commandSender.sendMessage(ChatColor.RED + "Enchantement ajouté !");
                 	}
-                	else {commandSender.sendMessage(ChatColor.RED + "Enchantement non trouvÃ© !");}
+                	else {commandSender.sendMessage(ChatColor.RED + "Enchantement non trouvé !");}
                 }
                 catch ( Throwable t ) { commandSender.sendMessage(ChatColor.RED + "Erreur lors de la tentative d'enchantement !"); }
 

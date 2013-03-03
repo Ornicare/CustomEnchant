@@ -43,7 +43,7 @@ public class Projectile_OmgWTFPop extends CommonEnchantment implements IZoneEffe
                     if ( Math.sqrt(X*X + Y*Y + Z*Z) > 8 ) { continue; }
                     Block lolBlock = blockHit.getWorld().getBlockAt((int)finalX, (int)finalY, (int)finalZ);
                     //PluginLoader.pluginLoader.getServer().broadcastMessage("MAtrix : " + lolBlock.getTypeId() + " => " + X + " " + Y + " " + Z);
-                    if ( lolBlock.getTypeId() == 0 || lolBlock.isLiquid() ) { continue; }
+                    if ( lolBlock.getTypeId() == 0 || /*lolBlock.isLiquid() ||*/ lolBlock.getTypeId() == 7 ) { continue; }
                     FallingBlock fallingBlock = lolBlock.getWorld().spawnFallingBlock(lolBlock.getLocation(), lolBlock.getType(), (byte) 0);
                     fallingBlock.setVelocity(new Vector((random.nextInt(200) - 100D) / 100D, 1000000D/(1000000D+random.nextInt(10000)), (random.nextInt(200) - 100D) / 100D));
                     fallingBlock.setDropItem(false);
