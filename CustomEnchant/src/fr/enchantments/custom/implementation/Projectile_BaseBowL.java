@@ -1,20 +1,21 @@
 package fr.enchantments.custom.implementation;
 
-import fr.enchantments.custom.helper.ProjectileHelper;
-import fr.enchantments.custom.loader.PluginLoader;
-import fr.enchantments.custom.model.CommonEnchantment;
-import fr.enchantments.custom.model.IZoneEffectEnchantment;
+import java.util.Random;
+
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.FallingBlock;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
 
-import java.util.Random;
+import fr.enchantments.custom.helper.ProjectileHelper;
+import fr.enchantments.custom.model.CommonEnchantment;
+import fr.enchantments.custom.model.IZoneEffectEnchantment;
 
 public class Projectile_BaseBowL extends CommonEnchantment implements IZoneEffectEnchantment
 {
