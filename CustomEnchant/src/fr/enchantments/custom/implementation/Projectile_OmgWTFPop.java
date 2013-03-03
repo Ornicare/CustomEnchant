@@ -27,7 +27,7 @@ public class Projectile_OmgWTFPop extends CommonEnchantment implements IZoneEffe
         projectileEntity.remove();
 
         Random random = new Random();
-        int marge = 20;
+        int marge = level;
         for ( int X=-marge; X<marge; X++)
         {
             for ( int Y=-marge; Y<marge; Y++)
@@ -46,6 +46,7 @@ public class Projectile_OmgWTFPop extends CommonEnchantment implements IZoneEffe
                     if ( lolBlock.getTypeId() == 0 ) { continue; }
                     FallingBlock fallingBlock = lolBlock.getWorld().spawnFallingBlock(lolBlock.getLocation(), lolBlock.getType(), (byte) 0);
                     fallingBlock.setVelocity(new Vector((random.nextInt(200) - 100D) / 100D, 1000000D/(1000000D+random.nextInt(10000)), (random.nextInt(200) - 100D) / 100D));
+                    fallingBlock.setDropItem(false);
                     lolBlock.setType(Material.AIR);
                 }
             }

@@ -50,10 +50,13 @@ public class Projectile_BaseBowL extends CommonEnchantment implements IZoneEffec
             //PluginLoader.pluginLoader.getServer().broadcastMessage("HOME RUN ! [2]");
 
             Vector directionVector = blockShot.getLocation().toVector().subtract(((Arrow)projectileEntity).getShooter().getLocation().toVector());
+            directionVector.setY(-directionVector.getBlockY());
             directionVector = directionVector.normalize().multiply(0.9999D);
 
             FallingBlock fallingBlock = blockShot.getWorld().spawnFallingBlock(blockShot.getLocation(), blockShot.getType(), (byte)0);
             fallingBlock.setVelocity(directionVector);
+            fallingBlock.setDropItem(false);
+            
 
             blockShot.setType(Material.AIR);
             projectileEntity.remove();
