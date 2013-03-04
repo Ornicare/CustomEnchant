@@ -1,12 +1,13 @@
 package fr.enchantments.custom.model;
 
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * That interface is the one which implements the required methods to perform some weapons based enchantments.
  * ( Such as swords, shovels and pumpkins of doom. )
  */
-public interface IDirectEnchantment {
+public interface IDirectHitEnchantment {
 	
 	/**
 	 * What ! A poor entity was shot ! POLICE, POLICE !
@@ -15,5 +16,6 @@ public interface IDirectEnchantment {
      * @param entityInflicter : The cool bad guy.
      * @param entityVictim : The sad victim.
 	 */
-	public void onEntityHit(LivingEntity entityInflicter, LivingEntity entityVictim, short level, int damage);
+	public void onEntityHit(LivingEntity entityInflicter, LivingEntity entityVictim, ItemStack weaponUsed, short level, int damage);
+
 }

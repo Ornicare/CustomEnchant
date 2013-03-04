@@ -2,6 +2,7 @@ package fr.enchantments.custom.implementation;
 
 import java.util.Random;
 
+import fr.enchantments.custom.model.BaseEnchantment;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -11,10 +12,9 @@ import org.bukkit.util.Vector;
 
 import fr.enchantments.custom.helper.ExplosionHelper;
 import fr.enchantments.custom.helper.ProjectileHelper;
-import fr.enchantments.custom.model.CommonEnchantment;
 import fr.enchantments.custom.model.IZoneEffectEnchantment;
 
-public class Projectile_OmgWTFPop extends CommonEnchantment implements IZoneEffectEnchantment
+public class Projectile_OmgWTFPop extends BaseEnchantment implements IZoneEffectEnchantment
 {
 
     public Projectile_OmgWTFPop(String enchantmentName, int enchantmentID, int maxLevel) { super(enchantmentName, (short)enchantmentID, (short)maxLevel); }

@@ -2,6 +2,7 @@ package fr.enchantments.custom.implementation;
 
 import java.util.Random;
 
+import fr.enchantments.custom.model.BaseEnchantment;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -10,10 +11,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import fr.enchantments.custom.helper.ProjectileHelper;
-import fr.enchantments.custom.model.CommonEnchantment;
 import fr.enchantments.custom.model.IZoneEffectEnchantment;
 
-public class Projectile_BaseBowL extends CommonEnchantment implements IZoneEffectEnchantment
+public class Projectile_BaseBowL extends BaseEnchantment implements IZoneEffectEnchantment
 {
 
     private static final String[] listText = new String[]

@@ -1,11 +1,12 @@
 package fr.enchantments.custom.implementation;
+import fr.enchantments.custom.model.BaseEnchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 
 import fr.enchantments.custom.helper.ExplosionHelper;
-import fr.enchantments.custom.model.CommonEnchantment;
-import fr.enchantments.custom.model.IDirectEnchantment;
+import fr.enchantments.custom.model.IDirectHitEnchantment;
 import fr.enchantments.custom.storage.Storage;
+import org.bukkit.inventory.ItemStack;
 
 
 /**
@@ -14,15 +15,15 @@ import fr.enchantments.custom.storage.Storage;
  * @author Antoine
  *
  */
-public class DirectAdminExplosion extends CommonEnchantment implements IDirectEnchantment{
+public class Direct_AdminExplosion extends BaseEnchantment implements IDirectHitEnchantment {
 
 
-	public DirectAdminExplosion(String name, int id, int maxLevel) {
+	public Direct_AdminExplosion(String name, int id, int maxLevel) {
 		super(name, (short) id, (short) maxLevel);
 	}
 
 	@Override
-	public void onEntityHit(LivingEntity entityInflicter, LivingEntity entityVictim, short level, int damage) {
+	public void onEntityHit(LivingEntity entityInflicter, LivingEntity entityVictim, ItemStack weaponUsed, short level, int damage) {
 		
 		ExplosionHelper.doFakeExplosion(entityVictim.getLocation(), level);
 		

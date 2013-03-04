@@ -1,9 +1,9 @@
 package fr.enchantments.custom.implementation;
 
+import fr.enchantments.custom.model.BaseEnchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 
-import fr.enchantments.custom.model.CommonEnchantment;
 import fr.enchantments.custom.model.IZoneEffectEnchantment;
 
 /**
@@ -12,7 +12,7 @@ import fr.enchantments.custom.model.IZoneEffectEnchantment;
  * @author Ornicare
  *
  */
-public class ProjectileAdminExplosion extends CommonEnchantment implements IZoneEffectEnchantment{
+public class Projectile_AdminExplosion extends BaseEnchantment implements IZoneEffectEnchantment{
 
     /**
      *
@@ -20,7 +20,7 @@ public class ProjectileAdminExplosion extends CommonEnchantment implements IZone
      * @param enchantmentID The ID of the enchantment
      * @param maxLevel The maximum level of the enchantment
      */
-	public ProjectileAdminExplosion(String enchantmentName, int enchantmentID, int maxLevel) {
+	public Projectile_AdminExplosion(String enchantmentName, int enchantmentID, int maxLevel) {
 		super(enchantmentName, (short) enchantmentID, (short) maxLevel);
 	}
 

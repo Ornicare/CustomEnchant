@@ -13,7 +13,7 @@ import fr.enchantments.custom.helper.MathHelper;
  * @author Ornicare
  *
  */
-public abstract class CommonEnchantment implements IEnchantment{
+public abstract class BaseEnchantment implements IEnchantment{
 	
 	/**
 	 * List of materials who can accept this enchant
@@ -75,7 +75,7 @@ public abstract class CommonEnchantment implements IEnchantment{
 		return incompatibleCombination;
 	}
 	
-	public CommonEnchantment(String name, short id, short maxLevel) {
+	public BaseEnchantment(String name, short id, short maxLevel) {
 		this.name = name;
 		this.id = id;
 		this.maxLevel = maxLevel;

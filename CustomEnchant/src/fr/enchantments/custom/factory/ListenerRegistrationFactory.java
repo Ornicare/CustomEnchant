@@ -4,15 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import fr.enchantments.custom.model.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 
 import fr.enchantments.custom.helper.EnchantmentHelper;
-import fr.enchantments.custom.model.CommonEnchantment;
-import fr.enchantments.custom.model.IDirectEnchantment;
-import fr.enchantments.custom.model.IEnchantment;
-import fr.enchantments.custom.model.IZoneEffectEnchantment;
 
 /**
  * That awesome class collects :
@@ -35,7 +32,7 @@ public class ListenerRegistrationFactory
      *
      * @param enchantmentToRegister : The Enchantment To Register In The DataBase
      */
-    public void registerEnchantment(CommonEnchantment enchantmentToRegister) { enchantmentList.add(enchantmentToRegister); }
+    public void registerEnchantment(BaseEnchantment enchantmentToRegister) { enchantmentList.add(enchantmentToRegister); }
 
     /**
      * Enchantment Factory : Send the zone event to all required & registered enchantments ! =D
@@ -75,16 +72,42 @@ public class ListenerRegistrationFactory
      */
     public void entityHit(LivingEntity entityShooter, LivingEntity entityVictim, int damage)
     {
-    	Map<Short,Short> damagerEnchantments = EnchantmentHelper.getCustomEnchantmentList(entityShooter.getEquipment().getItemInHand());
-    	
-        for ( IEnchantment actualEnchantment : enchantmentList )
+        ItemStack inflicterWeapon = entityShooter.getEquipment().getItemInHand();
+        if ( EnchantmentHelper.haveCustomEnchant(inflicterWeapon) )
         {
-            // 1] Skip if the enchantment does not implements the correct interface
-            if ( !(actualEnchantment instanceof IDirectEnchantment) ) { continue; }
+            Map<Short,Short> inflicterEnchantments = EnchantmentHelper.getCustomEnchantmentList(entityShooter.getEquipment().getItemInHand());
 
-            // 2] AND THEN...I.. no no, this time i'm not gonna draw a super-lazor of the death.
-            if(damagerEnchantments.containsKey(actualEnchantment.getId())) {
-            	((IDirectEnchantment)actualEnchantment).onEntityHit(entityShooter, entityVictim, damagerEnchantments.get(actualEnchantment.getId()), damage);
+            for ( IEnchantment actualEnchantment : enchantmentList )
+            {
+                // 1] Skip if the enchantment does not implements the correct interface
+                if ( !(actualEnchantment instanceof IDirectHitEnchantment) ) { continue; }
+
+                // 2] If bla bla
+                if ( !inflicterEnchantments.containsKey(actualEnchantment.getId()) ) { continue; }
+
+                // 3] AND THEN...I.. no no, this time i'm not gonna draw a super-lazor of the death.
+                ((IDirectHitEnchantment)actualEnchantment).onEntityHit(entityShooter, entityVictim, inflicterWeapon, inflicterEnchantments.get(actualEnchantment.getId()), damage);
+                break;
+            }
+        }
+
+        ItemStack[] victimEquipment = entityVictim.getEquipment().getArmorContents();
+        for ( ItemStack actualArmorPart : victimEquipment )
+        {
+            Map<Short,Short> actualArmorPartEnchantments = EnchantmentHelper.getCustomEnchantmentList(actualArmorPart);
+            if ( actualArmorPartEnchantments.isEmpty() ) { continue; }
+
+            for ( IEnchantment actualEnchantment : enchantmentList )
+            {
+                // 1] Skip if the enchantment does not implements the correct interface
+                if ( !(actualEnchantment instanceof IArmorHitEnchantment) ) { continue; }
+
+                // 2] If bla bla
+                if ( !actualArmorPartEnchantments.containsKey(actualEnchantment.getId()) ) { continue; }
+
+                // 3] AND THEN...I.. no no, this time i'm not gonna draw a super-lazor of the death.
+                ((IArmorHitEnchantment)actualEnchantment).onArmorHit(entityShooter, entityVictim, actualArmorPart, inflicterWeapon, actualArmorPartEnchantments.get(actualEnchantment.getId()), damage);
+                break;
             }
         }
     }

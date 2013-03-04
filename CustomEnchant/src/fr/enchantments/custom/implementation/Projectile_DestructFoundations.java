@@ -2,19 +2,17 @@ package fr.enchantments.custom.implementation;
 
 import fr.enchantments.custom.helper.ExplosionHelper;
 import fr.enchantments.custom.helper.ProjectileHelper;
-import fr.enchantments.custom.model.CommonEnchantment;
+import fr.enchantments.custom.model.BaseEnchantment;
 import fr.enchantments.custom.model.IZoneEffectEnchantment;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Random;
-
-public class ProjectileDestructFoundations extends CommonEnchantment implements IZoneEffectEnchantment
+public class Projectile_DestructFoundations extends BaseEnchantment implements IZoneEffectEnchantment
 {
 
-    public ProjectileDestructFoundations(String enchantmentName, int enchantmentID, int maxLevel) { super(enchantmentName, (short)enchantmentID, (short)maxLevel); }
+    public Projectile_DestructFoundations(String enchantmentName, int enchantmentID, int maxLevel) { super(enchantmentName, (short)enchantmentID, (short)maxLevel); }
 
     @Override
     public void onProjectileHit(ItemStack projectileShooter, Entity projectileEntity, short level)

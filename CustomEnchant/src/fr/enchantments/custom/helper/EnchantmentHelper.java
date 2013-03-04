@@ -26,7 +26,7 @@ public abstract class EnchantmentHelper {
 	 * @param itemStack The <code>ItemStack</code> to check
 	 * @return true if <code>ItemStack</code> have at least one new enchant.
 	 */
-	public static boolean haveSpecificEnchant(ItemStack itemStack) {
+	public static boolean haveCustomEnchant(ItemStack itemStack) {
 		return !getCustomEnchantmentList(itemStack).isEmpty();
 	}
 

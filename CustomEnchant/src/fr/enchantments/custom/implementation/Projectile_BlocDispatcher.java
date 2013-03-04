@@ -3,6 +3,7 @@ package fr.enchantments.custom.implementation;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.enchantments.custom.model.BaseEnchantment;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -10,13 +11,12 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.enchantments.custom.helper.ExplosionHelper;
 import fr.enchantments.custom.helper.ProjectileHelper;
-import fr.enchantments.custom.model.CommonEnchantment;
 import fr.enchantments.custom.model.IZoneEffectEnchantment;
 
-public class ProjectileBlocExchanger extends CommonEnchantment implements IZoneEffectEnchantment
+public class Projectile_BlocDispatcher extends BaseEnchantment implements IZoneEffectEnchantment
 {
 
-    public ProjectileBlocExchanger(String enchantmentName, int enchantmentID, int maxLevel) { super(enchantmentName, (short) enchantmentID, (short) maxLevel); }
+    public Projectile_BlocDispatcher(String enchantmentName, int enchantmentID, int maxLevel) { super(enchantmentName, (short) enchantmentID, (short) maxLevel); }
 
     @Override
     public void onProjectileHit(ItemStack projectileShooter, Entity projectileEntity, short level)
@@ -39,9 +39,9 @@ public class ProjectileBlocExchanger extends CommonEnchantment implements IZoneE
                     
                     //Location lolLocation = new Location(blockHit.getWorld(), finalX, finalY, finalZ);
 
-                    if ( X*X + Y*Y + Z*Z > level*level ) { continue; }
+                    if ( X*X + Y*Y + Z*Z > level*level) { continue; }
                     Block lolBlock = blockHit.getWorld().getBlockAt((int)finalX, (int)finalY, (int)finalZ);
-                    if(lolBlock.isEmpty()) continue;
+                    
                     if(Math.random()<0.5) {
                     	L1.add(lolBlock);
                     }
@@ -51,6 +51,7 @@ public class ProjectileBlocExchanger extends CommonEnchantment implements IZoneE
                 }
             }
         }
+        
         for(int i = 0; i<L1.size();i++) {
         	int j = (int) (Math.random()*L1.size());
         	Block temp = L1.get(j);

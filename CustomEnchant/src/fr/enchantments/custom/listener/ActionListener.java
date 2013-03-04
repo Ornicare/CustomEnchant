@@ -46,10 +46,12 @@ public class ActionListener implements Listener{
         if ( projectileShooter == null ) { return; }
 
         // 3] Skip non-enchanted items... obviously...
-		if ( !EnchantmentHelper.haveSpecificEnchant(projectileShooter) ) { return; }
+		// if ( !EnchantmentHelper.haveCustomEnchant(projectileShooter) ) { return; }
 
         // 4] And then do the cool things !
 	    Storage.ARROWOWNER.put(event.getProjectile().getUniqueId(), projectileShooter);
+
+        // PluginLoader.pluginLoader.getServer().broadcastMessage(ChatColor.GREEN + "HOOK UUID : " + event.getProjectile().getUniqueId());
 	}
 	
 	/**
@@ -145,7 +147,7 @@ public class ActionListener implements Listener{
         ItemStack weaponUsed = null;
         if ( event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE )
         {
-        	if(projectile.getType()==EntityType.SNOWBALL) {
+        	if ( projectile != null && projectile.getType()==EntityType.SNOWBALL) {
             	if(Storage.SNOWBALLOWNER.containsKey(projectile.getShooter())) {
             		weaponUsed = Storage.SNOWBALLOWNER.get(projectile.getShooter());
             	}
@@ -160,10 +162,22 @@ public class ActionListener implements Listener{
         else { weaponUsed = entityInflicter.getEquipment().getItemInHand(); }
 
         // 4] Verify Enchantment
-        if (weaponUsed ==null || !EnchantmentHelper.haveSpecificEnchant(weaponUsed) ) { return; }
-
-        // 3] Send all that shit to the factory of hell
-        plugin.getFactory().entityHit(entityInflicter, entityVictim, event.getDamage());
+        if ( weaponUsed != null && EnchantmentHelper.haveCustomEnchant(weaponUsed) )
+        {
+            plugin.getFactory().entityHit(entityInflicter, entityVictim, event.getDamage());
+        }
+        else
+        {
+            ItemStack[] armorContents = entityVictim.getEquipment().getArmorContents();
+            for ( ItemStack actualArmorPart : armorContents )
+            {
+                if ( EnchantmentHelper.haveCustomEnchant(actualArmorPart))
+                {
+                    plugin.getFactory().entityHit(entityInflicter, entityVictim, event.getDamage());
+                    return;
+                }
+            }
+        }
 	}
 
 }
