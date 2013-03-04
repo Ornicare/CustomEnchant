@@ -57,7 +57,7 @@ public class PluginLoader extends JavaPlugin {
         factory.registerEnchantment(new ProjectileStarvation("Starvation", 9, 10));
         factory.registerEnchantment(new ProjectileKick("Kick", 10, 10));
         factory.registerEnchantment(new DirectRider("Rider", 11, 1));
-        factory.registerEnchantment(new ProjectileChangeAimedBlock("Destruct Foundations", 12, 1));
+        factory.registerEnchantment(new ProjectileDestructFoundations("Destruct Foundations", 12, 1));
         
         // 2] Initialize Hookers & Blabla
         pluginLogger.log(Level.INFO, "Hook's loading");

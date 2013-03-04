@@ -11,10 +11,10 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Random;
 
-public class ProjectileChangeAimedBlock extends CommonEnchantment implements IZoneEffectEnchantment
+public class ProjectileDestructFoundations extends CommonEnchantment implements IZoneEffectEnchantment
 {
 
-    public ProjectileChangeAimedBlock(String enchantmentName, int enchantmentID, int maxLevel) { super(enchantmentName, (short)enchantmentID, (short)maxLevel); }
+    public ProjectileDestructFoundations(String enchantmentName, int enchantmentID, int maxLevel) { super(enchantmentName, (short)enchantmentID, (short)maxLevel); }
 
     @Override
     public void onProjectileHit(ItemStack projectileShooter, Entity projectileEntity, short level)
