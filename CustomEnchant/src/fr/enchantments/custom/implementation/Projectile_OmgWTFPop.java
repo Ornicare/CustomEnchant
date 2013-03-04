@@ -17,17 +17,17 @@ import fr.enchantments.custom.model.IZoneEffectEnchantment;
 public class Projectile_OmgWTFPop extends CommonEnchantment implements IZoneEffectEnchantment
 {
 
-    public Projectile_OmgWTFPop(String enchantmentName, int enchantmentID, int maxLevel) { super(enchantmentName, (short) enchantmentID, (short) maxLevel); }
+    public Projectile_OmgWTFPop(String enchantmentName, int enchantmentID, int maxLevel) { super(enchantmentName, (short)enchantmentID, (short)maxLevel); }
 
     @Override
     public void onProjectileHit(ItemStack projectileShooter, Entity projectileEntity, short level)
     {
         Block blockHit = ProjectileHelper.getBlockShotByProjectile(projectileEntity);
-        if(blockHit==null) return;
+        if ( blockHit==null ) { return; }
         projectileEntity.remove();
 
         Random random = new Random();
-        int marge = level * 2;;
+        int marge = level * 2;
         for ( int X=-marge; X<marge; X++)
         {
             for ( int Y=-marge; Y<marge; Y++)
@@ -44,7 +44,7 @@ public class Projectile_OmgWTFPop extends CommonEnchantment implements IZoneEffe
                     Block lolBlock = blockHit.getWorld().getBlockAt((int)finalX, (int)finalY, (int)finalZ);
 
                     if ( lolBlock.getTypeId() == 0 || /*lolBlock.isLiquid() ||*/ lolBlock.getTypeId() == 7 ) { continue; }
-                    FallingBlock fallingBlock = lolBlock.getWorld().spawnFallingBlock(lolBlock.getLocation(), lolBlock.getType(), blockHit.getData());
+                    FallingBlock fallingBlock = lolBlock.getWorld().spawnFallingBlock(lolBlock.getLocation(), lolBlock.getType(), lolBlock.getData());
                     fallingBlock.setVelocity(new Vector((random.nextInt(200) - 100D) / 100D, 1000000D/(1000000D+random.nextInt(10000)), (random.nextInt(200) - 100D) / 100D));
                     fallingBlock.setDropItem(false);
 

@@ -5,11 +5,7 @@ import java.util.Random;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.FallingBlock;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
@@ -34,15 +30,15 @@ public class Projectile_BaseBowL extends CommonEnchantment implements IZoneEffec
     };
     private static final String getRandomText() { return listText[(new Random()).nextInt(listText.length)]; }
 
-    public Projectile_BaseBowL(String enchantmentName, int enchantmentID, int maxLevel) { super(enchantmentName, (short) enchantmentID, (short) maxLevel); }
+    public Projectile_BaseBowL(String enchantmentName, int enchantmentID, int maxLevel) { super(enchantmentName, (short)enchantmentID, (short)maxLevel); }
 
     @Override
     public void onProjectileHit(ItemStack projectileShooter, Entity projectileEntity, short level)
     {
         try
         {
-            if ( !(projectileEntity instanceof Arrow) ) { return; }
-            LivingEntity shooter = ((Arrow)projectileEntity).getShooter();
+            if ( !(projectileEntity instanceof Projectile) ) { return; }
+            LivingEntity shooter = ((Projectile)projectileEntity).getShooter();
             if ( !(shooter instanceof Player) ) { return; }
 
             Block blockShot = ProjectileHelper.getBlockShotByProjectile(projectileEntity);
@@ -50,7 +46,7 @@ public class Projectile_BaseBowL extends CommonEnchantment implements IZoneEffec
 
             //PluginLoader.pluginLoader.getServer().broadcastMessage("HOME RUN ! [2]");
 
-            Vector directionVector = blockShot.getLocation().toVector().subtract(((Arrow)projectileEntity).getShooter().getLocation().toVector().add(new Vector(0, 1, 0)));
+            Vector directionVector = blockShot.getLocation().toVector().subtract(((Projectile)projectileEntity).getShooter().getLocation().toVector().add(new Vector(0, 1, 0)));
             directionVector.setY(Math.abs(directionVector.getBlockY()));
             directionVector = directionVector.normalize().multiply(0.9999D);
 
@@ -68,6 +64,6 @@ public class Projectile_BaseBowL extends CommonEnchantment implements IZoneEffec
 
             ((Player)shooter).sendMessage(ChatColor.RED + getRandomText());
         }
-        catch ( Throwable t ) { ((Player)(((Arrow)projectileEntity).getShooter())).sendMessage(ChatColor.RED + getRandomText()); }
+        catch ( Throwable t ) { ((Player)(((Projectile)projectileEntity).getShooter())).sendMessage(ChatColor.RED + getRandomText()); }
     }
 }
