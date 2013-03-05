@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import fr.enchantments.custom.loader.PluginLoader;
 import fr.enchantments.custom.model.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -33,6 +34,7 @@ public class ListenerRegistrationFactory
      *
      * @param enchantmentToRegister : The Enchantment To Register In The DataBase
      */
+    //TODO vérifier que l'id n'est pas déjà pris
     public void registerEnchantment(BaseEnchantment enchantmentToRegister) { enchantmentList.add(enchantmentToRegister); }
 
     /**

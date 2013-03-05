@@ -2,6 +2,7 @@ package fr.enchantments.custom.implementation;
 
 import java.util.Random;
 
+import fr.enchantments.custom.loader.PluginLoader;
 import fr.enchantments.custom.model.BaseEnchantment;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -13,11 +14,12 @@ import org.bukkit.util.Vector;
 import fr.enchantments.custom.helper.ExplosionHelper;
 import fr.enchantments.custom.helper.ProjectileHelper;
 import fr.enchantments.custom.model.IZoneEffectEnchantment;
+import fr.enchantments.custom.runnables.RunnableTrainee;
 
-public class Projectile_OmgWTFPop extends BaseEnchantment implements IZoneEffectEnchantment
+public class Projectile_OmgWTFPopTrainee extends BaseEnchantment implements IZoneEffectEnchantment
 {
 
-    public Projectile_OmgWTFPop(String enchantmentName, int enchantmentID, int maxLevel) { super(enchantmentName, (short)enchantmentID, (short)maxLevel); }
+    public Projectile_OmgWTFPopTrainee(String enchantmentName, int enchantmentID, int maxLevel) { super(enchantmentName, (short)enchantmentID, (short)maxLevel); }
 
     @Override
     public void onProjectileHit(ItemStack projectileShooter, Entity projectileEntity, short level)
@@ -45,9 +47,14 @@ public class Projectile_OmgWTFPop extends BaseEnchantment implements IZoneEffect
 
                     if ( lolBlock.getTypeId() == 0 || /*lolBlock.isLiquid() ||*/ lolBlock.getTypeId() == 7 ) { continue; }
                     FallingBlock fallingBlock = lolBlock.getWorld().spawnFallingBlock(lolBlock.getLocation(), lolBlock.getType(), lolBlock.getData());
-                    fallingBlock.setVelocity(new Vector((random.nextInt(200) - 100D) / 100D, 1000000D/(1000000D+random.nextInt(10000)), (random.nextInt(200) - 100D) / 100D));
+                    double distance = lolBlock.getLocation().distance(blockHit.getLocation());
+                    Vector dir = lolBlock.getLocation().clone().subtract(blockHit.getLocation().clone()).toVector().normalize().multiply(level/10*4*(distance+level)/(2*level));
+                    dir.setY(level/10*Math.random());
+                    dir.setX(dir.getX()*Math.random());
+                    dir.setZ(dir.getZ()*Math.random());
+                    fallingBlock.setVelocity(dir);
                     fallingBlock.setDropItem(false);
-                    
+                    new RunnableTrainee(fallingBlock,100).runTaskTimer(PluginLoader.pluginLoader, 1, 1);
                     lolBlock.setType(Material.AIR);
                 }
             }

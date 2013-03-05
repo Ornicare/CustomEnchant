@@ -42,7 +42,7 @@ public class Projectile_BaseBowL extends BaseEnchantment implements IZoneEffectE
             if ( !(shooter instanceof Player) ) { return; }
 
             Block blockShot = ProjectileHelper.getBlockShotByProjectile(projectileEntity);
-            if ( blockShot == null /*|| blockShot.getType() == Material.BEDROCK*/ ) { return; }
+            if ( blockShot == null  || blockShot.getType() == Material.BEDROCK || blockShot.getType() == Material.AIR) { return; }
 
             //PluginLoader.pluginLoader.getServer().broadcastMessage("HOME RUN ! [2]");
 

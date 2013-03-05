@@ -4,6 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import fr.enchantments.custom.implementation.*;
+
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -45,7 +46,7 @@ public class PluginLoader extends JavaPlugin {
         // 2] Initialize Enchantments Classes/Instances
         pluginLogger.log(Level.INFO, "Enchantments' loading");
         
-        factory.registerEnchantment(new LegalDirectHit_Explosion("AdminExplosive", 0, 2));
+        factory.registerEnchantment(new LegalDirectHit_Explosion("Explosive", 0, 2));
         factory.registerEnchantment(new Projectile_AdminExplosion("AdminExplosive", 1, 2));
         factory.registerEnchantment(new Projectile_BaseBowL("Base-Bow-L", 2, 1));
         factory.registerEnchantment(new Projectile_OmgWTFPop("oMg PoP", 3, 1));
@@ -60,6 +61,13 @@ public class PluginLoader extends JavaPlugin {
         factory.registerEnchantment(new Projectile_DestructFoundations("Destruct Foundations", 12, 1));
         factory.registerEnchantment(new ArmorHit_ShootDetector("Shoot Detector", 13, 1));
         factory.registerEnchantment(new ArmorDeath_DeathDetector("Die Detector", 14, 1));
+        factory.registerEnchantment(new LegalProjectile_Explosion("Explosion", 15, 2));
+        factory.registerEnchantment(new Projectile_FreezingExplosion("Freezing explosion", 16, 2));
+        factory.registerEnchantment(new Projectile_FreezingShard("Freezing shard", 17, 2));
+        factory.registerEnchantment(new Projectile_FreezingArc("Freezing arc", 18, 2));
+        factory.registerEnchantment(new Projectile_OmgWTFPopTrainee("Pop arc", 19, 2));
+        factory.registerEnchantment(new Projectile_OmgWTFPopLessRandom("Realistic explosion", 20, 2));
+        factory.registerEnchantment(new Projectile_FreezingWater("Jesus ", 21, 2));
         
         // 2] Initialize Hookers & Blabla
         pluginLogger.log(Level.INFO, "Hook's loading");

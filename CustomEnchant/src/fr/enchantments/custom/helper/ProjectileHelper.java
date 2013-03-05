@@ -26,12 +26,14 @@ public class ProjectileHelper
             if ( hitBlock.getTypeId() != 0 ) { break; }
         }
 
-        if ( hitBlock == null ) { return null; }
-        if ( hitBlock.isEmpty() ) { return null; }
-        if ( hitBlock.isLiquid() ) { return null; }
-        if ( hitBlock.getTypeId() == 0 ) { return null; }
+        //if ( hitBlock == null ) { return null; }
+        //if ( hitBlock.isEmpty() ) { return null; }
+        //if ( hitBlock.isLiquid() ) { return null; }
+        //if ( hitBlock.getTypeId() == 0 ) { return null; }
 
         return hitBlock;
     }
+    
+    
 
 }
