@@ -1,13 +1,11 @@
 package fr.enchantments.custom.runnables;
 
-import fr.enchantments.custom.loader.PluginLoader;
-import org.bukkit.ChatColor;
+import java.util.UUID;
+
 import org.bukkit.entity.Projectile;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.enchantments.custom.storage.Storage;
-
-import java.util.UUID;
 
 public class RunnableDeadProjectileRemover extends BukkitRunnable
 {

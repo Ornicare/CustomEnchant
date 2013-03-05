@@ -1,16 +1,19 @@
 package fr.enchantments.custom.factory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import fr.enchantments.custom.model.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 
 import fr.enchantments.custom.helper.EnchantmentHelper;
+import fr.enchantments.custom.model.BaseEnchantment;
+import fr.enchantments.custom.model.IArmorHitEnchantment;
+import fr.enchantments.custom.model.IDirectHitEnchantment;
+import fr.enchantments.custom.model.IEnchantment;
+import fr.enchantments.custom.model.IZoneEffectEnchantment;
 
 /**
  * That awesome class collects :

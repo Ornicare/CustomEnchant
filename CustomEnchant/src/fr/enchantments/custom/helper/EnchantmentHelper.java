@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import fr.enchantments.custom.model.IArmorHitEnchantment;
 import me.dpohvar.powernbt.nbt.NBTContainerItem;
 import me.dpohvar.powernbt.nbt.NBTTagCompound;
 import me.dpohvar.powernbt.nbt.NBTTagList;
