@@ -15,10 +15,10 @@ import org.bukkit.inventory.ItemStack;
  * @author Antoine
  *
  */
-public class Direct_AdminExplosion extends BaseEnchantment implements IDirectHitEnchantment {
+public class DirectHit_AdminExplosion extends BaseEnchantment implements IDirectHitEnchantment {
 
 
-	public Direct_AdminExplosion(String name, int id, int maxLevel) { super(name, (short)id, (short)maxLevel); }
+	public DirectHit_AdminExplosion(String name, int id, int maxLevel) { super(name, (short)id, (short)maxLevel); }
 
 	@Override
 	public void onEntityHit(LivingEntity entityInflicter, LivingEntity entityVictim, ItemStack weaponUsed, short level, short damage) {

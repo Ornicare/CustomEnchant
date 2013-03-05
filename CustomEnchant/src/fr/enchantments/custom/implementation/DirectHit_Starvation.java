@@ -8,10 +8,10 @@ import org.bukkit.potion.PotionEffectType;
 
 import fr.enchantments.custom.model.IDirectHitEnchantment;
 
-public class Direct_Starvation extends BaseEnchantment implements IDirectHitEnchantment
+public class DirectHit_Starvation extends BaseEnchantment implements IDirectHitEnchantment
 {
 
-    public Direct_Starvation(String enchantmentName, int enchantmentID, int maxLevel) { super(enchantmentName, (short)enchantmentID, (short)maxLevel); }
+    public DirectHit_Starvation(String enchantmentName, int enchantmentID, int maxLevel) { super(enchantmentName, (short)enchantmentID, (short)maxLevel); }
 
 	@Override
 	public void onEntityHit(LivingEntity entityInflicter,LivingEntity entityVictim, ItemStack weaponUsed, short level, short damage) {

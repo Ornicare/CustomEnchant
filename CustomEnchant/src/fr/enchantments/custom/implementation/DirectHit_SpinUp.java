@@ -13,10 +13,10 @@ import fr.enchantments.custom.model.IDirectHitEnchantment;
  * @author Ornicare
  *
  */
-public class Direct_SpinUp extends BaseEnchantment implements IDirectHitEnchantment {
+public class DirectHit_SpinUp extends BaseEnchantment implements IDirectHitEnchantment {
 
 
-	public Direct_SpinUp(String name, int id, int maxLevel) { super(name, (short)id, (short)maxLevel); }
+	public DirectHit_SpinUp(String name, int id, int maxLevel) { super(name, (short)id, (short)maxLevel); }
 
 	@Override
 	public void onEntityHit(LivingEntity entityInflicter, LivingEntity entityVictim, ItemStack weaponUsed, short level, short damage) {

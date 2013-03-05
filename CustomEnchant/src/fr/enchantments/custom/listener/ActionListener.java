@@ -10,10 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityShootBowEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -96,8 +93,20 @@ public class ActionListener implements Listener{
 			Storage.SNOWBALLOWNER.put(event.getPlayer(), event.getPlayer().getItemInHand());
 		}
 	}
-	
-	
+
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onEntityDie(EntityDeathEvent event)
+    {
+        ItemStack[] armorContents = event.getEntity().getEquipment().getArmorContents();
+        for ( ItemStack actualArmorPart : armorContents )
+        {
+            if ( EnchantmentHelper.haveCustomEnchant(actualArmorPart))
+            {
+                plugin.getFactory().entityDie(event);
+                return;
+            }
+        }
+	}
 	
 	/**
 	 * Call when an entity take damages

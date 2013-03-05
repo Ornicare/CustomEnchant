@@ -45,20 +45,21 @@ public class PluginLoader extends JavaPlugin {
         // 2] Initialize Enchantments Classes/Instances
         pluginLogger.log(Level.INFO, "Enchantments' loading");
         
-        factory.registerEnchantment(new Direct_AdminExplosion("AdminExplosive", 0, 2));
+        factory.registerEnchantment(new DirectHit_AdminExplosion("AdminExplosive", 0, 2));
         factory.registerEnchantment(new Projectile_AdminExplosion("AdminExplosive", 1, 2));
         factory.registerEnchantment(new Projectile_BaseBowL("Base-Bow-L", 2, 1));
         factory.registerEnchantment(new Projectile_OmgWTFPop("oMg PoP", 3, 1));
         factory.registerEnchantment(new Projectile_BlocDispatcher("Blocks dispatchers", 4, 1));
         factory.registerEnchantment(new Projectile_BlockExchanger("Blocks exchanger", 5, 1));
         factory.registerEnchantment(new Projectile_Compressor("Compressor", 6, 10));
-        factory.registerEnchantment(new Direct_SpinUp("Spin up", 7, 10));
-        factory.registerEnchantment(new Direct_Starvation("Starvation", 8, 10));
+        factory.registerEnchantment(new DirectHit_SpinUp("Spin up", 7, 10));
+        factory.registerEnchantment(new DirectHit_Starvation("Starvation", 8, 10));
         factory.registerEnchantment(new Projectile_Starvation("Starvation", 9, 10));
         factory.registerEnchantment(new Projectile_Kick("Kick", 10, 10));
-        factory.registerEnchantment(new Direct_Rider("Rider", 11, 1));
+        factory.registerEnchantment(new DirectHit_Rider("Rider", 11, 1));
         factory.registerEnchantment(new Projectile_DestructFoundations("Destruct Foundations", 12, 1));
-        factory.registerEnchantment(new Armor_ShootDetector("Shoot Detector", 13, 1));
+        factory.registerEnchantment(new ArmorHit_ShootDetector("Shoot Detector", 13, 1));
+        factory.registerEnchantment(new ArmorDeath_DeathDetector("Die Detector", 14, 1));
         
         // 2] Initialize Hookers & Blabla
         pluginLogger.log(Level.INFO, "Hook's loading");

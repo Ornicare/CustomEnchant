@@ -8,6 +8,7 @@ import java.util.Map;
 import fr.enchantments.custom.model.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
 import fr.enchantments.custom.helper.EnchantmentHelper;
@@ -101,6 +102,20 @@ public class ListenerRegistrationFactory
             if ( !(actualEnchantment instanceof IArmorHitEnchantment) ) { continue; }
 
             ((IArmorHitEnchantment)actualEnchantment).onArmorHit(entityShooter, entityVictim, inflicterWeapon, processedEnchantments.get(actualEnchantment), (short)damage);
+        }
+    }
+
+    public void entityDie(EntityDeathEvent event)
+    {
+        ItemStack[] victimEquipment = event.getEntity().getEquipment().getArmorContents();
+
+        Map<IEnchantment, Short> processedEnchantments = EnchantmentHelper.getTotalArmorEnchantmentsLevels(victimEquipment, enchantmentList);
+        for ( IEnchantment actualEnchantment : enchantmentList )
+        {
+            if ( !processedEnchantments.containsKey(actualEnchantment) ) { continue; }
+            if ( !(actualEnchantment instanceof IArmorDeathEnchantment) ) { continue; }
+
+            ((IArmorDeathEnchantment)actualEnchantment).onArmorOwnerDeath(event, processedEnchantments.get(actualEnchantment));
         }
     }
     

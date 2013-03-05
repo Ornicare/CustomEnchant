@@ -7,11 +7,11 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class Armor_ShootDetector extends BaseEnchantment implements IArmorHitEnchantment
+public class ArmorHit_ShootDetector extends BaseEnchantment implements IArmorHitEnchantment
 {
 
 
-    public Armor_ShootDetector(String name, int id, int maxLevel) { super(name, (short)id, (short)maxLevel); }
+    public ArmorHit_ShootDetector(String name, int id, int maxLevel) { super(name, (short)id, (short)maxLevel); }
 
     @Override
     public void onArmorHit(LivingEntity entityInflicter, LivingEntity entityVictim, ItemStack weaponUsed, short totalEnchantmentsLevels, short damage)
