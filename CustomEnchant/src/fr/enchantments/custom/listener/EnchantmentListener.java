@@ -11,7 +11,7 @@ public class EnchantmentListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onEnchantItemEvent(EnchantItemEvent event) {
-		//TODO add conditions rahhhh !
+		//TODO add conditions
 		EnchantmentFactory.addNewEnchantments(event.getItem(),event.getEnchantsToAdd(),event.getExpLevelCost());
 	}
 
