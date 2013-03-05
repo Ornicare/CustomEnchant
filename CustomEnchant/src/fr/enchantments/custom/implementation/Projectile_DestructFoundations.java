@@ -1,15 +1,15 @@
 package fr.enchantments.custom.implementation;
 
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.FallingBlock;
+import org.bukkit.inventory.ItemStack;
+
 import fr.enchantments.custom.helper.ExplosionHelper;
 import fr.enchantments.custom.helper.ProjectileHelper;
 import fr.enchantments.custom.model.BaseEnchantment;
 import fr.enchantments.custom.model.IZoneEffectEnchantment;
-import org.bukkit.Effect;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.block.Block;
-import org.bukkit.entity.*;
-import org.bukkit.inventory.ItemStack;
 
 public class Projectile_DestructFoundations extends BaseEnchantment implements IZoneEffectEnchantment
 {

@@ -1,15 +1,16 @@
 package fr.enchantments.custom.helper;
 
-import com.comphenix.protocol.Packets;
-import com.comphenix.protocol.events.PacketContainer;
-import fr.enchantments.custom.loader.PluginLoader;
+import java.util.Random;
+
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Sound;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-import java.util.Random;
+import com.comphenix.protocol.Packets;
+import com.comphenix.protocol.events.PacketContainer;
+
+import fr.enchantments.custom.loader.PluginLoader;
 
 public class ExplosionHelper
 {
