@@ -45,7 +45,7 @@ public class PluginLoader extends JavaPlugin {
         // 2] Initialize Enchantments Classes/Instances
         pluginLogger.log(Level.INFO, "Enchantments' loading");
         
-        factory.registerEnchantment(new DirectHit_AdminExplosion("AdminExplosive", 0, 2));
+        factory.registerEnchantment(new LegalDirectHit_Explosion("AdminExplosive", 0, 2));
         factory.registerEnchantment(new Projectile_AdminExplosion("AdminExplosive", 1, 2));
         factory.registerEnchantment(new Projectile_BaseBowL("Base-Bow-L", 2, 1));
         factory.registerEnchantment(new Projectile_OmgWTFPop("oMg PoP", 3, 1));
