@@ -12,7 +12,7 @@ public class Direct_Rider extends BaseEnchantment implements IDirectHitEnchantme
     public Direct_Rider(String enchantmentName, int enchantmentID, int maxLevel) { super(enchantmentName, (short) enchantmentID, (short) maxLevel); }
 
 	@Override
-	public void onEntityHit(LivingEntity entityInflicter, LivingEntity entityVictim, ItemStack weaponUsed, short level, int damage) {
+	public void onEntityHit(LivingEntity entityInflicter, LivingEntity entityVictim, ItemStack weaponUsed, short level, short damage) {
 		if(entityInflicter.isInsideVehicle()) {
 			entityInflicter.leaveVehicle();
 		}

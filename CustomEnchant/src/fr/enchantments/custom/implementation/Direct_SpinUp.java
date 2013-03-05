@@ -16,12 +16,10 @@ import fr.enchantments.custom.model.IDirectHitEnchantment;
 public class Direct_SpinUp extends BaseEnchantment implements IDirectHitEnchantment {
 
 
-	public Direct_SpinUp(String name, int id, int maxLevel) {
-		super(name, (short) id, (short) maxLevel);
-	}
+	public Direct_SpinUp(String name, int id, int maxLevel) { super(name, (short)id, (short)maxLevel); }
 
 	@Override
-	public void onEntityHit(LivingEntity entityInflicter, LivingEntity entityVictim, ItemStack weaponUsed, short level, int damage) {
+	public void onEntityHit(LivingEntity entityInflicter, LivingEntity entityVictim, ItemStack weaponUsed, short level, short damage) {
 		entityVictim.setVelocity(entityVictim.getVelocity().add(new Vector(0,level,0)));
 	}
 

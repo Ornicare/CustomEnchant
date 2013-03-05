@@ -18,12 +18,10 @@ import org.bukkit.inventory.ItemStack;
 public class Direct_AdminExplosion extends BaseEnchantment implements IDirectHitEnchantment {
 
 
-	public Direct_AdminExplosion(String name, int id, int maxLevel) {
-		super(name, (short) id, (short) maxLevel);
-	}
+	public Direct_AdminExplosion(String name, int id, int maxLevel) { super(name, (short)id, (short)maxLevel); }
 
 	@Override
-	public void onEntityHit(LivingEntity entityInflicter, LivingEntity entityVictim, ItemStack weaponUsed, short level, int damage) {
+	public void onEntityHit(LivingEntity entityInflicter, LivingEntity entityVictim, ItemStack weaponUsed, short level, short damage) {
 		
 		ExplosionHelper.doFakeExplosion(entityVictim.getLocation(), level);
 		

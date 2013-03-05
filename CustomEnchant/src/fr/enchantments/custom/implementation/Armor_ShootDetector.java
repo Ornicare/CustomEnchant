@@ -14,9 +14,9 @@ public class Armor_ShootDetector extends BaseEnchantment implements IArmorHitEnc
     public Armor_ShootDetector(String name, int id, int maxLevel) { super(name, (short)id, (short)maxLevel); }
 
     @Override
-    public void onArmorHit(LivingEntity entityInflicter, LivingEntity entityVictim, ItemStack armorHit, ItemStack weaponUsed, short level, int damage)
+    public void onArmorHit(LivingEntity entityInflicter, LivingEntity entityVictim, ItemStack weaponUsed, short totalEnchantmentsLevels, short damage)
     {
         if ( !(entityVictim instanceof Player) ) { return; }
-        ((Player) entityVictim).sendMessage(ChatColor.RED + "Tu t'es fait shooter par " + entityInflicter.toString());
+        ((Player) entityVictim).sendMessage(ChatColor.RED + "Tu t'es fait shooter par " + entityInflicter.toString() + " / Niveau : " + totalEnchantmentsLevels);
     }
 }

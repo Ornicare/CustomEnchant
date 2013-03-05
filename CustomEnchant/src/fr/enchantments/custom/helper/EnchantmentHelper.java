@@ -1,8 +1,10 @@
 package fr.enchantments.custom.helper;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import fr.enchantments.custom.model.IArmorHitEnchantment;
 import me.dpohvar.powernbt.nbt.NBTContainerItem;
 import me.dpohvar.powernbt.nbt.NBTTagCompound;
 import me.dpohvar.powernbt.nbt.NBTTagList;
@@ -18,7 +20,8 @@ import fr.enchantments.custom.model.IEnchantment;
  * This class is a bridge between raw enchantments class and <code>ItemStack</code>(s).
  * It stores the enchantmentID(s) & enchantmentLevel(s) in the <code>ItemStack</code>'s NBT storage.
  */
-public abstract class EnchantmentHelper {
+public abstract class EnchantmentHelper
+{
 	
 	/**
 	 * Check if <code>ItemStack</code> have at least one new enchant.
@@ -232,6 +235,27 @@ public abstract class EnchantmentHelper {
     	
 		container.getTag().set("display",display);
     }
-	
+
+    public static Map<IEnchantment, Short> getTotalArmorEnchantmentsLevels(ItemStack[] playerArmor, List<IEnchantment> enchantmentList)
+    {
+        Map<IEnchantment, Short> finalLevels = new HashMap<IEnchantment, Short>();
+
+        for ( IEnchantment actualEnchantment : enchantmentList )
+        {
+            short totalEnchantmentLevels = 0;
+
+            for ( ItemStack actualArmorPart : playerArmor )
+            {
+                Map<Short, Short> actualPartEnchantments = EnchantmentHelper.getCustomEnchantmentList(actualArmorPart);
+
+                if ( !actualPartEnchantments.containsKey(actualEnchantment.getId()) ) { continue; }
+                totalEnchantmentLevels += actualPartEnchantments.get(actualEnchantment.getId());
+            }
+
+            if ( totalEnchantmentLevels != 0 ) { finalLevels.put(actualEnchantment, totalEnchantmentLevels); }
+        }
+
+        return finalLevels;
+    }
 	
 }

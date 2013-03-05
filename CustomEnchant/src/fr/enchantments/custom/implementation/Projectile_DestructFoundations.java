@@ -4,7 +4,9 @@ import fr.enchantments.custom.helper.ExplosionHelper;
 import fr.enchantments.custom.helper.ProjectileHelper;
 import fr.enchantments.custom.model.BaseEnchantment;
 import fr.enchantments.custom.model.IZoneEffectEnchantment;
+import org.bukkit.Effect;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
@@ -34,8 +36,8 @@ public class Projectile_DestructFoundations extends BaseEnchantment implements I
 
                     if ( Math.sqrt(X*X + Y*Y + Z*Z) > level ) { continue; }
                     Block lolBlock = blockHit.getWorld().getBlockAt((int)finalX, (int)finalY, (int)finalZ);
-
-                    if ( lolBlock.getTypeId() == 0 || /*lolBlock.isLiquid() ||*/ lolBlock.getTypeId() == 7 ) { continue; }
+                    // || lolBlock.isLiquid()
+                    if ( lolBlock.getTypeId() == 0 || lolBlock.getTypeId() == 7 ) { continue; }
 
                     FallingBlock fallingBlock = lolBlock.getWorld().spawnFallingBlock(lolBlock.getLocation(), lolBlock.getType(), lolBlock.getData());
                     fallingBlock.setDropItem(false);
@@ -46,6 +48,8 @@ public class Projectile_DestructFoundations extends BaseEnchantment implements I
         }
 
         ExplosionHelper.doFakeExplosion(blockHit.getLocation(), 200);
+        // blockHit.getWorld().playSound(blockHit.getLocation(), Sound.ENDERMAN_TELEPORT, level * 4, 1);
+        // ExplosionHelper.doSmoke(blockHit.getLocation(), level * 4 / 3);
     }
 
 }

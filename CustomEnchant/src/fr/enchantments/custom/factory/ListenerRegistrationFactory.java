@@ -1,6 +1,7 @@
 package fr.enchantments.custom.factory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -86,29 +87,20 @@ public class ListenerRegistrationFactory
                 if ( !inflicterEnchantments.containsKey(actualEnchantment.getId()) ) { continue; }
 
                 // 3] AND THEN...I.. no no, this time i'm not gonna draw a super-lazor of the death.
-                ((IDirectHitEnchantment)actualEnchantment).onEntityHit(entityShooter, entityVictim, inflicterWeapon, inflicterEnchantments.get(actualEnchantment.getId()), damage);
+                ((IDirectHitEnchantment)actualEnchantment).onEntityHit(entityShooter, entityVictim, inflicterWeapon, inflicterEnchantments.get(actualEnchantment.getId()), (short)damage);
                 break;
             }
         }
 
         ItemStack[] victimEquipment = entityVictim.getEquipment().getArmorContents();
-        for ( ItemStack actualArmorPart : victimEquipment )
+
+        Map<IEnchantment, Short> processedEnchantments = EnchantmentHelper.getTotalArmorEnchantmentsLevels(victimEquipment, enchantmentList);
+        for ( IEnchantment actualEnchantment : enchantmentList )
         {
-            Map<Short,Short> actualArmorPartEnchantments = EnchantmentHelper.getCustomEnchantmentList(actualArmorPart);
-            if ( actualArmorPartEnchantments.isEmpty() ) { continue; }
+            if ( !processedEnchantments.containsKey(actualEnchantment) ) { continue; }
+            if ( !(actualEnchantment instanceof IArmorHitEnchantment) ) { continue; }
 
-            for ( IEnchantment actualEnchantment : enchantmentList )
-            {
-                // 1] Skip if the enchantment does not implements the correct interface
-                if ( !(actualEnchantment instanceof IArmorHitEnchantment) ) { continue; }
-
-                // 2] If bla bla
-                if ( !actualArmorPartEnchantments.containsKey(actualEnchantment.getId()) ) { continue; }
-
-                // 3] AND THEN...I.. no no, this time i'm not gonna draw a super-lazor of the death.
-                ((IArmorHitEnchantment)actualEnchantment).onArmorHit(entityShooter, entityVictim, actualArmorPart, inflicterWeapon, actualArmorPartEnchantments.get(actualEnchantment.getId()), damage);
-                break;
-            }
+            ((IArmorHitEnchantment)actualEnchantment).onArmorHit(entityShooter, entityVictim, inflicterWeapon, processedEnchantments.get(actualEnchantment), (short)damage);
         }
     }
     
