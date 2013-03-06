@@ -97,6 +97,7 @@ public class ActionListener implements Listener{
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onEntityDie(EntityDeathEvent event)
     {
+		
         ItemStack[] armorContents = event.getEntity().getEquipment().getArmorContents();
         for ( ItemStack actualArmorPart : armorContents )
         {
