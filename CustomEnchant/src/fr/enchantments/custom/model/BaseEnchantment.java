@@ -40,6 +40,11 @@ public abstract class BaseEnchantment implements IEnchantment{
 	 */
 	private short maxLevel;
 	
+	/**
+	 * Enchantment weight
+	 */
+	private int weight;
+	
 	public List<Material> getAuthorizedItems() {
 		return authorizedItems;
 	}
@@ -62,6 +67,10 @@ public abstract class BaseEnchantment implements IEnchantment{
 		//TODO return a level using the cost
 		return MathHelper.randomize(maxLevel);
 	}
+	
+	public int getWeight() {
+		return weight;
+	}
 
 	public short getId() {
 		return id;
@@ -79,6 +88,14 @@ public abstract class BaseEnchantment implements IEnchantment{
 		this.name = name;
 		this.id = id;
 		this.maxLevel = maxLevel;
+		this.weight = 10;
+	}
+	
+	public BaseEnchantment(String name, short id, short maxLevel, int weight) {
+		this.name = name;
+		this.id = id;
+		this.maxLevel = maxLevel;
+		this.weight = weight;
 	}
 
 
