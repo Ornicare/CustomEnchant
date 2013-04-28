@@ -1,15 +1,15 @@
 package fr.enchantments.custom.commands;
 
+import fr.enchantments.custom.helper.EnchantmentHelper;
+import fr.enchantments.custom.helper.GlowingHelper;
+import fr.enchantments.custom.loader.PluginLoader;
+import fr.enchantments.custom.model.IEnchantment;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-
-import fr.enchantments.custom.helper.EnchantmentHelper;
-import fr.enchantments.custom.loader.PluginLoader;
-import fr.enchantments.custom.model.IEnchantment;
 
 public class AddEnchantCommand implements CommandExecutor
 {
@@ -36,6 +36,9 @@ public class AddEnchantCommand implements CommandExecutor
                     	else {
                     		EnchantmentHelper.addCustomEnchant(handledItemStack, enchantment, 30);
                     	}
+
+                        GlowingHelper.addGlowingEffect(handledItemStack);
+
                     	commandSender.sendMessage(ChatColor.RED + "Enchantement ajouté !");
                 	}
                 	else {commandSender.sendMessage(ChatColor.RED + "Enchantement non trouvé !");}
