@@ -147,7 +147,7 @@ public class ListenerRegistrationFactory
 
 	public void stopRegistration() {
 		acceptRegistration = false;
-		enchantmentList = enchantmentMap.keySet();
+		//enchantmentList = enchantmentMap.keySet();
 	}
 
 	public RandomizerMap getEnchantmentMap() {
