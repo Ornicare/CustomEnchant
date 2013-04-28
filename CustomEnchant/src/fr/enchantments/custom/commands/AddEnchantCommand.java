@@ -33,7 +33,7 @@ public class AddEnchantCommand implements CommandExecutor
                 		if(args.length>1) {
                     		EnchantmentHelper.addCustomEnchantWithLevel(handledItemStack, enchantment, Short.parseShort(args[1]));
                     	}
-                    	else {
+                    	else { 
                     		EnchantmentHelper.addCustomEnchant(handledItemStack, enchantment, 30);
                     	}
 
