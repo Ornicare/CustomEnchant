@@ -1,6 +1,7 @@
 package fr.enchantments.custom.factory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
 import fr.enchantments.custom.helper.EnchantmentHelper;
+import fr.enchantments.custom.helper.RandomizerMap;
 
 /**
  * That awesome class collects :
@@ -28,14 +30,20 @@ public class ListenerRegistrationFactory
     //public static void initializeListenerFactory() { listenerFactory = new ListenerRegistrationFactory(); }
 
     private List<IEnchantment> enchantmentList = new ArrayList<IEnchantment>();
+    private RandomizerMap enchantmentMap = new RandomizerMap();
+    
 
+    private boolean acceptRegistration = true;
+    
     /**
      * Register The Enchantment In The Storage DataBase... and then... NOTHING ! MWAHAHAHAHA !
      *
      * @param enchantmentToRegister : The Enchantment To Register In The DataBase
      */
     //TODO vérifier que l'id n'est pas déjà pris
-    public void registerEnchantment(BaseEnchantment enchantmentToRegister) { enchantmentList.add(enchantmentToRegister); }
+    public void registerEnchantment(BaseEnchantment enchantmentToRegister) {
+    	if(acceptRegistration) enchantmentMap.push(enchantmentToRegister.getWeight(), enchantmentToRegister);
+    }
 
     /**
      * Enchantment Factory : Send the zone event to all required & registered enchantments ! =D
@@ -127,5 +135,10 @@ public class ListenerRegistrationFactory
         }
     	return null;
     }
+
+	public void stopRegistration() {
+		acceptRegistration = false;
+		enchantmentList = enchantmentMap.keySet();
+	}
 
 }

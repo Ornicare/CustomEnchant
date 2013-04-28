@@ -72,6 +72,8 @@ public class PluginLoader extends JavaPlugin {
         factory.registerEnchantment(new Projectile_OmgWTFPopRebond("Explosive rebond", 23, 2));
         factory.registerEnchantment(new Projectile_BlowMobs("Blow", 24, 2));
         
+        factory.stopRegistration();
+        
         // 2] Initialize Hookers & Blabla
         pluginLogger.log(Level.INFO, "Hook's loading");
         this.getServer().getPluginManager().registerEvents(new ActionListener(this), this);
