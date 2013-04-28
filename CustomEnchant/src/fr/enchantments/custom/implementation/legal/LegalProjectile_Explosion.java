@@ -1,4 +1,4 @@
-package fr.enchantments.custom.implementation;
+package fr.enchantments.custom.implementation.legal;
 
 import java.util.Map;
 import java.util.Set;
@@ -15,6 +15,7 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.inventory.ItemStack;
 
 import fr.enchantments.custom.helper.ExplosionHelper;
+import fr.enchantments.custom.model.BaseEnchantment;
 import fr.enchantments.custom.model.IZoneEffectEnchantment;
 import fr.enchantments.custom.storage.Storage;
 
@@ -24,8 +25,9 @@ import fr.enchantments.custom.storage.Storage;
  * @author Ornicare
  *
  */
-public class LegalProjectile_Explosion extends LegalDirectHit_Explosion implements IZoneEffectEnchantment{
-
+//public class LegalProjectile_Explosion extends LegalDirectHit_Explosion implements IZoneEffectEnchantment{
+public class LegalProjectile_Explosion extends BaseEnchantment implements IZoneEffectEnchantment{
+	
     /**
      *
      * @param enchantmentName The name of the enchantment
@@ -36,7 +38,7 @@ public class LegalProjectile_Explosion extends LegalDirectHit_Explosion implemen
 		super(enchantmentName, (short) enchantmentID, (short) maxLevel, weight, isLegit);
 		
 		//Add authorized items
-		addAuthorizedItems(Item.BOW.id);
+		addAuthorizedItems(bow);
 	}
 
     /**

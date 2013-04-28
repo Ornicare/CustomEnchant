@@ -2,6 +2,8 @@ package fr.enchantments.custom.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.server.v1_4_R1.Item;
+
 import org.bukkit.Material;
 
 import fr.enchantments.custom.helper.MathHelper;
@@ -66,6 +68,12 @@ public abstract class BaseEnchantment implements IEnchantment{
 	public short getMaxLevel() {
 		return maxLevel;
 	}
+	
+	protected int[] bow = {Item.BOW.id};
+	protected int[] swords = {Item.WOOD_SWORD.id,Item.STONE_SWORD.id,Item.IRON_SWORD.id,Item.DIAMOND_SWORD.id,Item.GOLD_SWORD.id};
+	protected int[] axes = {Item.WOOD_AXE.id,Item.STONE_AXE.id,Item.IRON_AXE.id,Item.DIAMOND_AXE.id,Item.GOLD_AXE.id};
+	protected int[] pickaxes = {Item.WOOD_PICKAXE.id,Item.STONE_PICKAXE.id,Item.IRON_PICKAXE.id,Item.DIAMOND_PICKAXE.id,Item.GOLD_PICKAXE.id};
+	
 
 	/**
 	 * Get a level to this enchantment

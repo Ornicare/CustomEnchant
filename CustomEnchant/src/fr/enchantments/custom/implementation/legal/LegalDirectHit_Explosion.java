@@ -1,5 +1,7 @@
-package fr.enchantments.custom.implementation;
+package fr.enchantments.custom.implementation.legal;
 import fr.enchantments.custom.model.BaseEnchantment;
+import net.minecraft.server.v1_4_R1.Item;
+
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 
@@ -20,6 +22,11 @@ public class LegalDirectHit_Explosion extends BaseEnchantment implements IDirect
 
 	public LegalDirectHit_Explosion(String name, int id, int maxLevel,int weight, boolean isLegit) {
 		super(name, (short)id, (short)maxLevel, weight, isLegit);
+		
+		//Add authorized items
+		addAuthorizedItems(swords);
+		addAuthorizedItems(pickaxes);
+		addAuthorizedItems(axes);
 		}
 
 	@Override

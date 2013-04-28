@@ -4,6 +4,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import fr.enchantments.custom.implementation.*;
+import fr.enchantments.custom.implementation.legal.LegalDirectHit_Explosion;
+import fr.enchantments.custom.implementation.legal.LegalDirectHit_Poison;
+import fr.enchantments.custom.implementation.legal.LegalProjectile_Explosion;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -47,7 +50,12 @@ public class PluginLoader extends JavaPlugin {
         // 2] Initialize Enchantments Classes/Instances
         pluginLogger.log(Level.INFO, "Enchantments' loading");
         
+        //Legal
         factory.registerEnchantment(new LegalDirectHit_Explosion("Explosive", 0, 4,10,true));
+        factory.registerEnchantment(new LegalProjectile_Explosion("Explosion", 15, 2,10,true));
+        factory.registerEnchantment(new LegalDirectHit_Poison("Poison", 25, 5,100,true));
+        
+        //Admin
         factory.registerEnchantment(new Projectile_AdminExplosion("AdminExplosive", 1, 2));
         factory.registerEnchantment(new Projectile_BaseBowL("Base-Bow-L", 2, 1));
         factory.registerEnchantment(new Projectile_OmgWTFPop("oMg PoP", 3, 1));
@@ -62,7 +70,7 @@ public class PluginLoader extends JavaPlugin {
         factory.registerEnchantment(new Projectile_DestructFoundations("Destruct Foundations", 12, 1));
         factory.registerEnchantment(new ArmorHit_ShootDetector("Shoot Detector", 13, 1));
         factory.registerEnchantment(new ArmorDeath_DeathDetector("Die Detector", 14, 1));
-        factory.registerEnchantment(new LegalProjectile_Explosion("Explosion", 15, 2,10,true));
+
         factory.registerEnchantment(new Projectile_FreezingExplosion("Freezing explosion", 16, 2));
         factory.registerEnchantment(new Projectile_FreezingShard("Freezing shard", 17, 2));
         factory.registerEnchantment(new Projectile_FreezingArc("Freezing arc", 18, 2));
