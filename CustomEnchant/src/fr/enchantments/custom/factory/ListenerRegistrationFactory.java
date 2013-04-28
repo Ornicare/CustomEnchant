@@ -7,6 +7,7 @@ import java.util.Map;
 
 import fr.enchantments.custom.loader.PluginLoader;
 import fr.enchantments.custom.model.*;
+
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -25,8 +26,12 @@ import fr.enchantments.custom.helper.RandomizerMap;
 public class ListenerRegistrationFactory
 {
 
-    //public static ListenerRegistrationFactory listenerFactory;
-    public ListenerRegistrationFactory() { }
+    private EnchantmentFactory enchantmentFactory;
+
+	//public static ListenerRegistrationFactory listenerFactory;
+    public ListenerRegistrationFactory() {
+    	this.enchantmentFactory = new EnchantmentFactory(this);
+    }
     //public static void initializeListenerFactory() { listenerFactory = new ListenerRegistrationFactory(); }
 
     private List<IEnchantment> enchantmentList = new ArrayList<IEnchantment>();
@@ -42,7 +47,11 @@ public class ListenerRegistrationFactory
      */
     //TODO vérifier que l'id n'est pas déjà pris
     public void registerEnchantment(BaseEnchantment enchantmentToRegister) {
-    	if(acceptRegistration) enchantmentMap.push(enchantmentToRegister.getWeight(), enchantmentToRegister);
+    	if(acceptRegistration) {
+    		//Add only the legit enchant to the naturally used list.
+    		if(enchantmentToRegister.isLegit()) enchantmentMap.push(enchantmentToRegister.getWeight(), enchantmentToRegister);
+    		enchantmentList.add(enchantmentToRegister);
+    	}
     }
 
     /**
@@ -139,6 +148,18 @@ public class ListenerRegistrationFactory
 	public void stopRegistration() {
 		acceptRegistration = false;
 		enchantmentList = enchantmentMap.keySet();
+	}
+
+	public RandomizerMap getEnchantmentMap() {
+		return enchantmentMap;
+	}
+
+	public EnchantmentFactory getEnchantmentFactory() {
+		return enchantmentFactory;
+	}
+
+	public List<IEnchantment> getEnchantmentList() {
+		return enchantmentList;
 	}
 
 }

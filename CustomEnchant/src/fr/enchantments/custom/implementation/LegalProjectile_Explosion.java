@@ -3,6 +3,8 @@ package fr.enchantments.custom.implementation;
 import java.util.Map;
 import java.util.Set;
 
+import net.minecraft.server.v1_4_R1.Item;
+import net.minecraft.server.v1_4_R1.Material;
 import net.minecraft.server.v1_4_R1.MathHelper;
 import net.minecraft.server.v1_4_R1.NBTTagCompound;
 
@@ -30,8 +32,11 @@ public class LegalProjectile_Explosion extends LegalDirectHit_Explosion implemen
      * @param enchantmentID The ID of the enchantment
      * @param maxLevel The maximum level of the enchantment
      */
-	public LegalProjectile_Explosion(String enchantmentName, int enchantmentID, int maxLevel) {
-		super(enchantmentName, (short) enchantmentID, (short) maxLevel);
+	public LegalProjectile_Explosion(String enchantmentName, int enchantmentID, int maxLevel, int weight, boolean isLegit) {
+		super(enchantmentName, (short) enchantmentID, (short) maxLevel, weight, isLegit);
+		
+		//Add authorized items
+		addAuthorizedItems(Item.BOW.id);
 	}
 
     /**

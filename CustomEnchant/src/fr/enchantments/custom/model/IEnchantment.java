@@ -6,7 +6,7 @@ import org.bukkit.Material;
 
 public interface IEnchantment {
 
-	public List<Material> getAuthorizedItems();
+	public List<Integer> getAuthorizedItems();
 
 	public short getId();
 
@@ -15,5 +15,11 @@ public interface IEnchantment {
 	public short getLevel(int cost);
 	
 	public List<IEnchantment> getIncompatibleCombination();
+	
+	public boolean isLegit();
+	
+	public int getWeight();
+
+	public short getMaxLevel();
 	
 }

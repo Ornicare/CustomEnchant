@@ -18,7 +18,7 @@ public abstract class BaseEnchantment implements IEnchantment{
 	/**
 	 * List of materials who can accept this enchant
 	 */
-	private List<Material> authorizedItems = new ArrayList<Material>();
+	private List<Integer> authorizedItems = new ArrayList<Integer>();
 	
 	/**
 	 * The list of enchantments which cannot be found with this
@@ -45,17 +45,26 @@ public abstract class BaseEnchantment implements IEnchantment{
 	 */
 	private int weight;
 	
-	public List<Material> getAuthorizedItems() {
+	/**
+	 * naturally obtainable enchant ?
+	 */
+	private boolean isLegit;
+	
+	public List<Integer> getAuthorizedItems() {
 		return authorizedItems;
 	}
 	
 	/**
 	 * Add new material to materials who can accept this enchant
 	 * 
-	 * @param authorizedItems material to add
+	 * @param id2 material to add
 	 */
-	public void addAuthorizedItems(Material... authorizedItems) {
-		for(Material m : authorizedItems) this.authorizedItems.add(m);
+	public void addAuthorizedItems(int... id2) {
+		for(int m : id2) this.authorizedItems.add(m);
+	}
+	
+	public short getMaxLevel() {
+		return maxLevel;
 	}
 
 	/**
@@ -64,6 +73,7 @@ public abstract class BaseEnchantment implements IEnchantment{
 	 * @return An integer between 1 and <code>maxLevel</code>
 	 */
 	public short getLevel(int cost) {
+		
 		//TODO return a level using the cost
 		return MathHelper.randomize(maxLevel);
 	}
@@ -89,13 +99,19 @@ public abstract class BaseEnchantment implements IEnchantment{
 		this.id = id;
 		this.maxLevel = maxLevel;
 		this.weight = 10;
+		this.isLegit = false;
 	}
 	
-	public BaseEnchantment(String name, short id, short maxLevel, int weight) {
+	public BaseEnchantment(String name, short id, short maxLevel, int weight, boolean isLegit) {
 		this.name = name;
 		this.id = id;
 		this.maxLevel = maxLevel;
 		this.weight = weight;
+		this.isLegit = isLegit;
+	}
+
+	public boolean isLegit() {
+		return isLegit;
 	}
 
 

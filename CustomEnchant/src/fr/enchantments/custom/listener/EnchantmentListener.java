@@ -9,10 +9,15 @@ import fr.enchantments.custom.factory.EnchantmentFactory;
 
 public class EnchantmentListener implements Listener {
 	
+	private EnchantmentFactory enchantmentFactory;
+
+	public EnchantmentListener(EnchantmentFactory enchantmentFactory) {
+		this.enchantmentFactory = enchantmentFactory;
+	}
+
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onEnchantItemEvent(EnchantItemEvent event) {
-		//TODO add conditions
-		EnchantmentFactory.addNewEnchantments(event.getItem(),event.getEnchantsToAdd(),event.getExpLevelCost());
+		enchantmentFactory.addNewEnchantments(event.getItem(),event.getEnchantsToAdd(),event.getExpLevelCost());
 	}
 
 }

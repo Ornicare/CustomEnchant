@@ -18,7 +18,9 @@ import org.bukkit.inventory.ItemStack;
 public class LegalDirectHit_Explosion extends BaseEnchantment implements IDirectHitEnchantment {
 
 
-	public LegalDirectHit_Explosion(String name, int id, int maxLevel) { super(name, (short)id, (short)maxLevel); }
+	public LegalDirectHit_Explosion(String name, int id, int maxLevel,int weight, boolean isLegit) {
+		super(name, (short)id, (short)maxLevel, weight, isLegit);
+		}
 
 	@Override
 	public void onEntityHit(LivingEntity entityInflicter, LivingEntity entityVictim, ItemStack weaponUsed, short level, short damage) {

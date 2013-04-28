@@ -14,6 +14,7 @@ import com.comphenix.protocol.ProtocolManager;
 import fr.enchantments.custom.commands.AddEnchantCommand;
 import fr.enchantments.custom.factory.ListenerRegistrationFactory;
 import fr.enchantments.custom.listener.ActionListener;
+import fr.enchantments.custom.listener.EnchantmentListener;
 
 public class PluginLoader extends JavaPlugin {
 
@@ -46,7 +47,7 @@ public class PluginLoader extends JavaPlugin {
         // 2] Initialize Enchantments Classes/Instances
         pluginLogger.log(Level.INFO, "Enchantments' loading");
         
-        factory.registerEnchantment(new LegalDirectHit_Explosion("Explosive", 0, 2));
+        factory.registerEnchantment(new LegalDirectHit_Explosion("Explosive", 0, 4,10,true));
         factory.registerEnchantment(new Projectile_AdminExplosion("AdminExplosive", 1, 2));
         factory.registerEnchantment(new Projectile_BaseBowL("Base-Bow-L", 2, 1));
         factory.registerEnchantment(new Projectile_OmgWTFPop("oMg PoP", 3, 1));
@@ -61,7 +62,7 @@ public class PluginLoader extends JavaPlugin {
         factory.registerEnchantment(new Projectile_DestructFoundations("Destruct Foundations", 12, 1));
         factory.registerEnchantment(new ArmorHit_ShootDetector("Shoot Detector", 13, 1));
         factory.registerEnchantment(new ArmorDeath_DeathDetector("Die Detector", 14, 1));
-        factory.registerEnchantment(new LegalProjectile_Explosion("Explosion", 15, 2));
+        factory.registerEnchantment(new LegalProjectile_Explosion("Explosion", 15, 2,10,true));
         factory.registerEnchantment(new Projectile_FreezingExplosion("Freezing explosion", 16, 2));
         factory.registerEnchantment(new Projectile_FreezingShard("Freezing shard", 17, 2));
         factory.registerEnchantment(new Projectile_FreezingArc("Freezing arc", 18, 2));
@@ -72,11 +73,13 @@ public class PluginLoader extends JavaPlugin {
         factory.registerEnchantment(new Projectile_OmgWTFPopRebond("Explosive rebond", 23, 2));
         factory.registerEnchantment(new Projectile_BlowMobs("Blow", 24, 2));
         
+        //Stop the registration
         factory.stopRegistration();
         
         // 2] Initialize Hookers & Blabla
         pluginLogger.log(Level.INFO, "Hook's loading");
         this.getServer().getPluginManager().registerEvents(new ActionListener(this), this);
+        this.getServer().getPluginManager().registerEvents(new EnchantmentListener(factory.getEnchantmentFactory()), this);
 
         //Register debug commands
         pluginLogger.log(Level.INFO, "Commands' registration");
