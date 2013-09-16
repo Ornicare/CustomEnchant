@@ -12,6 +12,7 @@ import me.dpohvar.powernbt.nbt.NBTTagCompound;
 import me.dpohvar.powernbt.nbt.NBTTagList;
 import me.dpohvar.powernbt.nbt.NBTTagShort;
 import me.dpohvar.powernbt.nbt.NBTTagString;
+import net.minecraft.server.v1_6_R2.Item;
 
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
@@ -25,6 +26,14 @@ import fr.enchantments.custom.model.IEnchantment;
  */
 public abstract class EnchantmentHelper
 {
+	
+	private static int[] bow = {Item.BOW.id};
+	private static int[] swords = {Item.WOOD_SWORD.id,Item.STONE_SWORD.id,Item.IRON_SWORD.id,Item.DIAMOND_SWORD.id,Item.GOLD_SWORD.id};
+	private static int[] axes = {Item.WOOD_AXE.id,Item.STONE_AXE.id,Item.IRON_AXE.id,Item.DIAMOND_AXE.id,Item.GOLD_AXE.id};
+	private static int[] pickaxes = {Item.WOOD_PICKAXE.id,Item.STONE_PICKAXE.id,Item.IRON_PICKAXE.id,Item.DIAMOND_PICKAXE.id,Item.GOLD_PICKAXE.id};
+	
+	//TODO snowballs ! arrows !
+	private static int[][] enchantableItems = {bow,swords,axes,pickaxes};
 	
 	/**
 	 * Check if <code>ItemStack</code> have at least one new enchant.
@@ -52,7 +61,19 @@ public abstract class EnchantmentHelper
 		//If it doesn't have a tag, return
 		//TODO error in case of mob damage player &&  workexplosion doesn't
 		NBTContainerItem container = new NBTContainerItem(item);
-				
+			
+		//TODO euh... on verra
+		int itemId = item.getTypeId();
+		
+		boolean isEnch = false;
+		for(int[] list : enchantableItems) {
+			for(int id : list) {
+				if(id==itemId) isEnch = true;
+			}
+		}
+		
+		if(!isEnch) return customEnchant;
+		
 		try {
 			if(container.getTag()==null) return customEnchant;
 		}
