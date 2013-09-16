@@ -174,7 +174,7 @@ public class ActionListener implements Listener{
         // 4] Verify Enchantment
         if ( weaponUsed != null && EnchantmentHelper.haveCustomEnchant(weaponUsed) )
         {
-            plugin.getFactory().entityHit(entityInflicter, entityVictim, event.getDamage());
+            plugin.getFactory().entityHit(entityInflicter, entityVictim, (int)event.getDamage());
         }
         else
         {
@@ -183,7 +183,7 @@ public class ActionListener implements Listener{
             {
                 if ( EnchantmentHelper.haveCustomEnchant(actualArmorPart))
                 {
-                    plugin.getFactory().entityHit(entityInflicter, entityVictim, event.getDamage());
+                    plugin.getFactory().entityHit(entityInflicter, entityVictim, (int)event.getDamage());
                     return;
                 }
             }

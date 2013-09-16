@@ -1,3 +1,8 @@
+Rendre une des dÃ©pendances (protocollib) optionnelle
+
+rÃ©ecrire les breaks
+
+
 
 infiltrator arrow
 slow arrow
@@ -9,11 +14,11 @@ si explosif :
  et vis versa.
  
  
-explosion n'abipmant aps le terrain pour les flèches
+explosion n'abipmant aps le terrain pour les flï¿½ches
 
 
 
-Enchantement => 2 attributs permettant de défirnir une gausienne => répartition levels.
+Enchantement => 2 attributs permettant de dï¿½firnir une gausienne => rï¿½partition levels.
 
 
 
@@ -24,4 +29,4 @@ le public dans le pluginlaoder... static
 reload ?
 
 
-id rentrés à la main : ne pas le tester (si existe déjà)
+id rentrï¿½s ï¿½ la main : ne pas le tester (si existe dï¿½jï¿½

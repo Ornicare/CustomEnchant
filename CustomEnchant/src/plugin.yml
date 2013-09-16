@@ -1,7 +1,7 @@
 depend: [ProtocolLib,PowerNBT]
 name: CustomEnchant
 main: fr.enchantments.custom.loader.PluginLoader
-version: 1.4.7
+version: 1.6.2
 commands:
    setitemname:
       description: Ceci est une commande demonstration.

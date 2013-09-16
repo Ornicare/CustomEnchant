@@ -3,6 +3,7 @@ package fr.enchantments.custom.helper;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 import me.dpohvar.powernbt.nbt.NBTContainerItem;
 import me.dpohvar.powernbt.nbt.NBTTagCompound;
@@ -13,6 +14,7 @@ import me.dpohvar.powernbt.nbt.NBTTagString;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
+import fr.enchantments.custom.loader.PluginLoader;
 import fr.enchantments.custom.model.IEnchantment;
 
 /**
@@ -48,6 +50,9 @@ public abstract class EnchantmentHelper
 		//If it doesn't have a tag, return
 		//TODO error in case of mob damage player &&  workexplosion doesn't
 		NBTContainerItem container = new NBTContainerItem(item);
+		
+		PluginLoader.pluginLoader.getLogger().log(Level.INFO, container.getTag()==null?"null":container.getTag().toString());
+		
 		try {
 			if(container.getTag()==null) return customEnchant;
 		}

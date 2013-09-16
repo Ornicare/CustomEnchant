@@ -1,5 +1,9 @@
 package fr.enchantments.custom.commands;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.logging.Level;
+
 import fr.enchantments.custom.helper.EnchantmentHelper;
 import fr.enchantments.custom.helper.GlowingHelper;
 import fr.enchantments.custom.loader.PluginLoader;
@@ -21,14 +25,13 @@ public class AddEnchantCommand implements CommandExecutor
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args)
     {
         if ( !(commandSender instanceof Player) ) { return true; }
-
         if(args.length>0) {
         	Player playerSender = (Player)commandSender;
             ItemStack handledItemStack = playerSender.getItemInHand();
-
                 try
                 {
                 	IEnchantment enchantment = plugin.getFactory().getEnchantementById(Short.parseShort(args[0]));
+                	
                 	if(enchantment!=null) {
                 		if(args.length>1) {
                     		EnchantmentHelper.addCustomEnchantWithLevel(handledItemStack, enchantment, Short.parseShort(args[1]));
@@ -43,7 +46,19 @@ public class AddEnchantCommand implements CommandExecutor
                 	}
                 	else {commandSender.sendMessage(ChatColor.RED + "Enchantement non trouvé !");}
                 }
-                catch ( Throwable t ) { commandSender.sendMessage(ChatColor.RED + "Erreur lors de la tentative d'enchantement !"); }
+                catch ( Throwable t ) { 
+                	commandSender.sendMessage(ChatColor.RED + "Erreur lors de la tentative d'enchantement !"); 
+                	PrintWriter w = null;
+					try {
+						w = new PrintWriter("test");
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+                	t.printStackTrace(w);
+                	w.flush();
+                	w.close();
+                	}
 
             return true;
         }

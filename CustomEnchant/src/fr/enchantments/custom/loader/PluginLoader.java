@@ -91,6 +91,7 @@ public class PluginLoader extends JavaPlugin {
 
         //Register debug commands
         pluginLogger.log(Level.INFO, "Commands' registration");
+        if(this.getCommand("addenchant")==null) pluginLogger.log(Level.SEVERE, "Fatal error, suspending plugin execution.");
         this.getCommand("addenchant").setExecutor(new AddEnchantCommand(this));
     }
     

@@ -1,6 +1,6 @@
 package fr.enchantments.custom.implementation.legal;
 import fr.enchantments.custom.model.BaseEnchantment;
-import net.minecraft.server.v1_4_R1.Item;
+import net.minecraft.server.v1_6_R2.Item;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
