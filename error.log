@@ -1,0 +1,156 @@
+System.ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Windows.Forms.TreeNodeCollection.get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at NBTedit.MainForm.AfterSelect (System.Object sender, System.Windows.Forms.TreeViewEventArgs e) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeView.OnAfterSelect (System.Windows.Forms.TreeViewEventArgs e) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeView.set_SelectedNode (System.Windows.Forms.TreeNode value) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) System.Windows.Forms.TreeView:set_SelectedNode (System.Windows.Forms.TreeNode)
+  at System.Windows.Forms.TreeNodeCollection.RemoveAt (Int32 index, Boolean update) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeNodeCollection.Clear () [0x00000] in <filename unknown>:0 
+  at NBTedit.NBTView.Clear () [0x00000] in <filename unknown>:0 
+  at NBTedit.NBTView.Load (System.String filename) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) NBTedit.NBTView:Load (string)
+  at NBTedit.MainForm.Open (System.Object sender, System.EventArgs e) [0x00000] in <filename unknown>:0 
+System.ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Windows.Forms.TreeNodeCollection.get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at NBTedit.MainForm.AfterSelect (System.Object sender, System.Windows.Forms.TreeViewEventArgs e) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeView.OnAfterSelect (System.Windows.Forms.TreeViewEventArgs e) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeView.set_SelectedNode (System.Windows.Forms.TreeNode value) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) System.Windows.Forms.TreeView:set_SelectedNode (System.Windows.Forms.TreeNode)
+  at System.Windows.Forms.TreeNodeCollection.RemoveAt (Int32 index, Boolean update) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeNodeCollection.Clear () [0x00000] in <filename unknown>:0 
+  at NBTedit.NBTView.Clear () [0x00000] in <filename unknown>:0 
+  at NBTedit.NBTView.Load (System.String filename) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) NBTedit.NBTView:Load (string)
+  at NBTedit.MainForm.Open (System.Object sender, System.EventArgs e) [0x00000] in <filename unknown>:0 
+System.ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Windows.Forms.TreeNodeCollection.get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at NBTedit.MainForm.AfterSelect (System.Object sender, System.Windows.Forms.TreeViewEventArgs e) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeView.OnAfterSelect (System.Windows.Forms.TreeViewEventArgs e) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeView.set_SelectedNode (System.Windows.Forms.TreeNode value) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) System.Windows.Forms.TreeView:set_SelectedNode (System.Windows.Forms.TreeNode)
+  at System.Windows.Forms.TreeNodeCollection.RemoveAt (Int32 index, Boolean update) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeNodeCollection.Clear () [0x00000] in <filename unknown>:0 
+  at NBTedit.NBTView.Clear () [0x00000] in <filename unknown>:0 
+  at NBTedit.NBTView.Load (System.String filename) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) NBTedit.NBTView:Load (string)
+  at NBTedit.MainForm.Open (System.Object sender, System.EventArgs e) [0x00000] in <filename unknown>:0 
+System.ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Windows.Forms.TreeNodeCollection.get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at NBTedit.MainForm.AfterSelect (System.Object sender, System.Windows.Forms.TreeViewEventArgs e) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeView.OnAfterSelect (System.Windows.Forms.TreeViewEventArgs e) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeView.set_SelectedNode (System.Windows.Forms.TreeNode value) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) System.Windows.Forms.TreeView:set_SelectedNode (System.Windows.Forms.TreeNode)
+  at System.Windows.Forms.TreeNodeCollection.RemoveAt (Int32 index, Boolean update) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeNodeCollection.Clear () [0x00000] in <filename unknown>:0 
+  at NBTedit.NBTView.Clear () [0x00000] in <filename unknown>:0 
+  at NBTedit.NBTView.Load (System.String filename) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) NBTedit.NBTView:Load (string)
+  at NBTedit.MainForm.Open (System.Object sender, System.EventArgs e) [0x00000] in <filename unknown>:0 
+System.ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Windows.Forms.TreeNodeCollection.get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at NBTedit.MainForm.AfterSelect (System.Object sender, System.Windows.Forms.TreeViewEventArgs e) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeView.OnAfterSelect (System.Windows.Forms.TreeViewEventArgs e) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeView.set_SelectedNode (System.Windows.Forms.TreeNode value) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) System.Windows.Forms.TreeView:set_SelectedNode (System.Windows.Forms.TreeNode)
+  at System.Windows.Forms.TreeNodeCollection.RemoveAt (Int32 index, Boolean update) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeNodeCollection.Clear () [0x00000] in <filename unknown>:0 
+  at NBTedit.NBTView.Clear () [0x00000] in <filename unknown>:0 
+  at NBTedit.NBTView.Load (System.String filename) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) NBTedit.NBTView:Load (string)
+  at NBTedit.MainForm.Open (System.Object sender, System.EventArgs e) [0x00000] in <filename unknown>:0 
+System.ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Windows.Forms.TreeNodeCollection.get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at NBTedit.MainForm.AfterSelect (System.Object sender, System.Windows.Forms.TreeViewEventArgs e) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeView.OnAfterSelect (System.Windows.Forms.TreeViewEventArgs e) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeView.set_SelectedNode (System.Windows.Forms.TreeNode value) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) System.Windows.Forms.TreeView:set_SelectedNode (System.Windows.Forms.TreeNode)
+  at System.Windows.Forms.TreeNodeCollection.RemoveAt (Int32 index, Boolean update) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeNodeCollection.Clear () [0x00000] in <filename unknown>:0 
+  at NBTedit.NBTView.Clear () [0x00000] in <filename unknown>:0 
+  at NBTedit.NBTView.Load (System.String filename) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) NBTedit.NBTView:Load (string)
+  at NBTedit.MainForm.Open (System.Object sender, System.EventArgs e) [0x00000] in <filename unknown>:0 
+System.ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Windows.Forms.TreeNodeCollection.get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at NBTedit.MainForm.AfterSelect (System.Object sender, System.Windows.Forms.TreeViewEventArgs e) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeView.OnAfterSelect (System.Windows.Forms.TreeViewEventArgs e) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeView.set_SelectedNode (System.Windows.Forms.TreeNode value) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) System.Windows.Forms.TreeView:set_SelectedNode (System.Windows.Forms.TreeNode)
+  at System.Windows.Forms.TreeNodeCollection.RemoveAt (Int32 index, Boolean update) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeNodeCollection.Clear () [0x00000] in <filename unknown>:0 
+  at NBTedit.NBTView.Clear () [0x00000] in <filename unknown>:0 
+  at NBTedit.NBTView.Load (System.String filename) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) NBTedit.NBTView:Load (string)
+  at NBTedit.MainForm.Open (System.Object sender, System.EventArgs e) [0x00000] in <filename unknown>:0 
+System.ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Windows.Forms.TreeNodeCollection.get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at NBTedit.MainForm.AfterSelect (System.Object sender, System.Windows.Forms.TreeViewEventArgs e) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeView.OnAfterSelect (System.Windows.Forms.TreeViewEventArgs e) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeView.set_SelectedNode (System.Windows.Forms.TreeNode value) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) System.Windows.Forms.TreeView:set_SelectedNode (System.Windows.Forms.TreeNode)
+  at System.Windows.Forms.TreeNodeCollection.RemoveAt (Int32 index, Boolean update) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeNodeCollection.Clear () [0x00000] in <filename unknown>:0 
+  at NBTedit.NBTView.Clear () [0x00000] in <filename unknown>:0 
+  at NBTedit.NBTView.Load (System.String filename) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) NBTedit.NBTView:Load (string)
+  at NBTedit.MainForm.Open (System.Object sender, System.EventArgs e) [0x00000] in <filename unknown>:0 
+System.ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Windows.Forms.TreeNodeCollection.get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at NBTedit.MainForm.AfterSelect (System.Object sender, System.Windows.Forms.TreeViewEventArgs e) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeView.OnAfterSelect (System.Windows.Forms.TreeViewEventArgs e) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeView.set_SelectedNode (System.Windows.Forms.TreeNode value) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) System.Windows.Forms.TreeView:set_SelectedNode (System.Windows.Forms.TreeNode)
+  at System.Windows.Forms.TreeNodeCollection.RemoveAt (Int32 index, Boolean update) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeNodeCollection.Clear () [0x00000] in <filename unknown>:0 
+  at NBTedit.NBTView.Clear () [0x00000] in <filename unknown>:0 
+  at NBTedit.NBTView.Load (System.String filename) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) NBTedit.NBTView:Load (string)
+  at NBTedit.MainForm.Open (System.Object sender, System.EventArgs e) [0x00000] in <filename unknown>:0 
+System.ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Windows.Forms.TreeNodeCollection.get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at NBTedit.MainForm.AfterSelect (System.Object sender, System.Windows.Forms.TreeViewEventArgs e) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeView.OnAfterSelect (System.Windows.Forms.TreeViewEventArgs e) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeView.set_SelectedNode (System.Windows.Forms.TreeNode value) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) System.Windows.Forms.TreeView:set_SelectedNode (System.Windows.Forms.TreeNode)
+  at System.Windows.Forms.TreeNodeCollection.RemoveAt (Int32 index, Boolean update) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeNodeCollection.Clear () [0x00000] in <filename unknown>:0 
+  at NBTedit.NBTView.Clear () [0x00000] in <filename unknown>:0 
+  at NBTedit.NBTView.Load (System.String filename) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) NBTedit.NBTView:Load (string)
+  at NBTedit.MainForm.Open (System.Object sender, System.EventArgs e) [0x00000] in <filename unknown>:0 
+System.ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Windows.Forms.TreeNodeCollection.get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at NBTedit.MainForm.AfterSelect (System.Object sender, System.Windows.Forms.TreeViewEventArgs e) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeView.OnAfterSelect (System.Windows.Forms.TreeViewEventArgs e) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeView.set_SelectedNode (System.Windows.Forms.TreeNode value) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) System.Windows.Forms.TreeView:set_SelectedNode (System.Windows.Forms.TreeNode)
+  at System.Windows.Forms.TreeNodeCollection.RemoveAt (Int32 index, Boolean update) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeNodeCollection.Clear () [0x00000] in <filename unknown>:0 
+  at NBTedit.NBTView.Clear () [0x00000] in <filename unknown>:0 
+  at NBTedit.NBTView.Load (System.String filename) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) NBTedit.NBTView:Load (string)
+  at NBTedit.MainForm.Open (System.Object sender, System.EventArgs e) [0x00000] in <filename unknown>:0 
+System.ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: index
+  at System.Windows.Forms.TreeNodeCollection.get_Item (Int32 index) [0x00000] in <filename unknown>:0 
+  at NBTedit.MainForm.AfterSelect (System.Object sender, System.Windows.Forms.TreeViewEventArgs e) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeView.OnAfterSelect (System.Windows.Forms.TreeViewEventArgs e) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeView.set_SelectedNode (System.Windows.Forms.TreeNode value) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) System.Windows.Forms.TreeView:set_SelectedNode (System.Windows.Forms.TreeNode)
+  at System.Windows.Forms.TreeNodeCollection.RemoveAt (Int32 index, Boolean update) [0x00000] in <filename unknown>:0 
+  at System.Windows.Forms.TreeNodeCollection.Clear () [0x00000] in <filename unknown>:0 
+  at NBTedit.NBTView.Clear () [0x00000] in <filename unknown>:0 
+  at NBTedit.NBTView.Load (System.String filename) [0x00000] in <filename unknown>:0 
+  at (wrapper remoting-invoke-with-check) NBTedit.NBTView:Load (string)
+  at NBTedit.MainForm.Open (System.Object sender, System.EventArgs e) [0x00000] in <filename unknown>:0 

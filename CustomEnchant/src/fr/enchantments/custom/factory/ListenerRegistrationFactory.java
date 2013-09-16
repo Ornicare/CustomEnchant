@@ -45,7 +45,7 @@ public class ListenerRegistrationFactory
      *
      * @param enchantmentToRegister : The Enchantment To Register In The DataBase
      */
-    //TODO vérifier que l'id n'est pas déjà pris
+    //TODO vï¿½rifier que l'id n'est pas dï¿½jï¿½ pris
     public void registerEnchantment(BaseEnchantment enchantmentToRegister) {
     	if(acceptRegistration) {
     		//Add only the legit enchant to the naturally used list.

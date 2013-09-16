@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
+import me.dpohvar.powernbt.nbt.NBTBase;
 import me.dpohvar.powernbt.nbt.NBTContainerItem;
+import me.dpohvar.powernbt.nbt.NBTQuery;
 import me.dpohvar.powernbt.nbt.NBTTagCompound;
 import me.dpohvar.powernbt.nbt.NBTTagList;
 import me.dpohvar.powernbt.nbt.NBTTagShort;
@@ -50,9 +52,7 @@ public abstract class EnchantmentHelper
 		//If it doesn't have a tag, return
 		//TODO error in case of mob damage player &&  workexplosion doesn't
 		NBTContainerItem container = new NBTContainerItem(item);
-		
-		PluginLoader.pluginLoader.getLogger().log(Level.INFO, container.getTag()==null?"null":container.getTag().toString());
-		
+				
 		try {
 			if(container.getTag()==null) return customEnchant;
 		}
@@ -61,7 +61,8 @@ public abstract class EnchantmentHelper
 		}
 		
 		//test if it have already "customenchant" tag
-		NBTTagList existingCustomEnchant = container.getTag().getList("customenchant");
+		NBTTagList existingCustomEnchant = (NBTTagList) getCompoundFromString(container,"customenchant");
+
 		if (existingCustomEnchant == null) return customEnchant;
 
 		for (int i=0;i<existingCustomEnchant.size();i++) {
@@ -112,13 +113,17 @@ public abstract class EnchantmentHelper
 		//If it doesn't have any tag, create it.
 		if(container.getTag()==null) container.setTag(new NBTTagCompound("tag"));
 		
-		//test if it have already "customenchant" tag
-		NBTTagList existingCustomEnchant = container.getTag().getList("customenchant");
+		//test if it have already "customenchant" tag TODO : duplicat !
+		NBTTagList existingCustomEnchant = (NBTTagList) getCompoundFromString(container, "customenchant");
 		if (existingCustomEnchant == null) existingCustomEnchant = new NBTTagList("customenchant");
 	
 		//add and save it
 		existingCustomEnchant.add(enchantmentNBT);
-		container.getTag().set("customenchant",existingCustomEnchant);
+		
+		NBTTagCompound temp = new NBTTagCompound();
+		temp.set("customenchant", existingCustomEnchant);
+		
+		container.setCustomTag(temp);
 		
 		// Add the corresponding lore
         String romanLevel = level>3999?Integer.toString(level):new RomanNumeral(level).toString();
@@ -138,7 +143,7 @@ public abstract class EnchantmentHelper
     	//Get the NBT version of the item
 		NBTContainerItem container = new NBTContainerItem(item);
 
-		NBTTagList existingCustomEnchant = container.getTag().getList("customenchant");
+		NBTTagList existingCustomEnchant = (NBTTagList) getCompoundFromString(container, "customenchant");
 		String oldRomanLevel = null;
 		for (int i=0;i<existingCustomEnchant.size();i++) {
 			NBTTagCompound enchant = (NBTTagCompound) existingCustomEnchant.get(i);
@@ -151,13 +156,26 @@ public abstract class EnchantmentHelper
 			}
 		}
         
-        //add and save it
-		container.getTag().set("customenchant",existingCustomEnchant);
+        //add and save it TODO : duplicat !
+		NBTTagCompound temp = new NBTTagCompound();
+		temp.set("customenchant", existingCustomEnchant);
+		
+		container.setCustomTag(temp);
 		
 		// Modify the corresponding lore
         String romanLevel = level>3999?Integer.toString(level):new RomanNumeral(level).toString();
         delItemLore(item, ChatColor.GRAY + enchantment.getName() + " " + oldRomanLevel);
         addLoreToItem(item, ChatColor.GRAY, enchantment, romanLevel);
+	}
+
+    /**
+     * Return the customenchant NBTTag
+     * 
+     * @param container
+     * @return
+     */
+	private static NBTBase getCompoundFromString(NBTContainerItem container, String query) {
+		return container.getCustomTag(NBTQuery.fromString(query));
 	}
 
 	/**
@@ -194,7 +212,7 @@ public abstract class EnchantmentHelper
     	
     	display.set("Lore", Lore);
     	
-		container.getTag().set("display",display);
+    	container.setCustomTag(NBTQuery.fromString("display"),display); //TODO : duplicat bordel !
 	}
 
 	/**
@@ -225,7 +243,7 @@ public abstract class EnchantmentHelper
     	if(container.getTag()==null) container.setTag(new NBTTagCompound("tag"));
     	
     	
-    	NBTTagCompound display = container.getTag().getCompound("display");
+    	NBTTagCompound display = (NBTTagCompound) container.getCustomTag(NBTQuery.fromString("display"));
     	if (display == null) display = new NBTTagCompound("display");
     	
     	NBTTagList Lore = display.getList("Lore");
@@ -237,7 +255,7 @@ public abstract class EnchantmentHelper
     	
     	display.set("Lore", Lore);
     	
-		container.getTag().set("display",display);
+		container.setCustomTag(NBTQuery.fromString("display"),display);
     }
 
     public static Map<IEnchantment, Short> getTotalArmorEnchantmentsLevels(ItemStack[] playerArmor, List<IEnchantment> enchantmentList)

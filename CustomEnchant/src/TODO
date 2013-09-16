@@ -1,8 +1,11 @@
 Rendre une des dépendances (protocollib) optionnelle
 
 réecrire les breaks
+beaucoup de code en double dans enchanthelper
 
+Rennommer l'objet via l'anvil supprime les enchants => soit bloquer, soir corriger
 
+L'ajout de lore déconne
 
 infiltrator arrow
 slow arrow
