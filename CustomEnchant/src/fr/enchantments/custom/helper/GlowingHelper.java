@@ -18,8 +18,9 @@ public class GlowingHelper
     public static void addGlowingEffect(ItemStack actualItemStack)
     {
         if ( actualItemStack == null ) { return; }
-        //if ( actualItemStack.getEnchantmentLevel(Enchantment.SILK_TOUCH) != 32 ) { return; }
-
+        
+        if(EnchantmentHelper.getCustomEnchantmentList(actualItemStack).size()==0) return;
+        
         NbtCompound compound = (NbtCompound) NbtFactory.fromItemTag(actualItemStack);
         compound.put(NbtFactory.ofList("ench"));
     }
