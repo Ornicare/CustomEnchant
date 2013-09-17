@@ -3,12 +3,8 @@ Rendre une des dépendances (protocollib) optionnelle
 réecrire les breaks
 beaucoup de code en double dans enchanthelper
 
-Rennommer l'objet via l'anvil supprime les enchants => soit bloquer, soir corriger
+L'ajout via la table d'enchant déconne : meme enchant et double ajout ?!
 
-L'ajout de lore déconne
-Les enchantements ne persistent pas ??
-
-ajouter les armures à la liste des enchantables
 
 infiltrator arrow
 slow arrow
@@ -26,9 +22,6 @@ explosion n'abipmant aps le terrain pour les fl�ches
 
 Enchantement => 2 attributs permettant de d�firnir une gausienne => r�partition levels.
 
-
-
-Le truc brillant
 
 le public dans le pluginlaoder... static
 
