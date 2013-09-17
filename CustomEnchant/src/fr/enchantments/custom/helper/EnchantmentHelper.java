@@ -3,22 +3,20 @@ package fr.enchantments.custom.helper;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 
 import me.dpohvar.powernbt.nbt.NBTBase;
 import me.dpohvar.powernbt.nbt.NBTContainerItem;
 import me.dpohvar.powernbt.nbt.NBTQuery;
 import me.dpohvar.powernbt.nbt.NBTTagCompound;
 import me.dpohvar.powernbt.nbt.NBTTagList;
-import me.dpohvar.powernbt.nbt.NBTTagShort;
 import me.dpohvar.powernbt.nbt.NBTTagString;
 import net.minecraft.server.v1_6_R2.Item;
 
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
-import fr.enchantments.custom.loader.PluginLoader;
 import fr.enchantments.custom.model.IEnchantment;
+//import fr.enchantments.custom.loader.PluginLoader;
 
 /**
  * This class is a bridge between raw enchantments class and <code>ItemStack</code>(s).
@@ -35,6 +33,11 @@ public abstract class EnchantmentHelper
 	
 	//TODO snowballs ! arrows !
 	private static int[][] enchantableItems = {bow,swords,axes,pickaxes,special};
+	
+	/**
+	 * Lore recognition prefix.
+	 */
+	private static String CEPREFIX = "§z§c§e§p";
 	
 	/**
 	 * Check if <code>ItemStack</code> have at least one new enchant.
@@ -59,9 +62,9 @@ public abstract class EnchantmentHelper
 		
 		if(item==null) return customEnchant;
 		
-		//If it doesn't have a tag, return
-		//TODO error in case of mob damage player &&  workexplosion doesn't
-		NBTContainerItem container = new NBTContainerItem(item);
+//		//If it doesn't have a tag, return
+//		//TODO error in case of mob damage player &&  workexplosion doesn't
+//		NBTContainerItem container = new NBTContainerItem(item);
 			
 		//TODO euh... on verra
 		int itemId = item.getTypeId();
@@ -74,25 +77,100 @@ public abstract class EnchantmentHelper
 		}
 		
 		if(!isEnch) return customEnchant;
+//		
+//		try {
+//			if(container.getTag()==null) return customEnchant;
+//		}
+//		catch(Throwable e) {
+//			return customEnchant;
+//		}
+//		
+//		
+//		
+//		//test if it have already "customenchant" tag
+//		NBTTagList existingCustomEnchant = (NBTTagList) getCompoundFromString(container,"customenchant");
+//
+//		if (existingCustomEnchant == null) return customEnchant;
+//
+//		for (int i=0;i<existingCustomEnchant.size();i++) {
+//			NBTTagCompound enchant = (NBTTagCompound) existingCustomEnchant.get(i);
+//			customEnchant.put(enchant.getShort("id"),enchant.getShort("lvl"));
+//		}
 		
-		try {
-			if(container.getTag()==null) return customEnchant;
-		}
-		catch(Throwable e) {
-			return customEnchant;
-		}
 		
-		//test if it have already "customenchant" tag
-		NBTTagList existingCustomEnchant = (NBTTagList) getCompoundFromString(container,"customenchant");
+		//Get the NBT version of the item
+    	NBTContainerItem container = new NBTContainerItem(item);
+    	
+    	//If it doesn't have any tag, create it.
+    	if(container.getTag()==null) container.setTag(new NBTTagCompound("tag"));
+    	
+    	NBTTagCompound display = container.getTag().getCompound("display");
+    	if (display == null) display = new NBTTagCompound("display");
+    	
+    	NBTTagList Lore = display.getList("Lore");
+    	if (Lore == null) Lore = new NBTTagList("Lore");
 
-		if (existingCustomEnchant == null) return customEnchant;
+		for (int i=0;i<Lore.size();i++) {
 
-		for (int i=0;i<existingCustomEnchant.size();i++) {
-			NBTTagCompound enchant = (NBTTagCompound) existingCustomEnchant.get(i);
-			customEnchant.put(enchant.getShort("id"),enchant.getShort("lvl"));
+			NBTTagString loreCompound = (NBTTagString)Lore.get(i);
+					
+			if(loreCompound.get().startsWith(CEPREFIX)) {
+				return deserialize(loreCompound.get());
+			}
 		}
 		
 		return customEnchant;
+	}
+	
+	/**
+	 * Transform a Map of customs enchantments into a string like <code>§1§-§2§;§7§-§9§;</code>
+	 * 
+	 * @param customEnchants
+	 * @return
+	 */
+	private static String serialize(Map<Short,Short> customEnchants) {
+		String tempResult = "";
+		for(short id : customEnchants.keySet()) {
+			tempResult+=id+"-"+customEnchants.get(id)+";";
+		}
+		
+		String result = "";
+		for(short i = 0; i < tempResult.length() ; ++i) {
+			result+="§"+tempResult.substring(i, i+1);
+			
+		}
+		
+		return CEPREFIX+result;
+	}
+	
+	/**
+	 * Transform a string encode in a certain pattern into a Map.
+	 * 
+	 * @param s
+	 * @return
+	 */
+	private static Map<Short,Short> deserialize(String s) {
+		
+		
+		
+		Map<Short,Short> result = new HashMap<Short,Short>();
+		try {
+			String tempResult = s.replaceAll(CEPREFIX, "");
+			tempResult = tempResult.replaceAll("§", "");
+			
+//			PluginLoader.pluginLoader.getLogger().log(Level.INFO,tempResult);
+			
+			for(String subS : tempResult.split(";")) {
+				String[] temp = subS.split("-");
+				short id = Short.parseShort(temp[0]);
+				short value = Short.parseShort(temp[1]);
+				result.put(id,value);
+			}
+		}
+		catch(Exception e) {}
+		
+		
+		return result;
 	}
 
     /**
@@ -118,42 +196,43 @@ public abstract class EnchantmentHelper
 	 * @param level
 	 */
 	public static void addCustomEnchantWithLevel(ItemStack item, IEnchantment enchantment, short level) {
+		Map<Short, Short> enchants = getCustomEnchantmentList(item);
+		
 		//erase previous enchant if it already exists
-		if(getCustomEnchantmentList(item).containsKey(enchantment.getId())) {
+		if(enchants.containsKey(enchantment.getId())) {
 			modifyCustomEnchantByUsingLevel(item,enchantment,level);
-			return;
+		}
+		else {
+			// Add the corresponding lore
+	        String romanLevel = level>3999?Integer.toString(level):new RomanNumeral(level).toString();
+	        addLoreToItem(item, ChatColor.GRAY, enchantment, romanLevel);
 		}
 		
-		//Get the NBT version of the item
-		NBTContainerItem container = new NBTContainerItem(item);
+		String oldEnchants = serialize(enchants);
 		
-		//Create the NBT version of the enchantment
-		NBTTagCompound enchantmentNBT  = new NBTTagCompound();
-			enchantmentNBT.set("id", new NBTTagShort(enchantment.getId()));
-			enchantmentNBT.set("lvl", new NBTTagShort(level));
-			
-		//If it doesn't have any tag, create it.
-		if(container.getTag()==null) container.setTag(new NBTTagCompound("tag"));
+		//We use the non-redondancy property of map to erase all old keys.
+		enchants.put(enchantment.getId(), level);
 		
-		//test if it have already "customenchant" tag TODO : duplicat !
-		NBTTagList existingCustomEnchant = (NBTTagList) getCompoundFromString(container, "customenchant");
-		if (existingCustomEnchant == null) existingCustomEnchant = new NBTTagList("customenchant");
 	
-		//add and save it
-		existingCustomEnchant.add(enchantmentNBT);
-		
-		NBTTagCompound temp = new NBTTagCompound();
-		temp.set("customenchant", existingCustomEnchant);
-		
-		container.setCustomTag(temp);
-		
-		// Add the corresponding lore
-        String romanLevel = level>3999?Integer.toString(level):new RomanNumeral(level).toString();
-        addLoreToItem(item, ChatColor.GRAY, enchantment, romanLevel);
+		writeEchants(item,enchants,oldEnchants);
+
 		
 	}
 
-    /**
+	/**
+	 * Write a new lore to save custom enchants.
+	 * 
+	 * @param item
+	 * @param enchants
+	 * @param oldEnchants 
+	 */
+    private static void writeEchants(ItemStack item, Map<Short, Short> enchants, String oldEnchants) {
+		// TODO Auto-generated method stub
+    	delItemLore(item, oldEnchants);
+        addLoreToItem(item, serialize(enchants));
+	}
+
+	/**
      * Set <code>enchantment</code> to <code>level</code> for <code>item</code>
      * 
      * @param item
@@ -161,28 +240,16 @@ public abstract class EnchantmentHelper
      * @param level
      */
     public static void modifyCustomEnchantByUsingLevel(ItemStack item, IEnchantment enchantment, short level) {
-
-    	//Get the NBT version of the item
-		NBTContainerItem container = new NBTContainerItem(item);
-
-		NBTTagList existingCustomEnchant = (NBTTagList) getCompoundFromString(container, "customenchant");
+    	
+    	Map<Short, Short> enchants = getCustomEnchantmentList(item);
+    	
 		String oldRomanLevel = null;
-		for (int i=0;i<existingCustomEnchant.size();i++) {
-			NBTTagCompound enchant = (NBTTagCompound) existingCustomEnchant.get(i);
-			if(enchant.getShort("id")==enchantment.getId()) {
+		for (short id : enchants.keySet()) {
+			if(id==enchantment.getId()) {
 				//get the old lore
-				oldRomanLevel = new RomanNumeral(enchant.getShort("lvl")).toString();
-				
-				enchant.set("lvl", new NBTTagShort(level));
-				existingCustomEnchant.set(i, enchant);
+				oldRomanLevel = new RomanNumeral(enchants.get(id)).toString();
 			}
 		}
-        
-        //add and save it TODO : duplicat !
-		NBTTagCompound temp = new NBTTagCompound();
-		temp.set("customenchant", existingCustomEnchant);
-		
-		container.setCustomTag(temp);
 		
 		// Modify the corresponding lore
         String romanLevel = level>3999?Integer.toString(level):new RomanNumeral(level).toString();
@@ -223,7 +290,7 @@ public abstract class EnchantmentHelper
 		for (int i=0;i<Lore.size();i++) {
 
 			NBTTagString loreCompound = (NBTTagString)Lore.get(i);
-
+//			PluginLoader.pluginLoader.getLogger().log(Level.INFO,loreCompound.get()+"---"+loreToRemove);
 			if(loreCompound.get().equals(loreToRemove)) {
 				loreToRemoveIndex = i;
 				break;
