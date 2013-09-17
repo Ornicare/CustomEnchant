@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import me.dpohvar.powernbt.nbt.NBTBase;
 import me.dpohvar.powernbt.nbt.NBTContainerItem;
 import me.dpohvar.powernbt.nbt.NBTQuery;
 import me.dpohvar.powernbt.nbt.NBTTagCompound;
@@ -35,10 +34,22 @@ public abstract class EnchantmentHelper {
 			Item.STONE_PICKAXE.id, Item.IRON_PICKAXE.id,
 			Item.DIAMOND_PICKAXE.id, Item.GOLD_PICKAXE.id };
 	private static int[] special = { Item.SNOW_BALL.id };
+	private static int[] armors = { Item.LEATHER_BOOTS.id,
+			Item.LEATHER_CHESTPLATE.id, Item.LEATHER_HELMET.id,
+			Item.LEATHER_LEGGINGS.id, Item.IRON_BOOTS.id, Item.IRON_BOOTS.id,
+			Item.IRON_HELMET.id, Item.IRON_LEGGINGS.id, Item.GOLD_BOOTS.id,
+			Item.GOLD_CHESTPLATE.id, Item.GOLD_HELMET.id,
+			Item.GOLD_LEGGINGS.id, Item.CHAINMAIL_BOOTS.id,
+			Item.CHAINMAIL_CHESTPLATE.id, Item.CHAINMAIL_HELMET.id,
+			Item.CHAINMAIL_LEGGINGS.id, Item.DIAMOND_BOOTS.id,
+			Item.DIAMOND_CHESTPLATE.id, Item.DIAMOND_HELMET.id,
+			Item.DIAMOND_LEGGINGS.id,
+
+	};
 
 	// TODO snowballs ! arrows !
 	private static int[][] enchantableItems = { bow, swords, axes, pickaxes,
-			special };
+			special, armors };
 
 	/**
 	 * Lore recognition prefix.
@@ -127,7 +138,8 @@ public abstract class EnchantmentHelper {
 	}
 
 	/**
-	 * Test if the item is legally enchantable (by legally, we mean, for our plugin).
+	 * Test if the item is legally enchantable (by legally, we mean, for our
+	 * plugin).
 	 * 
 	 * @param item
 	 * @return
@@ -285,16 +297,16 @@ public abstract class EnchantmentHelper {
 		addLoreToItem(item, ChatColor.GRAY, enchantment, romanLevel);
 	}
 
-	/**
-	 * Return the customenchant NBTTag
-	 * 
-	 * @param container
-	 * @return
-	 */
-	private static NBTBase getCompoundFromString(NBTContainerItem container,
-			String query) {
-		return container.getCustomTag(NBTQuery.fromString(query));
-	}
+//	/**
+//	 * Return the customenchant NBTTag
+//	 * 
+//	 * @param container
+//	 * @return
+//	 */
+//	private static NBTBase getCompoundFromString(NBTContainerItem container,
+//			String query) {
+//		return container.getCustomTag(NBTQuery.fromString(query));
+//	}
 
 	/**
 	 * Try to remove <code>loreToRemove</code> from <code>itemStack</code> Lore.

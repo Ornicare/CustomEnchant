@@ -2,30 +2,18 @@ package fr.enchantments.custom.commands;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.Map;
-import java.util.Set;
-import java.util.logging.Level;
-
-import fr.enchantments.custom.helper.EnchantmentHelper;
-import fr.enchantments.custom.helper.GlowingHelper;
-import fr.enchantments.custom.helper.RomanNumeral;
-import fr.enchantments.custom.loader.PluginLoader;
-import fr.enchantments.custom.model.IEnchantment;
-import me.dpohvar.powernbt.nbt.NBTContainerItem;
-import me.dpohvar.powernbt.nbt.NBTQuery;
-import me.dpohvar.powernbt.nbt.NBTTagCompound;
-import me.dpohvar.powernbt.nbt.NBTTagList;
-import me.dpohvar.powernbt.nbt.NBTTagShort;
-import me.dpohvar.powernbt.nbt.NBTTagString;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_6_R2.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import fr.enchantments.custom.helper.EnchantmentHelper;
+import fr.enchantments.custom.helper.GlowingHelper;
+import fr.enchantments.custom.loader.PluginLoader;
+import fr.enchantments.custom.model.IEnchantment;
 
 public class AddEnchantCommand implements CommandExecutor {
 
