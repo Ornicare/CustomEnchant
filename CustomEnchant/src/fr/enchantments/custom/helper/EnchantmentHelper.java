@@ -14,6 +14,7 @@ import net.minecraft.server.v1_6_R2.Item;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
+import fr.enchantments.custom.model.EnchantablesItems;
 import fr.enchantments.custom.model.IEnchantment;
 
 //import fr.enchantments.custom.loader.PluginLoader;
@@ -23,33 +24,32 @@ import fr.enchantments.custom.model.IEnchantment;
  * <code>ItemStack</code>(s). It stores the enchantmentID(s) &
  * enchantmentLevel(s) in the <code>ItemStack</code>'s NBT storage.
  */
-public abstract class EnchantmentHelper {
+public abstract class EnchantmentHelper extends EnchantablesItems{
 
-	private static int[] bow = { Item.BOW.id };
-	private static int[] swords = { Item.WOOD_SWORD.id, Item.STONE_SWORD.id,
-			Item.IRON_SWORD.id, Item.DIAMOND_SWORD.id, Item.GOLD_SWORD.id };
-	private static int[] axes = { Item.WOOD_AXE.id, Item.STONE_AXE.id,
-			Item.IRON_AXE.id, Item.DIAMOND_AXE.id, Item.GOLD_AXE.id };
-	private static int[] pickaxes = { Item.WOOD_PICKAXE.id,
-			Item.STONE_PICKAXE.id, Item.IRON_PICKAXE.id,
-			Item.DIAMOND_PICKAXE.id, Item.GOLD_PICKAXE.id };
-	private static int[] special = { Item.SNOW_BALL.id };
-	private static int[] armors = { Item.LEATHER_BOOTS.id,
-			Item.LEATHER_CHESTPLATE.id, Item.LEATHER_HELMET.id,
-			Item.LEATHER_LEGGINGS.id, Item.IRON_BOOTS.id, Item.IRON_BOOTS.id,
-			Item.IRON_HELMET.id, Item.IRON_LEGGINGS.id, Item.GOLD_BOOTS.id,
-			Item.GOLD_CHESTPLATE.id, Item.GOLD_HELMET.id,
-			Item.GOLD_LEGGINGS.id, Item.CHAINMAIL_BOOTS.id,
-			Item.CHAINMAIL_CHESTPLATE.id, Item.CHAINMAIL_HELMET.id,
-			Item.CHAINMAIL_LEGGINGS.id, Item.DIAMOND_BOOTS.id,
-			Item.DIAMOND_CHESTPLATE.id, Item.DIAMOND_HELMET.id,
-			Item.DIAMOND_LEGGINGS.id,
+//	private static int[] bow = { Item.BOW.id };
+//	private static int[] swords = { Item.WOOD_SWORD.id, Item.STONE_SWORD.id,
+//			Item.IRON_SWORD.id, Item.DIAMOND_SWORD.id, Item.GOLD_SWORD.id };
+//	private static int[] axes = { Item.WOOD_AXE.id, Item.STONE_AXE.id,
+//			Item.IRON_AXE.id, Item.DIAMOND_AXE.id, Item.GOLD_AXE.id };
+//	private static int[] pickaxes = { Item.WOOD_PICKAXE.id,
+//			Item.STONE_PICKAXE.id, Item.IRON_PICKAXE.id,
+//			Item.DIAMOND_PICKAXE.id, Item.GOLD_PICKAXE.id };
+//	private static int[] special = { Item.SNOW_BALL.id };
+//	private static int[] armors = { Item.LEATHER_BOOTS.id,
+//			Item.LEATHER_CHESTPLATE.id, Item.LEATHER_HELMET.id,
+//			Item.LEATHER_LEGGINGS.id, Item.IRON_BOOTS.id, Item.IRON_BOOTS.id,
+//			Item.IRON_HELMET.id, Item.IRON_LEGGINGS.id, Item.GOLD_BOOTS.id,
+//			Item.GOLD_CHESTPLATE.id, Item.GOLD_HELMET.id,
+//			Item.GOLD_LEGGINGS.id, Item.CHAINMAIL_BOOTS.id,
+//			Item.CHAINMAIL_CHESTPLATE.id, Item.CHAINMAIL_HELMET.id,
+//			Item.CHAINMAIL_LEGGINGS.id, Item.DIAMOND_BOOTS.id,
+//			Item.DIAMOND_CHESTPLATE.id, Item.DIAMOND_HELMET.id,
+//			Item.DIAMOND_LEGGINGS.id
+//
+//	};
 
-	};
-
-	// TODO snowballs ! arrows !
 	private static int[][] enchantableItems = { bow, swords, axes, pickaxes,
-			special, armors };
+			special, armors ,interact};
 
 	/**
 	 * Lore recognition prefix.

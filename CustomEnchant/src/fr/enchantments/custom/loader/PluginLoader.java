@@ -43,7 +43,9 @@ import fr.enchantments.custom.implementation.Projectile_Rebond;
 import fr.enchantments.custom.implementation.Projectile_Starvation;
 import fr.enchantments.custom.implementation.legal.LegalDirectHit_Explosion;
 import fr.enchantments.custom.implementation.legal.LegalDirectHit_Poison;
+import fr.enchantments.custom.implementation.legal.LegalInteract_MegaJump;
 import fr.enchantments.custom.implementation.legal.LegalProjectile_Explosion;
+import fr.enchantments.custom.implementation.legal.LegalProjectile_PoisonExplosion;
 import fr.enchantments.custom.listener.ActionListener;
 import fr.enchantments.custom.listener.EnchantmentListener;
 
@@ -102,6 +104,11 @@ public class PluginLoader extends JavaPlugin {
 				15, 2, 10, true));
 		factory.registerEnchantment(new LegalDirectHit_Poison("Poison", 25, 5,
 				100, true));
+		factory.registerEnchantment(new LegalProjectile_PoisonExplosion("Poison Explosion", 26, 10,
+				50, true));
+		
+		factory.registerEnchantment(new LegalInteract_MegaJump("Mega Jump", 27, 3,
+				5, true));
 
 		// Admin
 		factory.registerEnchantment(new Projectile_AdminExplosion(
@@ -172,6 +179,10 @@ public class PluginLoader extends JavaPlugin {
 
 	public ListenerRegistrationFactory getFactory() {
 		return factory;
+	}
+
+	public ProtocolManager getProtocolManager() {
+		return protocolManager;
 	}
 
 }

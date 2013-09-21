@@ -3,19 +3,23 @@ package fr.enchantments.custom.factory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
 import fr.enchantments.custom.helper.EnchantmentHelper;
 import fr.enchantments.custom.helper.RandomizerMap;
+import fr.enchantments.custom.loader.PluginLoader;
 import fr.enchantments.custom.model.BaseEnchantment;
 import fr.enchantments.custom.model.IArmorDeathEnchantment;
 import fr.enchantments.custom.model.IArmorHitEnchantment;
 import fr.enchantments.custom.model.IDirectHitEnchantment;
 import fr.enchantments.custom.model.IEnchantment;
+import fr.enchantments.custom.model.IInteractEnchantment;
 import fr.enchantments.custom.model.IZoneEffectEnchantment;
 
 /**
@@ -84,6 +88,23 @@ public class ListenerRegistrationFactory
             }
         }
     }
+    
+    
+    public void playerInteract(Player player, ItemStack item) {
+    		Map<Short,Short> shooterEnchantments = EnchantmentHelper.getCustomEnchantmentList(item);
+    	
+        for ( IEnchantment actualEnchantment : enchantmentList )
+        {
+
+            // 1] Skip if the enchantment does not implements the correct interface
+            if ( !(actualEnchantment instanceof IInteractEnchantment) ) { continue; }
+            PluginLoader.pluginLoader.getLogger().log(Level.INFO,"sddsdsdsss");
+            if(shooterEnchantments.containsKey(actualEnchantment.getId())) {
+    			PluginLoader.pluginLoader.getLogger().log(Level.INFO,"sdss");
+            	((IInteractEnchantment)actualEnchantment).onInteract(player,  shooterEnchantments.get(actualEnchantment.getId()));
+            	}
+        }
+	}
 
     /**
      * That method does the same thing that the one above, but with an EntityDamage event.
@@ -94,11 +115,19 @@ public class ListenerRegistrationFactory
      */
     public void entityHit(LivingEntity entityShooter, LivingEntity entityVictim, int damage)
     {
+    	
         ItemStack inflicterWeapon = entityShooter.getEquipment().getItemInHand();
+        
+
+    	PluginLoader.pluginLoader.getLogger().log(Level.SEVERE,"sword !"+inflicterWeapon.getTypeId());
+    	
+        
         if ( EnchantmentHelper.haveCustomEnchant(inflicterWeapon) )
         {
-            Map<Short,Short> inflicterEnchantments = EnchantmentHelper.getCustomEnchantmentList(entityShooter.getEquipment().getItemInHand());
+            Map<Short,Short> inflicterEnchantments = EnchantmentHelper.getCustomEnchantmentList(inflicterWeapon);
 
+            PluginLoader.pluginLoader.getLogger().log(Level.SEVERE,"sword !"+inflicterEnchantments.size());
+            
             for ( IEnchantment actualEnchantment : enchantmentList )
             {
                 // 1] Skip if the enchantment does not implements the correct interface
@@ -109,7 +138,7 @@ public class ListenerRegistrationFactory
 
                 // 3] AND THEN...I.. no no, this time i'm not gonna draw a super-lazor of the death.
                 ((IDirectHitEnchantment)actualEnchantment).onEntityHit(entityShooter, entityVictim, inflicterWeapon, inflicterEnchantments.get(actualEnchantment.getId()), (short)damage);
-                break;
+
             }
         }
 
@@ -163,5 +192,7 @@ public class ListenerRegistrationFactory
 	public List<IEnchantment> getEnchantmentList() {
 		return enchantmentList;
 	}
+
+	
 
 }
