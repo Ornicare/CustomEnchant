@@ -44,6 +44,7 @@ import fr.enchantments.custom.implementation.Projectile_Starvation;
 import fr.enchantments.custom.implementation.legal.LegalDirectHit_Explosion;
 import fr.enchantments.custom.implementation.legal.LegalDirectHit_Poison;
 import fr.enchantments.custom.implementation.legal.LegalInteract_MegaJump;
+import fr.enchantments.custom.implementation.legal.LegalProjectile_BlackHole;
 import fr.enchantments.custom.implementation.legal.LegalProjectile_Explosion;
 import fr.enchantments.custom.implementation.legal.LegalProjectile_PoisonExplosion;
 import fr.enchantments.custom.listener.ActionListener;
@@ -106,10 +107,11 @@ public class PluginLoader extends JavaPlugin {
 				100, true));
 		factory.registerEnchantment(new LegalProjectile_PoisonExplosion("Poison Explosion", 26, 10,
 				50, true));
-		
 		factory.registerEnchantment(new LegalInteract_MegaJump("Mega Jump", 27, 3,
 				5, true));
-
+		factory.registerEnchantment(new LegalProjectile_BlackHole("Black Hole", 28, 20,
+				5, true));
+		
 		// Admin
 		factory.registerEnchantment(new Projectile_AdminExplosion(
 				"AdminExplosive", 1, 2));

@@ -14,6 +14,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.*;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -133,9 +134,11 @@ public class ActionListener implements Listener {
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onEntityDie(EntityDeathEvent event) {
 
+		if(!(event.getEntity() instanceof LivingEntity)) return;
 		ItemStack[] armorContents = event.getEntity().getEquipment()
 				.getArmorContents();
 		for (ItemStack actualArmorPart : armorContents) {
+			if(actualArmorPart==null) continue;
 			if (EnchantmentHelper.haveCustomEnchant(actualArmorPart)) {
 				plugin.getFactory().entityDie(event);
 				return;
@@ -156,6 +159,12 @@ public class ActionListener implements Listener {
 		if (!(event.getEntity() instanceof LivingEntity)) {
 			return;
 		}
+		
+		//TODO enchant on specific damages ?
+		if(event.getCause()==DamageCause.FALL) {
+			ExplosionHelper.playBlackHoleEffect(event.getEntity().getLocation());
+		}
+		
 		LivingEntity entityVictim = (LivingEntity) event.getEntity();
 
 		LivingEntity entityInflicter = null;

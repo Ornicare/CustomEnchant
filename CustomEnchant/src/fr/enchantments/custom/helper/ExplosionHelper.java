@@ -1,13 +1,17 @@
 package fr.enchantments.custom.helper;
 
 import java.util.Random;
+import java.util.logging.Level;
 
 import org.bukkit.Effect;
 import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.EnderDragon;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 import com.comphenix.protocol.Packets;
 import com.comphenix.protocol.events.PacketContainer;
@@ -124,7 +128,7 @@ public class ExplosionHelper
 //		location.getWorld().playEffect(location, Effect.POTION_BREAK, 1018);
 	}
 	
-	public static void playBlackHoleEffect(Location location, short level) {
+	public static void playBlackHoleEffect(Location location) {
 		location.getWorld().playEffect(location, Effect.ENDER_SIGNAL, 0);
 	}
 
@@ -142,5 +146,31 @@ public class ExplosionHelper
 	public static void setPortalLegality() {
 		illegalPortal --;
 	}
+
+	public static void blowEntities(Entity proj, double d, double distance) {
+	    Location loc =proj.getLocation();
+//		for (Entity ent : proj.getNearbyEntities(distance, distance, distance))
+//        {
+//			
+//			if(ent instanceof LivingEntity) {
+//				Vector entV = ent.getVelocity();
+//				Vector diff = ent.getLocation().toVector().subtract(loc.toVector());
+//				entV = entV.add(diff.normalize().clone().multiply(force));
+//				PluginLoader.pluginLoader.getLogger().log(Level.SEVERE," "+entV.getX()+" "+entV.getY()+" "+entV.getZ());
+//				((LivingEntity)ent).setVelocity(entV.clone());
+//				
+//				
+//			}
+	    
+	    for(Entity ent : proj.getNearbyEntities(distance, distance, distance)) {
+//       	 if(ent instanceof LivingEntity) ent.setVelocity(ent.getVelocity().add(ent.getLocation().clone().subtract(proj.getLocation().clone()).toVector().normalize().multiply(1+distance-ent.getLocation().distance(proj.getLocation()))));
+	    	 /*if(ent instanceof LivingEntity)*/ ent.setVelocity(ent.getVelocity().add(ent.getLocation().clone().subtract(proj.getLocation().clone()).toVector()/*.normalize()*/.multiply(d)));
+	         
+	    }
+
+//        }
+    }
+		
+	
 
 }
