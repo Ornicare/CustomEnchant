@@ -25,6 +25,7 @@ import fr.enchantments.custom.implementation.DirectHit_SpinUp;
 import fr.enchantments.custom.implementation.DirectHit_Starvation;
 import fr.enchantments.custom.implementation.Projectile_AdminExplosion;
 import fr.enchantments.custom.implementation.Projectile_BaseBowL;
+import fr.enchantments.custom.implementation.Projectile_BlackHole;
 import fr.enchantments.custom.implementation.Projectile_BlocDispatcher;
 import fr.enchantments.custom.implementation.Projectile_BlockExchanger;
 import fr.enchantments.custom.implementation.Projectile_BlowMobs;
@@ -153,6 +154,8 @@ public class PluginLoader extends JavaPlugin {
 		factory.registerEnchantment(new Projectile_OmgWTFPopRebond(
 				"Explosive rebond", 23, 2));
 		factory.registerEnchantment(new Projectile_BlowMobs("Blow", 24, 2));
+		factory.registerEnchantment(new Projectile_BlackHole("Perpetual Black Hole", 29, 20,
+				5, false));
 
 		// Stop the registration
 		factory.stopRegistration();

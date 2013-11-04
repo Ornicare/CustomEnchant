@@ -24,7 +24,7 @@ public class Projectile_BlowMobs extends BaseEnchantment implements IZoneEffectE
 
 
          for(Entity ent : projectileEntity.getNearbyEntities(level, level, level)) {
-        	 if(ent instanceof LivingEntity) ent.setVelocity(ent.getVelocity().add(ent.getLocation().clone().subtract(blockHit.getLocation().clone()).toVector().normalize().multiply(1+level-ent.getLocation().distance(blockHit.getLocation()))));
+        	 /*if(ent instanceof LivingEntity)*/ ent.setVelocity(ent.getVelocity().add(ent.getLocation().clone().subtract(blockHit.getLocation().clone()).toVector().normalize().multiply(1+level-ent.getLocation().distance(blockHit.getLocation()))));
          }
          ExplosionHelper.doFakeExplosion(blockHit.getLocation(), 200);
     }
