@@ -2,7 +2,7 @@ package fr.enchantments.custom.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.server.v1_6_R2.Item;
+import net.minecraft.server.v1_6_R3.Item;
 
 import org.bukkit.Material;
 

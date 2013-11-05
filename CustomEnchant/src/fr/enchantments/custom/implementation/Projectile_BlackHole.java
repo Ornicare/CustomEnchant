@@ -3,10 +3,10 @@ package fr.enchantments.custom.implementation;
 import java.util.Map;
 import java.util.Set;
 
-import net.minecraft.server.v1_6_R2.Item;
-import net.minecraft.server.v1_6_R2.Material;
-import net.minecraft.server.v1_6_R2.MathHelper;
-import net.minecraft.server.v1_6_R2.NBTTagCompound;
+import net.minecraft.server.v1_6_R3.Item;
+import net.minecraft.server.v1_6_R3.Material;
+import net.minecraft.server.v1_6_R3.MathHelper;
+import net.minecraft.server.v1_6_R3.NBTTagCompound;
 
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;

@@ -52,7 +52,7 @@ public class ListenerRegistrationFactory
      * @param enchantmentToRegister : The Enchantment To Register In The DataBase
      */
     //TODO v�rifier que l'id n'est pas d�j� pris
-    public void registerEnchantment(BaseEnchantment enchantmentToRegister) {
+    public void registerEnchantment(IEnchantment enchantmentToRegister) {
     	if(acceptRegistration) {
     		//Add only the legit enchant to the naturally used list.
     		if(enchantmentToRegister.isLegit()) enchantmentMap.push(enchantmentToRegister.getWeight(), enchantmentToRegister);
@@ -192,6 +192,8 @@ public class ListenerRegistrationFactory
 	public List<IEnchantment> getEnchantmentList() {
 		return enchantmentList;
 	}
+
+
 
 	
 

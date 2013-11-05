@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
  * That interface is the one which implements the required methods to perform some weapons based enchantments.
  * ( Such as swords, shovels and pumpkins of doom. )
  */
-public interface IDirectHitEnchantment {
+public interface IDirectHitEnchantment extends IEnchantment{
 	
 	/**
 	 * What ! A poor entity was shot ! POLICE, POLICE !

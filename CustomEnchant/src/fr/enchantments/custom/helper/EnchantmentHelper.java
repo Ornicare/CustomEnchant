@@ -9,7 +9,7 @@ import me.dpohvar.powernbt.nbt.NBTQuery;
 import me.dpohvar.powernbt.nbt.NBTTagCompound;
 import me.dpohvar.powernbt.nbt.NBTTagList;
 import me.dpohvar.powernbt.nbt.NBTTagString;
-import net.minecraft.server.v1_6_R2.Item;
+import net.minecraft.server.v1_6_R3.Item;
 
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;

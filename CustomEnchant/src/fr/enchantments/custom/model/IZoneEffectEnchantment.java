@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
  * That interface is the one which implements the required methods to perform a zone-recognition enchantments.
  * ( Such as explosions, thrown potions, more explosions, M-O-R-E explosions. And eventually, explosions. )
  */
-public interface IZoneEffectEnchantment
+public interface IZoneEffectEnchantment extends IEnchantment
 {
 
     /**

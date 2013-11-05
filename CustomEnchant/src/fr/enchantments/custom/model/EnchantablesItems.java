@@ -1,6 +1,6 @@
 package fr.enchantments.custom.model;
 
-import net.minecraft.server.v1_6_R2.Item;
+import net.minecraft.server.v1_6_R3.Item;
 
 public abstract class EnchantablesItems {
 	protected static int[] bow = { Item.BOW.id };

@@ -10,7 +10,7 @@ import fr.enchantments.custom.model.IEnchantment;
 
 
 /**
- * Wrapper for a  Map<weigh,BaseEnchantment>
+ * Wrapper for a  Map<weigh,IEnchantment>
  * Probability to get choose is proportionnal to the weight
  * 
  * @author Ornicare
@@ -19,19 +19,19 @@ import fr.enchantments.custom.model.IEnchantment;
 public class RandomizerMap{
 
 	private int totalWeigh = 0;
-	private Map<Integer[],BaseEnchantment> map = new HashMap<Integer[],BaseEnchantment>();
+	private Map<Integer[],IEnchantment> map = new HashMap<Integer[],IEnchantment>();
 	
 	public int getTotalWeigh() {
 		return totalWeigh;
 	}
 
-	public void push(Integer key, BaseEnchantment value) {
+	public void push(Integer key, IEnchantment enchantmentToRegister) {
 		Integer[] definitionValue = new Integer[2];
 		definitionValue[0] = new Integer(this.totalWeigh);
 		this.totalWeigh += key.intValue();
 		definitionValue[1] = new Integer(this.totalWeigh);
 		
-		map.put(definitionValue, value);
+		map.put(definitionValue, enchantmentToRegister);
 	}
 	
 	public void push(int key, BaseEnchantment value) {
@@ -53,7 +53,7 @@ public class RandomizerMap{
 	 * 
 	 * @return MobModel
 	 */
-	public BaseEnchantment getRandomEnchantment() {
+	public IEnchantment getRandomEnchantment() {
 		int mobInt = MathHelper.randomize((short)totalWeigh);
 		for(Integer[] definitionDomain : map.keySet()) {
 			if(mobInt>definitionDomain[0] && mobInt<=definitionDomain[1]) return map.get(definitionDomain);

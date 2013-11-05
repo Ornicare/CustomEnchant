@@ -1,5 +1,9 @@
 package fr.enchantments.custom.loader;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,6 +18,7 @@ import com.comphenix.protocol.events.ConnectionSide;
 import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
+import com.space.plugin.PluginExternalizer;
 
 import fr.enchantments.custom.commands.AddEnchantCommand;
 import fr.enchantments.custom.factory.ListenerRegistrationFactory;
@@ -50,6 +55,9 @@ import fr.enchantments.custom.implementation.legal.LegalProjectile_Explosion;
 import fr.enchantments.custom.implementation.legal.LegalProjectile_PoisonExplosion;
 import fr.enchantments.custom.listener.ActionListener;
 import fr.enchantments.custom.listener.EnchantmentListener;
+import fr.enchantments.custom.model.BaseEnchantment;
+import fr.enchantments.custom.model.IEnchantment;
+import fr.enchantments.custom.model.IZoneEffectEnchantment;
 
 public class PluginLoader extends JavaPlugin {
 
@@ -98,6 +106,39 @@ public class PluginLoader extends JavaPlugin {
 
 		// 2] Initialize Enchantments Classes/Instances
 		pluginLogger.log(Level.INFO, "Enchantments' loading");
+		
+		
+		/////////////!!!!!!!!!!!!!.///////////////////////
+		try {
+			String folder = "plugins/CustomEnchant/enchantments";
+			PluginExternalizer enchantsPluginsloader = new com.space.main.PluginLoader().createPluginManager(folder);
+			ArrayList<String> enchants = enchantsPluginsloader.getPluginList();
+			for(String enchant : enchants) {
+				Properties config = new Properties();
+				String path = enchantsPluginsloader.getPluginPath(enchant);
+				path = path.substring(0,path.length()-5);
+				config.load(new FileInputStream(new File(path+"/enchant.properties")));
+				
+				IEnchantment enchantImpl = null;
+				//TODO add enchant type
+				switch (config.getProperty("type")) {
+				case "ZoneEffect":
+					Class<?>[] classes = {String.class, short.class, short.class};
+					//TODO add info porvenant de la config + constructeur complet Deuxième arg : le calculer (on ne vas pas demander à l'user le numéro d'enchant qu'il souhaite...
+					enchantImpl = (IZoneEffectEnchantment) enchantsPluginsloader.getPluginUsingConstructor(enchant, classes, "Test", (short)0, (short)10);
+					break;
+
+				default:
+					break;
+				}
+				factory.registerEnchantment(enchantImpl);
+			}
+		} catch (Exception e) {
+			getLogger().severe("Error while loading enchants ! Aborting.");
+			e.printStackTrace();
+			return;
+		}
+		/////////////!!!!!!!!!!!!!.///////////////////////
 
 		// Legal
 		factory.registerEnchantment(new LegalDirectHit_Explosion("Explosive",
