@@ -46,6 +46,11 @@ public class InstanceHandler implements InvocationHandler{
 		if(realObject == null) createNewInstance();
 		return m.invoke(realObject, args);
 	}
+	
+	public Class<?> getHandledClass() {
+		if(realObject == null) createNewInstance();
+		return realObject.getClass();
+	}
 
 	/**
 	 * Give an instance of the plugin.

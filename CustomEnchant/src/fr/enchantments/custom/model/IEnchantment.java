@@ -21,5 +21,7 @@ public interface IEnchantment {
 	public int getWeight();
 
 	public short getMaxLevel();
+
+	public void setId(short currentId);
 	
 }

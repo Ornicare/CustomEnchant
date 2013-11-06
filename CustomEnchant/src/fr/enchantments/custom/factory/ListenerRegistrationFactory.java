@@ -31,6 +31,8 @@ import fr.enchantments.custom.model.IZoneEffectEnchantment;
  */
 public class ListenerRegistrationFactory
 {
+	
+	private short currentId = 0;
 
     private EnchantmentFactory enchantmentFactory;
 
@@ -51,10 +53,11 @@ public class ListenerRegistrationFactory
      *
      * @param enchantmentToRegister : The Enchantment To Register In The DataBase
      */
-    //TODO v�rifier que l'id n'est pas d�j� pris
     public void registerEnchantment(IEnchantment enchantmentToRegister) {
     	if(acceptRegistration) {
-    		//Add only the legit enchant to the naturally used list.
+    		enchantmentToRegister.setId(currentId);
+    		++currentId;
+    		
     		if(enchantmentToRegister.isLegit()) enchantmentMap.push(enchantmentToRegister.getWeight(), enchantmentToRegister);
     		enchantmentList.add(enchantmentToRegister);
     	}

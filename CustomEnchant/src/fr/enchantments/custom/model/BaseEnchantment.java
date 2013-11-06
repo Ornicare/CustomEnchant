@@ -89,6 +89,10 @@ public abstract class BaseEnchantment extends EnchantablesItems  implements IEnc
 	public short getId() {
 		return id;
 	}
+	
+	public void setId(short id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
@@ -109,6 +113,13 @@ public abstract class BaseEnchantment extends EnchantablesItems  implements IEnc
 	public BaseEnchantment(String name, short id, short maxLevel, int weight, boolean isLegit) {
 		this.name = name;
 		this.id = id;
+		this.maxLevel = maxLevel;
+		this.weight = weight;
+		this.isLegit = isLegit;
+	}
+	
+	public BaseEnchantment(String name, short maxLevel, int weight, boolean isLegit) {
+		this.name = name;
 		this.maxLevel = maxLevel;
 		this.weight = weight;
 		this.isLegit = isLegit;

@@ -1,4 +1,14 @@
+Enchantmanager (standalone pour gÈrer weight, ...)
+VÈrif compatibilitÈ des noms
+
+cast with list : http://stackoverflow.com/questions/1375718/java-generics-casting-to-or-a-way-to-use-an-arbitrary-foo
+
+Doc : le dÈv peut fournir un jar => extraire enchant.properties dans un dossier adjcent (like bukkit)
+
+
+
 Rendre une des d√©pendances (protocollib) optionnelle
+se passer de power nbt ?
 
 r√©ecrire les breaks
 beaucoup de code en double dans enchanthelper

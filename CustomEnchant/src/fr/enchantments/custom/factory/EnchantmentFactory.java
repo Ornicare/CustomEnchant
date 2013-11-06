@@ -13,7 +13,6 @@ import org.bukkit.inventory.ItemStack;
 import fr.enchantments.custom.helper.EnchantmentHelper;
 import fr.enchantments.custom.helper.MathHelper;
 import fr.enchantments.custom.helper.RandomizerMap;
-import fr.enchantments.custom.model.BaseEnchantment;
 import fr.enchantments.custom.model.IEnchantment;
 
 public class EnchantmentFactory {
@@ -69,7 +68,7 @@ public class EnchantmentFactory {
 		// TODO Auto-generated method stub
 		//TODO enlever une partie des enchants existants
 		//TODO tester si l'objet est compatible
-		//TODO déterminer nb d'enchant à ajouter.
+		//TODO dï¿½terminer nb d'enchant ï¿½ ajouter.
 
 		int nbEnchant = MathHelper.randomize((short) (expLevelCost/5));
 		nbEnchant = nbEnchant > 3 ? 3 : nbEnchant;
@@ -102,17 +101,17 @@ public class EnchantmentFactory {
 		
 		for(int i = 0 ;i<nbEnchant;i++) {
 			IEnchantment enchantment = listenerFactory.getEnchantmentMap().getRandomEnchantment();
-			//TODO level réaliste
+			//TODO level rï¿½aliste
 			short level = enchantment.getLevel(expLevelCost);
 			//TODO si enchant incompatible, ne pas juste skip ?
 			//If an enchant is already present, skip it.
-			//TODO : à voir, en corélation avec le choix du nb d'enchant à ajouter.
+			//TODO : ï¿½ voir, en corï¿½lation avec le choix du nb d'enchant ï¿½ ajouter.
 			if(enchantment !=null && !addEnchantments.contains(enchantment)) {
 				if(enchantment.getAuthorizedItems().contains(item.getTypeId())) EnchantmentHelper.addCustomEnchantWithLevel(item, enchantment, level);
 			}
 		}*/
 		
-		//Trop compliqué
+		//Trop compliquï¿½
 		/*//Eventually delete some existing enchantment ? Max enchant = 4.
 		int nbToDelete = 4-(enchantsToAdd.keySet().size() + nbEnchant);
 		for(int i = 0;i<nbToDelete;i++) {
@@ -126,7 +125,7 @@ public class EnchantmentFactory {
 		RandomizerMap possibleEnchantments = new RandomizerMap();
 		for(IEnchantment ench : listenerFactory.getEnchantmentList()) {
 			if(ench.isLegit() && ench.getAuthorizedItems().contains(item.getTypeId()) && !addEnchantments.contains(ench)) {
-				possibleEnchantments.push(ench.getWeight(), (BaseEnchantment) ench);
+				possibleEnchantments.push(ench.getWeight(), (IEnchantment) ench);
 			}
 		}
 		return possibleEnchantments;
