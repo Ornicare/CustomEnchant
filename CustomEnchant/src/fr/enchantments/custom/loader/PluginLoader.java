@@ -2,8 +2,12 @@ package fr.enchantments.custom.loader;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,9 +15,13 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.io.IOUtils;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+
+
+
 
 import com.comphenix.protocol.Packets;
 import com.comphenix.protocol.ProtocolLibrary;
@@ -43,13 +51,14 @@ public class PluginLoader extends JavaPlugin {
 	@SuppressWarnings("unused")
 	private FileConfiguration config;
 	public static ProtocolManager protocolManager;
-	private ListenerRegistrationFactory factory;
 	public static PluginLoader pluginLoader;
+	private ListenerRegistrationFactory factory;
 
 	/**
 	 * Actions to perform on plugin load.
 	 */
 	public void onEnable() {
+		
 		pluginLoader = this;
 
 		// Used to modify packets
@@ -95,8 +104,44 @@ public class PluginLoader extends JavaPlugin {
 			for(String enchant : enchants) {
 				Properties config = new Properties();
 				String path = enchantsPluginsloader.getPluginPath(enchant);
-				path = path.substring(0,path.length()-5);
-				config.load(new FileInputStream(new File(path+"/enchant.properties")));
+				if(path.endsWith("/bin/") || path.endsWith("\\bin\\")) path = path.substring(0,path.length()-5);
+				
+				pluginLogger.info(path);
+				
+				File prop = new File(path+"/enchant.properties");
+				
+				
+//				if(path.endsWith(".jar")) {
+//					File pathDir = new File(path.substring(0, path.length()-4));
+//					if(!pathDir.exists() || pathDir.isFile()) {
+//						pathDir.mkdirs();
+//					}
+//					
+//					 prop = new File(path.substring(0, path.length()-4)+"/enchant.properties");
+//					
+//					if(!prop.exists()) {
+//						URL url = new URL("jar:file:"+path+"!/enchant.properties");
+//						InputStream is = url.openStream();
+//						config.load(is);
+//						
+//						//Create the file for a furthe use
+//						prop.createNewFile();
+//						FileOutputStream out = new FileOutputStream(prop);
+//						IOUtils.copy(is, out);
+//						out.flush();
+//						out.close();
+//						
+//					}
+//					else {
+//						config.load(new FileInputStream(prop));
+//					}
+//				}
+//				else {
+//					config.load(new FileInputStream(prop));
+//				}
+				
+				config.load(new FileInputStream(prop));
+				
 				
 				//TODO add info porvenant de la config + constructeur complet Deuxième arg : le calculer (on ne vas pas demander à l'user le numéro d'enchant qu'il souhaite...
 				Class<?>[] classes = {String.class, short.class, int.class, boolean.class};
@@ -111,8 +156,8 @@ public class PluginLoader extends JavaPlugin {
 				
 				IEnchantment enchantImpl = null;
 				//TODO It's here we add new enchants type. Some plugins cannot implements multiples enchants. (risk : some buggy woody)
-				Class<?>[] legalEnchantClasses = {IArmorDeathEnchantment.class, IArmorHitEnchantment.class, IDirectHitEnchantment.class, IInteractEnchantment.class, IZoneEffectEnchantment.class};
-				List<Class<?>> test = new ArrayList<>(Arrays.asList(legalEnchantClasses));
+//				Class<?>[] legalEnchantClasses = {IArmorDeathEnchantment.class, IArmorHitEnchantment.class, IDirectHitEnchantment.class, IInteractEnchantment.class, IZoneEffectEnchantment.class};
+//				List<Class<?>> test = new ArrayList<>(Arrays.asList(legalEnchantClasses));
 				
 //				ClassWrapper<?>[] test2 = {new ClassWrapper<IZoneEffectEnchantment>()};
 				

@@ -64,7 +64,7 @@ public class PluginManager {
         
         // All plugins are in folder /plugins
         for (File file : directory.listFiles()) {
-        	if(file.isFile() && file.getName().endsWith(".jar")) {
+        	/*if(file.isFile() && file.getName().endsWith(".jar")) {
         		Properties prop = loadConfig(file);
             	if(prop!=null) {
             		if(prop.containsKey("runnable") && prop.getProperty("runnable").equals("true")) {
@@ -75,7 +75,8 @@ public class PluginManager {
                 	}
             	}
         	}
-        	else if(file.isDirectory()){
+        	else */
+        	if(file.isDirectory()){
         		//TODO checkyChekoCheka
         		Properties config = new Properties();
         		config.load(new FileInputStream(new File(file.getAbsoluteFile()+"/plugin.properties")));
