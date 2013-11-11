@@ -1,5 +1,6 @@
 package fr.enchantments.custom.helper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import net.minecraft.server.v1_6_R3.Item;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
+import fr.enchantments.custom.loader.PluginLoader;
 import fr.enchantments.custom.model.EnchantablesItems;
 import fr.enchantments.custom.model.IEnchantment;
 
@@ -24,32 +26,32 @@ import fr.enchantments.custom.model.IEnchantment;
  * <code>ItemStack</code>(s). It stores the enchantmentID(s) &
  * enchantmentLevel(s) in the <code>ItemStack</code>'s NBT storage.
  */
-public abstract class EnchantmentHelper extends EnchantablesItems{
+public abstract class EnchantmentHelper extends EnchantablesItems {
 
-//	private static int[] bow = { Item.BOW.id };
-//	private static int[] swords = { Item.WOOD_SWORD.id, Item.STONE_SWORD.id,
-//			Item.IRON_SWORD.id, Item.DIAMOND_SWORD.id, Item.GOLD_SWORD.id };
-//	private static int[] axes = { Item.WOOD_AXE.id, Item.STONE_AXE.id,
-//			Item.IRON_AXE.id, Item.DIAMOND_AXE.id, Item.GOLD_AXE.id };
-//	private static int[] pickaxes = { Item.WOOD_PICKAXE.id,
-//			Item.STONE_PICKAXE.id, Item.IRON_PICKAXE.id,
-//			Item.DIAMOND_PICKAXE.id, Item.GOLD_PICKAXE.id };
-//	private static int[] special = { Item.SNOW_BALL.id };
-//	private static int[] armors = { Item.LEATHER_BOOTS.id,
-//			Item.LEATHER_CHESTPLATE.id, Item.LEATHER_HELMET.id,
-//			Item.LEATHER_LEGGINGS.id, Item.IRON_BOOTS.id, Item.IRON_BOOTS.id,
-//			Item.IRON_HELMET.id, Item.IRON_LEGGINGS.id, Item.GOLD_BOOTS.id,
-//			Item.GOLD_CHESTPLATE.id, Item.GOLD_HELMET.id,
-//			Item.GOLD_LEGGINGS.id, Item.CHAINMAIL_BOOTS.id,
-//			Item.CHAINMAIL_CHESTPLATE.id, Item.CHAINMAIL_HELMET.id,
-//			Item.CHAINMAIL_LEGGINGS.id, Item.DIAMOND_BOOTS.id,
-//			Item.DIAMOND_CHESTPLATE.id, Item.DIAMOND_HELMET.id,
-//			Item.DIAMOND_LEGGINGS.id
-//
-//	};
+	// private static int[] bow = { Item.BOW.id };
+	// private static int[] swords = { Item.WOOD_SWORD.id, Item.STONE_SWORD.id,
+	// Item.IRON_SWORD.id, Item.DIAMOND_SWORD.id, Item.GOLD_SWORD.id };
+	// private static int[] axes = { Item.WOOD_AXE.id, Item.STONE_AXE.id,
+	// Item.IRON_AXE.id, Item.DIAMOND_AXE.id, Item.GOLD_AXE.id };
+	// private static int[] pickaxes = { Item.WOOD_PICKAXE.id,
+	// Item.STONE_PICKAXE.id, Item.IRON_PICKAXE.id,
+	// Item.DIAMOND_PICKAXE.id, Item.GOLD_PICKAXE.id };
+	// private static int[] special = { Item.SNOW_BALL.id };
+	// private static int[] armors = { Item.LEATHER_BOOTS.id,
+	// Item.LEATHER_CHESTPLATE.id, Item.LEATHER_HELMET.id,
+	// Item.LEATHER_LEGGINGS.id, Item.IRON_BOOTS.id, Item.IRON_BOOTS.id,
+	// Item.IRON_HELMET.id, Item.IRON_LEGGINGS.id, Item.GOLD_BOOTS.id,
+	// Item.GOLD_CHESTPLATE.id, Item.GOLD_HELMET.id,
+	// Item.GOLD_LEGGINGS.id, Item.CHAINMAIL_BOOTS.id,
+	// Item.CHAINMAIL_CHESTPLATE.id, Item.CHAINMAIL_HELMET.id,
+	// Item.CHAINMAIL_LEGGINGS.id, Item.DIAMOND_BOOTS.id,
+	// Item.DIAMOND_CHESTPLATE.id, Item.DIAMOND_HELMET.id,
+	// Item.DIAMOND_LEGGINGS.id
+	//
+	// };
 
 	private static int[][] enchantableItems = { bow, swords, axes, pickaxes,
-			special, armors ,interact};
+			special, armors, interact };
 
 	/**
 	 * Lore recognition prefix.
@@ -75,7 +77,14 @@ public abstract class EnchantmentHelper extends EnchantablesItems{
 	 * @return Map<enchantmentID, enchantmentLevel>
 	 */
 	public static Map<Short, Short> getCustomEnchantmentList(ItemStack item) {
+		return getCustomEnchantmentList(item, false);
+	}
+	
+	
+	public static Map<Short, Short> getCustomEnchantmentList(ItemStack item, boolean rewrite) {
 
+		
+		
 		// Map<enchantmentID, enchantmentLevel>
 		Map<Short, Short> customEnchant = new HashMap<Short, Short>();
 
@@ -130,7 +139,10 @@ public abstract class EnchantmentHelper extends EnchantablesItems{
 			NBTTagString loreCompound = (NBTTagString) Lore.get(i);
 
 			if (loreCompound.get().startsWith(CEPREFIX)) {
-				return deserialize(loreCompound.get());
+				customEnchant = deserialize(loreCompound.get());
+
+				if(rewrite) rewriteLore(item, customEnchant);
+				return customEnchant;
 			}
 		}
 
@@ -234,7 +246,8 @@ public abstract class EnchantmentHelper extends EnchantablesItems{
 	 */
 	public static void addCustomEnchantWithLevel(ItemStack item,
 			IEnchantment enchantment, short level) {
-		Map<Short, Short> enchants = getCustomEnchantmentList(item);
+		
+		Map<Short, Short> enchants = getCustomEnchantmentList(item, false);
 
 		// erase previous enchant if it already exists
 		if (enchants.containsKey(enchantment.getId())) {
@@ -243,7 +256,8 @@ public abstract class EnchantmentHelper extends EnchantablesItems{
 			// Add the corresponding lore
 			String romanLevel = level > 3999 ? Integer.toString(level)
 					: new RomanNumeral(level).toString();
-			addLoreToItem(item, ChatColor.GRAY, enchantment, romanLevel);
+			addLoreToItem(item, ChatColor.GRAY, enchantment, romanLevel
+					+ CEPREFIX);
 		}
 
 		String oldEnchants = serialize(enchants);
@@ -253,6 +267,81 @@ public abstract class EnchantmentHelper extends EnchantablesItems{
 
 		writeEchants(item, enchants, oldEnchants);
 
+	}
+	
+	/**
+	 * Rewrite the lore to remove unused enchants.
+	 * @param itemStack
+	 * @param customEnchant 
+	 */
+	public static void rewriteLore(ItemStack itemStack, Map<Short, Short> enchants) {
+		
+//		try {
+//			throw new Exception();
+//		}catch(Exception e) {
+//			PluginLoader.pluginLoader.getLogger().info("@@"+e.getStackTrace()[0]+"@@"+e.getStackTrace()[1]+"@@"+e.getStackTrace()[2]+"@@"+e.getStackTrace()[3]);
+//		}
+		
+//		PluginLoader.pluginLoader.getLogger().info("fdugfdugyfds"+enchants.size());
+		// Get the NBT version of the item
+		NBTContainerItem container = new NBTContainerItem(itemStack);
+
+		// If it doesn't have any tag, create it.
+		if (container.getTag() == null)
+			container.setTag(new NBTTagCompound("tag"));
+
+		NBTTagCompound display = container.getTag().getCompound("display");
+		if (display == null)
+			display = new NBTTagCompound("display");
+
+		NBTTagList Lore = display.getList("Lore");
+		if (Lore == null)
+			Lore = new NBTTagList("Lore");
+
+		//Do not remove customs lore.
+		List<Integer> loreToRemoveIndex = new ArrayList<Integer>();
+		String savedEnchants = null;
+		for (int i = 0; i < Lore.size(); i++) {
+
+			NBTTagString loreCompound = (NBTTagString) Lore.get(i);
+			// Remove tagged lore
+			if (loreCompound.get().endsWith(CEPREFIX)) {
+				loreToRemoveIndex.add(i);
+			}
+			if(loreCompound.get().startsWith(CEPREFIX)) {
+				savedEnchants = loreCompound.get();
+			}
+		}
+		
+		for (int i = loreToRemoveIndex.size() - 1; i > -1; i--) {
+			Lore.remove(loreToRemoveIndex.get(i));
+		}
+		
+		display.set("Lore", Lore);
+		container.setCustomTag(NBTQuery.fromString("display"), display);
+		
+		for(IEnchantment enchant : PluginLoader.pluginLoader.getFactory().getEnchantmentList()) {
+			if(enchants.keySet().contains(enchant.getId())) {
+				addCustomEnchantWithLevel(itemStack, enchant, enchants.get(enchant.getId()));
+			}
+		}
+		
+		//rewrite old enchants
+		if (container.getTag() == null)
+			container.setTag(new NBTTagCompound("tag"));
+
+		display = container.getTag().getCompound("display");
+		if (display == null)
+			display = new NBTTagCompound("display");
+		
+		Lore = display.getList("Lore");
+		if (Lore == null)
+			Lore = new NBTTagList("Lore");
+		
+		Lore.set(Lore.size()-1, new NBTTagString(savedEnchants));
+		
+		display.set("Lore", Lore);
+		container.setCustomTag(NBTQuery.fromString("display"), display);
 	}
 
 	/**
@@ -293,20 +382,20 @@ public abstract class EnchantmentHelper extends EnchantablesItems{
 		String romanLevel = level > 3999 ? Integer.toString(level)
 				: new RomanNumeral(level).toString();
 		delItemLore(item, ChatColor.GRAY + enchantment.getName() + " "
-				+ oldRomanLevel);
-		addLoreToItem(item, ChatColor.GRAY, enchantment, romanLevel);
+				+ oldRomanLevel+CEPREFIX);
+		addLoreToItem(item, ChatColor.GRAY, enchantment, romanLevel + CEPREFIX);
 	}
 
-//	/**
-//	 * Return the customenchant NBTTag
-//	 * 
-//	 * @param container
-//	 * @return
-//	 */
-//	private static NBTBase getCompoundFromString(NBTContainerItem container,
-//			String query) {
-//		return container.getCustomTag(NBTQuery.fromString(query));
-//	}
+	// /**
+	// * Return the customenchant NBTTag
+	// *
+	// * @param container
+	// * @return
+	// */
+	// private static NBTBase getCompoundFromString(NBTContainerItem container,
+	// String query) {
+	// return container.getCustomTag(NBTQuery.fromString(query));
+	// }
 
 	/**
 	 * Try to remove <code>loreToRemove</code> from <code>itemStack</code> Lore.

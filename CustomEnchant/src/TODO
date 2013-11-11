@@ -3,9 +3,6 @@ Vérif compatibilité des noms
 
 cast with list : http://stackoverflow.com/questions/1375718/java-generics-casting-to-or-a-way-to-use-an-arbitrary-foo
 
-Doc : le dév peut fournir un jar => extraire enchant.properties dans un dossier adjcent (like bukkit)
-
-
 
 Rendre une des dÃ©pendances (protocollib) optionnelle
 se passer de power nbt ?
@@ -35,9 +32,19 @@ explosion n'abipmant aps le terrain pour les flï¿½ches
 Enchantement => 2 attributs permettant de dï¿½firnir une gausienne => rï¿½partition levels.
 
 
-le public dans le pluginlaoder... static
-
 reload ?
 
 
-id rentrï¿½s ï¿½ la main : ne pas le tester (si existe dï¿½jï¿½
+Fonction regenerateLore : si on supprime des enchant, mettre le lore à jour.
+
+
+Vérifier qu'on ne supprime pas de lore en ajoutant un enchant
+
+Notes :
+-------
+
+Le dév ne peut pas fournir de jar : compliqué de distinguer plugins et dossiers simples.
+Le nom du plugin de l'enchant est son id (unique d'après le système de plugins : tester le message d'erreur)
+L'entrée de l'idTable correspondant à un enchant n'est pas supprimée si le plugin l'est : si on veut le remettre, c'est possible.
+	=> A tester
+Note : le rewrite de la lore se fait lors de l'application du glowing effect.

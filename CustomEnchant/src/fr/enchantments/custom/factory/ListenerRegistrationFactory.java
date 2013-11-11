@@ -3,6 +3,7 @@ package fr.enchantments.custom.factory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.logging.Level;
 
 import org.bukkit.entity.Entity;
@@ -47,16 +48,30 @@ public class ListenerRegistrationFactory
     
 
     private boolean acceptRegistration = true;
+
+	private Map<String, String> idTable;
     
     /**
      * Register The Enchantment In The Storage DataBase... and then... NOTHING ! MWAHAHAHAHA !
+     * @param enchant 
      *
      * @param enchantmentToRegister : The Enchantment To Register In The DataBase
      */
-    public void registerEnchantment(IEnchantment enchantmentToRegister) {
+    public void registerEnchantment(String enchant, IEnchantment enchantmentToRegister) {
     	if(acceptRegistration) {
-    		enchantmentToRegister.setId(currentId);
-    		++currentId;
+    		while(idTable.values().contains(String.valueOf(currentId))) {
+    			++currentId;
+    		}
+    		
+    		if(idTable.containsKey(enchant)) {
+    			enchantmentToRegister.setId(Short.parseShort(idTable.get(enchant)));
+    		}
+    		else {
+    			enchantmentToRegister.setId(currentId);
+    			idTable.put(enchant, String.valueOf(currentId));
+    		}
+    		
+    		
     		
     		if(enchantmentToRegister.isLegit()) enchantmentMap.push(enchantmentToRegister.getWeight(), enchantmentToRegister);
     		enchantmentList.add(enchantmentToRegister);
@@ -194,6 +209,14 @@ public class ListenerRegistrationFactory
 
 	public List<IEnchantment> getEnchantmentList() {
 		return enchantmentList;
+	}
+
+	public void setIdTable(Map<String, String> hashIdTable) {
+		this.idTable = hashIdTable;
+	}
+	
+	public Map<String, String> getIdTable() {
+		return this.idTable;
 	}
 
 

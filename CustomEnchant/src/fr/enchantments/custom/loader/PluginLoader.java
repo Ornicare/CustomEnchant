@@ -2,26 +2,26 @@ package fr.enchantments.custom.loader;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.commons.io.IOUtils;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-
-
-
 
 import com.comphenix.protocol.Packets;
 import com.comphenix.protocol.ProtocolLibrary;
@@ -95,9 +95,31 @@ public class PluginLoader extends JavaPlugin {
 		// 2] Initialize Enchantments Classes/Instances
 		pluginLogger.log(Level.INFO, "Enchantments' loading");
 		
+	
 		
 		/////////////!!!!!!!!!!!!!.///////////////////////
+		
+
+		
+		File idTableFile = new File("plugins/CustomEnchant/idTable.properties");
+		
+		
 		try {
+			//IdTable loading
+			
+			Properties idTable = new Properties();
+			
+			if(!idTableFile.exists()) idTableFile.createNewFile();
+			idTable.load(new FileInputStream(idTableFile));
+			
+			Map<String,String> hashIdTable = new HashMap<String,String>();
+			for(Entry<Object, Object> couple : idTable.entrySet()) {
+				hashIdTable.put((String)couple.getKey(), (String)couple.getValue());
+			}
+			
+			factory.setIdTable(hashIdTable);
+			
+			
 			String folder = "plugins/CustomEnchant/enchantments";
 			PluginExternalizer enchantsPluginsloader = new com.space.main.PluginLoader().createPluginManager(folder);
 			ArrayList<String> enchants = enchantsPluginsloader.getPluginList();
@@ -105,6 +127,9 @@ public class PluginLoader extends JavaPlugin {
 				Properties config = new Properties();
 				String path = enchantsPluginsloader.getPluginPath(enchant);
 				if(path.endsWith("/bin/") || path.endsWith("\\bin\\")) path = path.substring(0,path.length()-5);
+				
+				
+				
 				
 				pluginLogger.info(path);
 				
@@ -179,7 +204,7 @@ public class PluginLoader extends JavaPlugin {
 				
 //				enchantImpl = test2[0].cast(proxy);
 				
-				factory.registerEnchantment(enchantImpl);
+				factory.registerEnchantment(enchant, enchantImpl);
 			}
 		} catch (Exception e) {
 			getLogger().severe("Error while loading enchants ! Aborting.");
@@ -190,6 +215,36 @@ public class PluginLoader extends JavaPlugin {
 
 		// Stop the registration
 		factory.stopRegistration();
+		
+		//Write the new id table for further usage
+//		idTableFile.delete();
+//		try {
+//			idTableFile.createNewFile();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		FileOutputStream idOut = null;
+//		try {
+//			idOut = new FileOutputStream(idTableFile);
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
+		
+		PrintWriter writer = null;
+		try {
+			writer = new PrintWriter(idTableFile.getAbsolutePath(), "UTF-8");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+		for(String s : factory.getIdTable().keySet()) {
+			writer.println(s+"="+factory.getIdTable().get(s));
+		}
+		
+		writer.close();
+		
 
 		// 2] Initialize Hookers & Blabla
 		pluginLogger.log(Level.INFO, "Hook's loading");
