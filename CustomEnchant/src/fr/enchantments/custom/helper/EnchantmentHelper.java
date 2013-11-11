@@ -10,12 +10,11 @@ import me.dpohvar.powernbt.nbt.NBTQuery;
 import me.dpohvar.powernbt.nbt.NBTTagCompound;
 import me.dpohvar.powernbt.nbt.NBTTagList;
 import me.dpohvar.powernbt.nbt.NBTTagString;
-import net.minecraft.server.v1_6_R3.Item;
 
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
-import fr.enchantments.custom.loader.PluginLoader;
+import fr.enchantments.custom.factory.ListenerRegistrationFactory;
 import fr.enchantments.custom.model.EnchantablesItems;
 import fr.enchantments.custom.model.IEnchantment;
 
@@ -58,6 +57,8 @@ public abstract class EnchantmentHelper extends EnchantablesItems {
 	 */
 	private static String CEPREFIX = "§z§c§e§p";
 
+	private static ListenerRegistrationFactory factory;
+
 	/**
 	 * Check if <code>ItemStack</code> have at least one new enchant.
 	 * 
@@ -79,12 +80,14 @@ public abstract class EnchantmentHelper extends EnchantablesItems {
 	public static Map<Short, Short> getCustomEnchantmentList(ItemStack item) {
 		return getCustomEnchantmentList(item, false);
 	}
-	
-	
-	public static Map<Short, Short> getCustomEnchantmentList(ItemStack item, boolean rewrite) {
 
-		
-		
+	public static void setFactoryInstance(ListenerRegistrationFactory factoryI) {
+		factory = factoryI;
+	}
+
+	public static Map<Short, Short> getCustomEnchantmentList(ItemStack item,
+			boolean rewrite) {
+
 		// Map<enchantmentID, enchantmentLevel>
 		Map<Short, Short> customEnchant = new HashMap<Short, Short>();
 
@@ -92,7 +95,7 @@ public abstract class EnchantmentHelper extends EnchantablesItems {
 			return customEnchant;
 
 		// //If it doesn't have a tag, return
-		// //TODO error in case of mob damage player && workexplosion doesn't
+		// error in case of mob damage player && workexplosion doesn't
 		// NBTContainerItem container = new NBTContainerItem(item);
 
 		if (!isEnchantable(item))
@@ -119,20 +122,7 @@ public abstract class EnchantmentHelper extends EnchantablesItems {
 		// customEnchant.put(enchant.getShort("id"),enchant.getShort("lvl"));
 		// }
 
-		// Get the NBT version of the item
-		NBTContainerItem container = new NBTContainerItem(item);
-
-		// If it doesn't have any tag, create it.
-		if (container.getTag() == null)
-			container.setTag(new NBTTagCompound("tag"));
-
-		NBTTagCompound display = container.getTag().getCompound("display");
-		if (display == null)
-			display = new NBTTagCompound("display");
-
-		NBTTagList Lore = display.getList("Lore");
-		if (Lore == null)
-			Lore = new NBTTagList("Lore");
+		NBTTagList Lore = getLore(item);
 
 		for (int i = 0; i < Lore.size(); i++) {
 
@@ -141,7 +131,8 @@ public abstract class EnchantmentHelper extends EnchantablesItems {
 			if (loreCompound.get().startsWith(CEPREFIX)) {
 				customEnchant = deserialize(loreCompound.get());
 
-				if(rewrite) rewriteLore(item, customEnchant);
+				if (rewrite)
+					rewriteLore(item, customEnchant);
 				return customEnchant;
 			}
 		}
@@ -158,6 +149,7 @@ public abstract class EnchantmentHelper extends EnchantablesItems {
 	 */
 	public static boolean isEnchantable(ItemStack item) {
 
+		@SuppressWarnings("deprecation")
 		int itemId = item.getTypeId();
 
 		for (int[] list : enchantableItems) {
@@ -246,7 +238,7 @@ public abstract class EnchantmentHelper extends EnchantablesItems {
 	 */
 	public static void addCustomEnchantWithLevel(ItemStack item,
 			IEnchantment enchantment, short level) {
-		
+
 		Map<Short, Short> enchants = getCustomEnchantmentList(item, false);
 
 		// erase previous enchant if it already exists
@@ -265,40 +257,32 @@ public abstract class EnchantmentHelper extends EnchantablesItems {
 		// We use the non-redondancy property of map to erase all old keys.
 		enchants.put(enchantment.getId(), level);
 
-		writeEchants(item, enchants, oldEnchants);
+		writeEnchants(item, enchants, oldEnchants);
 
 	}
-	
+
 	/**
 	 * Rewrite the lore to remove unused enchants.
+	 * 
 	 * @param itemStack
-	 * @param customEnchant 
+	 * @param customEnchant
 	 */
-	public static void rewriteLore(ItemStack itemStack, Map<Short, Short> enchants) {
-		
-//		try {
-//			throw new Exception();
-//		}catch(Exception e) {
-//			PluginLoader.pluginLoader.getLogger().info("@@"+e.getStackTrace()[0]+"@@"+e.getStackTrace()[1]+"@@"+e.getStackTrace()[2]+"@@"+e.getStackTrace()[3]);
-//		}
-		
-//		PluginLoader.pluginLoader.getLogger().info("fdugfdugyfds"+enchants.size());
+	public static void rewriteLore(ItemStack itemStack,
+			Map<Short, Short> enchants) {
+
+		// try {
+		// throw new Exception();
+		// }catch(Exception e) {
+		// PluginLoader.pluginLoader.getLogger().info("@@"+e.getStackTrace()[0]+"@@"+e.getStackTrace()[1]+"@@"+e.getStackTrace()[2]+"@@"+e.getStackTrace()[3]);
+		// }
+
+		// PluginLoader.pluginLoader.getLogger().info("fdugfdugyfds"+enchants.size());
 		// Get the NBT version of the item
-		NBTContainerItem container = new NBTContainerItem(itemStack);
 
-		// If it doesn't have any tag, create it.
-		if (container.getTag() == null)
-			container.setTag(new NBTTagCompound("tag"));
+		NBTTagList Lore = getLore(itemStack);
 
-		NBTTagCompound display = container.getTag().getCompound("display");
-		if (display == null)
-			display = new NBTTagCompound("display");
 
-		NBTTagList Lore = display.getList("Lore");
-		if (Lore == null)
-			Lore = new NBTTagList("Lore");
-
-		//Do not remove customs lore.
+		// Do not remove customs lore.
 		List<Integer> loreToRemoveIndex = new ArrayList<Integer>();
 		String savedEnchants = null;
 		for (int i = 0; i < Lore.size(); i++) {
@@ -308,40 +292,28 @@ public abstract class EnchantmentHelper extends EnchantablesItems {
 			if (loreCompound.get().endsWith(CEPREFIX)) {
 				loreToRemoveIndex.add(i);
 			}
-			if(loreCompound.get().startsWith(CEPREFIX)) {
+			if (loreCompound.get().startsWith(CEPREFIX)) {
 				savedEnchants = loreCompound.get();
 			}
 		}
-		
+
 		for (int i = loreToRemoveIndex.size() - 1; i > -1; i--) {
 			Lore.remove(loreToRemoveIndex.get(i));
 		}
-		
-		display.set("Lore", Lore);
-		container.setCustomTag(NBTQuery.fromString("display"), display);
-		
-		for(IEnchantment enchant : PluginLoader.pluginLoader.getFactory().getEnchantmentList()) {
-			if(enchants.keySet().contains(enchant.getId())) {
-				addCustomEnchantWithLevel(itemStack, enchant, enchants.get(enchant.getId()));
+
+		setLore(itemStack, Lore);
+
+		for (IEnchantment enchant : factory.getEnchantmentList()) {
+			if (enchants.keySet().contains(enchant.getId())) {
+				addCustomEnchantWithLevel(itemStack, enchant,
+						enchants.get(enchant.getId()));
 			}
 		}
-		
-		//rewrite old enchants
-		if (container.getTag() == null)
-			container.setTag(new NBTTagCompound("tag"));
 
-		display = container.getTag().getCompound("display");
-		if (display == null)
-			display = new NBTTagCompound("display");
-		
-		Lore = display.getList("Lore");
-		if (Lore == null)
-			Lore = new NBTTagList("Lore");
-		
-		Lore.set(Lore.size()-1, new NBTTagString(savedEnchants));
-		
-		display.set("Lore", Lore);
-		container.setCustomTag(NBTQuery.fromString("display"), display);
+		// rewrite old enchants
+		Lore = getLore(itemStack);
+		Lore.set(Lore.size() - 1, new NBTTagString(savedEnchants));
+		setLore(itemStack, Lore);
 	}
 
 	/**
@@ -351,9 +323,8 @@ public abstract class EnchantmentHelper extends EnchantablesItems {
 	 * @param enchants
 	 * @param oldEnchants
 	 */
-	private static void writeEchants(ItemStack item,
+	private static void writeEnchants(ItemStack item,
 			Map<Short, Short> enchants, String oldEnchants) {
-		// TODO Auto-generated method stub
 		delItemLore(item, oldEnchants);
 		addLoreToItem(item, serialize(enchants));
 	}
@@ -382,7 +353,7 @@ public abstract class EnchantmentHelper extends EnchantablesItems {
 		String romanLevel = level > 3999 ? Integer.toString(level)
 				: new RomanNumeral(level).toString();
 		delItemLore(item, ChatColor.GRAY + enchantment.getName() + " "
-				+ oldRomanLevel+CEPREFIX);
+				+ oldRomanLevel + CEPREFIX);
 		addLoreToItem(item, ChatColor.GRAY, enchantment, romanLevel + CEPREFIX);
 	}
 
@@ -404,20 +375,8 @@ public abstract class EnchantmentHelper extends EnchantablesItems {
 	 * @param loreToRemove
 	 */
 	public static void delItemLore(ItemStack itemStack, String loreToRemove) {
-		// Get the NBT version of the item
-		NBTContainerItem container = new NBTContainerItem(itemStack);
 
-		// If it doesn't have any tag, create it.
-		if (container.getTag() == null)
-			container.setTag(new NBTTagCompound("tag"));
-
-		NBTTagCompound display = container.getTag().getCompound("display");
-		if (display == null)
-			display = new NBTTagCompound("display");
-
-		NBTTagList Lore = display.getList("Lore");
-		if (Lore == null)
-			Lore = new NBTTagList("Lore");
+		NBTTagList Lore = getLore(itemStack);
 
 		int loreToRemoveIndex = -1;
 		for (int i = 0; i < Lore.size(); i++) {
@@ -433,13 +392,43 @@ public abstract class EnchantmentHelper extends EnchantablesItems {
 		if (loreToRemoveIndex != -1)
 			Lore.remove(loreToRemoveIndex);
 
-		display.set("Lore", Lore);
+		setLore(itemStack, Lore);
+	}
 
-		container.setCustomTag(NBTQuery.fromString("display"), display); // TODO
-																			// :
-																			// duplicat
-																			// bordel
-																			// !
+	private static void setLore(ItemStack itemStack, NBTTagList lore) {
+		// Get the NBT version of the item
+		NBTContainerItem container = new NBTContainerItem(itemStack);
+
+		// If it doesn't have any tag, create it.
+		if (container.getTag() == null)
+			container.setTag(new NBTTagCompound("tag"));
+
+		NBTTagCompound display = container.getTag().getCompound("display");
+		if (display == null)
+			display = new NBTTagCompound("display");
+		
+		display.set("Lore", lore);
+		container.setCustomTag(NBTQuery.fromString("display"), display);
+	}
+
+	private static NBTTagList getLore(ItemStack itemStack) {
+
+		// Get the NBT version of the item
+		NBTContainerItem container = new NBTContainerItem(itemStack);
+
+		// If it doesn't have any tag, create it.
+		if (container.getTag() == null)
+			container.setTag(new NBTTagCompound("tag"));
+
+		NBTTagCompound display = container.getTag().getCompound("display");
+		if (display == null)
+			display = new NBTTagCompound("display");
+
+		NBTTagList Lore = display.getList("Lore");
+		if (Lore == null)
+			Lore = new NBTTagList("Lore");
+
+		return Lore;
 	}
 
 	/**
@@ -472,29 +461,12 @@ public abstract class EnchantmentHelper extends EnchantablesItems {
 	 * @param rawTextToAdd
 	 */
 	public static void addLoreToItem(ItemStack itemStack, String rawTextToAdd) {
-		// Get the NBT version of the item
-		NBTContainerItem container = new NBTContainerItem(itemStack);
+		NBTTagList Lore = getLore(itemStack);
 
-		// If it doesn't have any tag, create it.
-		if (container.getTag() == null)
-			container.setTag(new NBTTagCompound("tag"));
-
-		NBTTagCompound display = (NBTTagCompound) container
-				.getCustomTag(NBTQuery.fromString("display"));
-		if (display == null)
-			display = new NBTTagCompound("display");
-
-		NBTTagList Lore = display.getList("Lore");
-		if (Lore == null)
-			Lore = new NBTTagList("Lore");
 
 		NBTTagString loreToadd = new NBTTagString("", rawTextToAdd);
-
 		Lore.add(loreToadd);
-
-		display.set("Lore", Lore);
-
-		container.setCustomTag(NBTQuery.fromString("display"), display);
+		setLore(itemStack, Lore);
 	}
 
 	public static Map<IEnchantment, Short> getTotalArmorEnchantmentsLevels(

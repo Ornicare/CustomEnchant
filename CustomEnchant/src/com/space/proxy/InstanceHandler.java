@@ -5,8 +5,6 @@ import java.lang.reflect.Method;
 
 import com.space.plugin.PluginBase;
 
-import fr.enchantments.custom.loader.PluginLoader;
-
 /**
  * 
  * Handler for the lazy proxy.

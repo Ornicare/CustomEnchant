@@ -3,7 +3,6 @@ package fr.enchantments.custom.factory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.logging.Level;
 
 import org.bukkit.entity.Entity;
@@ -15,7 +14,6 @@ import org.bukkit.inventory.ItemStack;
 import fr.enchantments.custom.helper.EnchantmentHelper;
 import fr.enchantments.custom.helper.RandomizerMap;
 import fr.enchantments.custom.loader.PluginLoader;
-import fr.enchantments.custom.model.BaseEnchantment;
 import fr.enchantments.custom.model.IArmorDeathEnchantment;
 import fr.enchantments.custom.model.IArmorHitEnchantment;
 import fr.enchantments.custom.model.IDirectHitEnchantment;
@@ -37,9 +35,13 @@ public class ListenerRegistrationFactory
 
     private EnchantmentFactory enchantmentFactory;
 
+	private PluginLoader pluginLoader;
+
 	//public static ListenerRegistrationFactory listenerFactory;
-    public ListenerRegistrationFactory() {
+    public ListenerRegistrationFactory(PluginLoader pluginLoader) {
     	this.enchantmentFactory = new EnchantmentFactory(this);
+    	this.pluginLoader = pluginLoader;
+    	EnchantmentHelper.setFactoryInstance(this);
     }
     //public static void initializeListenerFactory() { listenerFactory = new ListenerRegistrationFactory(); }
 
@@ -116,9 +118,9 @@ public class ListenerRegistrationFactory
 
             // 1] Skip if the enchantment does not implements the correct interface
             if ( !(actualEnchantment instanceof IInteractEnchantment) ) { continue; }
-            PluginLoader.pluginLoader.getLogger().log(Level.INFO,"sddsdsdsss");
+            pluginLoader.getLogger().log(Level.INFO,"sddsdsdsss");
             if(shooterEnchantments.containsKey(actualEnchantment.getId())) {
-    			PluginLoader.pluginLoader.getLogger().log(Level.INFO,"sdss");
+    			pluginLoader.getLogger().log(Level.INFO,"sdss");
             	((IInteractEnchantment)actualEnchantment).onInteract(player,  shooterEnchantments.get(actualEnchantment.getId()));
             	}
         }
@@ -131,20 +133,21 @@ public class ListenerRegistrationFactory
      * @param entityShooter : The entity that shoot the second one, he's the bad guy D:
      * @param entityVictim : The entity that was shot by the first one, he's the victim :D
      */
-    public void entityHit(LivingEntity entityShooter, LivingEntity entityVictim, int damage)
+    @SuppressWarnings("deprecation")
+	public void entityHit(LivingEntity entityShooter, LivingEntity entityVictim, int damage)
     {
     	
         ItemStack inflicterWeapon = entityShooter.getEquipment().getItemInHand();
         
 
-    	PluginLoader.pluginLoader.getLogger().log(Level.SEVERE,"sword !"+inflicterWeapon.getTypeId());
+    	pluginLoader.getLogger().log(Level.SEVERE,"sword !"+inflicterWeapon.getTypeId());
     	
         
         if ( EnchantmentHelper.haveCustomEnchant(inflicterWeapon) )
         {
             Map<Short,Short> inflicterEnchantments = EnchantmentHelper.getCustomEnchantmentList(inflicterWeapon);
 
-            PluginLoader.pluginLoader.getLogger().log(Level.SEVERE,"sword !"+inflicterEnchantments.size());
+            pluginLoader.getLogger().log(Level.SEVERE,"sword !"+inflicterEnchantments.size());
             
             for ( IEnchantment actualEnchantment : enchantmentList )
             {

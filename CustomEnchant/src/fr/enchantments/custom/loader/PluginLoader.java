@@ -3,8 +3,6 @@ package fr.enchantments.custom.loader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationHandler;
@@ -35,9 +33,11 @@ import com.space.proxy.InstanceHandler;
 
 import fr.enchantments.custom.commands.AddEnchantCommand;
 import fr.enchantments.custom.factory.ListenerRegistrationFactory;
+import fr.enchantments.custom.helper.ExplosionHelper;
 import fr.enchantments.custom.helper.GlowingHelper;
 import fr.enchantments.custom.listener.ActionListener;
 import fr.enchantments.custom.listener.EnchantmentListener;
+import fr.enchantments.custom.model.BaseEnchantment;
 import fr.enchantments.custom.model.IArmorDeathEnchantment;
 import fr.enchantments.custom.model.IArmorHitEnchantment;
 import fr.enchantments.custom.model.IDirectHitEnchantment;
@@ -50,8 +50,8 @@ public class PluginLoader extends JavaPlugin {
 	private Logger pluginLogger;
 	@SuppressWarnings("unused")
 	private FileConfiguration config;
-	public static ProtocolManager protocolManager;
-	public static PluginLoader pluginLoader;
+	private ProtocolManager protocolManager;
+//	public static PluginLoader pluginLoader;
 	private ListenerRegistrationFactory factory;
 
 	/**
@@ -59,10 +59,13 @@ public class PluginLoader extends JavaPlugin {
 	 */
 	public void onEnable() {
 		
-		pluginLoader = this;
-
+	
 		// Used to modify packets
 		protocolManager = ProtocolLibrary.getProtocolManager();
+		
+		//Used by specifics enchantments
+		ExplosionHelper.setPluginLoaderInstance(this);
+		BaseEnchantment.setParentPlugin(this);
 
 		ProtocolLibrary.getProtocolManager().addPacketListener(
 				new PacketAdapter(this, ConnectionSide.SERVER_SIDE,
@@ -90,7 +93,7 @@ public class PluginLoader extends JavaPlugin {
 		config = this.getConfig();
 
 		// Create the factory
-		factory = new ListenerRegistrationFactory();
+		factory = new ListenerRegistrationFactory(this);
 
 		// 2] Initialize Enchantments Classes/Instances
 		pluginLogger.log(Level.INFO, "Enchantments' loading");
@@ -168,7 +171,7 @@ public class PluginLoader extends JavaPlugin {
 				config.load(new FileInputStream(prop));
 				
 				
-				//TODO add info porvenant de la config + constructeur complet Deuxième arg : le calculer (on ne vas pas demander à l'user le numéro d'enchant qu'il souhaite...
+				
 				Class<?>[] classes = {String.class, short.class, int.class, boolean.class};
 				String name = config.getProperty("name");
 				short maxLevel = (short)Short.parseShort(config.getProperty("maxLevel"));

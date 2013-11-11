@@ -14,7 +14,8 @@ public class ProjectileHelper
      * @param projectileEntity The projectile that will be scanned
      * @return The block shot by a projectile
      */
-    public static Block getBlockShotByProjectile(Entity projectileEntity)
+    @SuppressWarnings("deprecation")
+	public static Block getBlockShotByProjectile(Entity projectileEntity)
     {
         World projectileWorld = projectileEntity.getWorld();
         BlockIterator blockIterator = new BlockIterator(projectileWorld, projectileEntity.getLocation().toVector(), projectileEntity.getVelocity().normalize(), 0, 4);

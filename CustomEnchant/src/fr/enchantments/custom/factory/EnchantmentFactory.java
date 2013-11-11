@@ -101,11 +101,11 @@ public class EnchantmentFactory {
 		
 		for(int i = 0 ;i<nbEnchant;i++) {
 			IEnchantment enchantment = listenerFactory.getEnchantmentMap().getRandomEnchantment();
-			//TODO level r�aliste
+			// level r�aliste
 			short level = enchantment.getLevel(expLevelCost);
-			//TODO si enchant incompatible, ne pas juste skip ?
+			// si enchant incompatible, ne pas juste skip ?
 			//If an enchant is already present, skip it.
-			//TODO : � voir, en cor�lation avec le choix du nb d'enchant � ajouter.
+			// : � voir, en cor�lation avec le choix du nb d'enchant � ajouter.
 			if(enchantment !=null && !addEnchantments.contains(enchantment)) {
 				if(enchantment.getAuthorizedItems().contains(item.getTypeId())) EnchantmentHelper.addCustomEnchantWithLevel(item, enchantment, level);
 			}
@@ -120,6 +120,7 @@ public class EnchantmentFactory {
 		}*/
 	}
 	
+	@SuppressWarnings("deprecation")
 	public RandomizerMap getPossiblesEnchantemnts(ItemStack item, List<IEnchantment> addEnchantments) {
 		//Create a list of all possible enchantments
 		RandomizerMap possibleEnchantments = new RandomizerMap();

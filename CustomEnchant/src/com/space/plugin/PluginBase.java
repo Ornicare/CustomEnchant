@@ -7,8 +7,6 @@ import java.util.Properties;
 
 import com.space.proxy.InstanceHandler;
 
-import fr.enchantments.custom.loader.PluginLoader;
-
 
 /**
  * 

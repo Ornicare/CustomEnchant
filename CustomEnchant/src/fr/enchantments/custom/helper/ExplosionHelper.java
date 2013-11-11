@@ -1,7 +1,6 @@
 package fr.enchantments.custom.helper;
 
 import java.util.Random;
-import java.util.logging.Level;
 
 import org.bukkit.Effect;
 import org.bukkit.EntityEffect;
@@ -9,14 +8,10 @@ import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
 
 import com.comphenix.protocol.Packets;
 import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.events.PacketEvent;
-import com.comphenix.protocol.injector.PacketConstructor;
 
 import fr.enchantments.custom.loader.PluginLoader;
 
@@ -27,10 +22,11 @@ public class ExplosionHelper
 	 * State of the next enderdragon portal
 	 */
     private static int illegalPortal  = 0;
+	private static PluginLoader pluginLoader;
 
 
 	public static void doFakeExplosion(Location location, int radius) {
-        PacketContainer fakeExplosion = PluginLoader.protocolManager.createPacket(Packets.Server.EXPLOSION);
+        PacketContainer fakeExplosion = pluginLoader.getProtocolManager().createPacket(Packets.Server.EXPLOSION);
 
         fakeExplosion.getDoubles().write(0, location.getX()).write(1, location.getY() + 1.25).write(2, location.getZ());
         fakeExplosion.getFloat().write(0, (float)radius);
@@ -39,19 +35,23 @@ public class ExplosionHelper
 //        fakeExplosion.getFloat().write(1, 2F).write(2, 2F).write(3, 2F);
         try
         {
-            for (Player player : PluginLoader.pluginLoader.getServer().getWorld(location.getWorld().getName()).getPlayers())
+            for (Player player : pluginLoader.getServer().getWorld(location.getWorld().getName()).getPlayers())
             {
                 if ( player.getLocation().distance(location) > 100) { continue; }
 
-                PluginLoader.protocolManager.sendServerPacket(player, fakeExplosion);
+                pluginLoader.getProtocolManager().sendServerPacket(player, fakeExplosion);
             }
             location.getWorld().playSound(location, Sound.EXPLODE, 10, 1);
         }
         catch ( Throwable t ) { }
     }
 	
+	public static void setPluginLoaderInstance(PluginLoader pl) {
+		pluginLoader = pl;
+	}
+	
 	public static void megaJump(Location location, int radius, Player player) {
-        PacketContainer fakeExplosion = PluginLoader.protocolManager.createPacket(Packets.Server.EXPLOSION);
+        PacketContainer fakeExplosion = pluginLoader.getProtocolManager().createPacket(Packets.Server.EXPLOSION);
 
         fakeExplosion.getDoubles().write(0, location.getX()).write(1, location.getY() + 1.25).write(2, location.getZ());
         fakeExplosion.getFloat().write(0, (float)radius);
@@ -60,7 +60,7 @@ public class ExplosionHelper
         fakeExplosion.getFloat().write(0, 2F).write(2, (float)radius).write(0, 2F);
         try
         {
-            PluginLoader.protocolManager.sendServerPacket(player, fakeExplosion);
+        	pluginLoader.getProtocolManager().sendServerPacket(player, fakeExplosion);
             location.getWorld().playSound(location, Sound.CAT_MEOW, 10, 1);
         }
         catch ( Throwable t ) { }
@@ -69,7 +69,8 @@ public class ExplosionHelper
 	
 
 
-    public static void doSmoke(Location location, int radius)
+    @SuppressWarnings("deprecation")
+	public static void doSmoke(Location location, int radius)
     {
         Random lolRandom = new Random();
 
@@ -101,14 +102,14 @@ public class ExplosionHelper
 	         
 	    
 	    
-	    PacketContainer fakeExplosion = PluginLoader.pluginLoader.getProtocolManager().createPacket(61);
+	    PacketContainer fakeExplosion = pluginLoader.getProtocolManager().createPacket(61);
 
 
 	    
 //	        PacketContainer packet = blockBreakConstructor.createPacket(61, 2002,loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), 0);
 	        try
 	        {
-	            for (Player player : PluginLoader.pluginLoader.getServer().getWorld(loc.getWorld().getName()).getPlayers())
+	            for (Player player : pluginLoader.getServer().getWorld(loc.getWorld().getName()).getPlayers())
 	            {
 
 	                if ( player.getLocation().distance(loc) > 100) { continue; }
@@ -120,7 +121,7 @@ public class ExplosionHelper
 	        	    write(3, (int) loc.getZ());
 	    	    fakeExplosion.getSpecificModifier(byte.class).
 	    	        write(0, (byte) loc.getY());
-	                PluginLoader.protocolManager.sendServerPacket(player, fakeExplosion);
+	    	    pluginLoader.getProtocolManager().sendServerPacket(player, fakeExplosion);
 	            }
 	        }
 	        catch ( Throwable t ) { }
@@ -148,7 +149,7 @@ public class ExplosionHelper
 	}
 
 	public static void blowEntities(Entity proj, double d, double distance) {
-	    Location loc =proj.getLocation();
+//	    Location loc =proj.getLocation();
 //		for (Entity ent : proj.getNearbyEntities(distance, distance, distance))
 //        {
 //			

@@ -1,19 +1,32 @@
+Projet user friendly : 
+
 Enchantmanager (standalone pour gérer weight, ...)
 Vérif compatibilité des noms
 
-cast with list : http://stackoverflow.com/questions/1375718/java-generics-casting-to-or-a-way-to-use-an-arbitrary-foo
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//cast with list : http://stackoverflow.com/questions/1375718/java-generics-casting-to-or-a-way-to-use-an-arbitrary-foo
 
 
-Rendre une des dÃ©pendances (protocollib) optionnelle
-se passer de power nbt ?
+[PlusTard][[Rendre une des dÃ©pendances (protocollib) optionnelle
+se passer de power nbt ?]]
 
-rÃ©ecrire les breaks
-beaucoup de code en double dans enchanthelper
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 L'ajout via la table d'enchant dÃ©conne : meme enchant et double ajout ?!
 
 
-getById
+Enchantement => 2 attributs permettant de dï¿½firnir une gausienne => rï¿½partition levels.
+
+
+reload ?
+
+Réecrire l'ajout auto d'enchantst
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+Set de base :
+-------------
 
 infiltrator arrow
 slow arrow
@@ -27,18 +40,12 @@ si explosif :
  
 explosion n'abipmant aps le terrain pour les flï¿½ches
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+Quelques tests : 
 
+[OK]Vérifier qu'on ne supprime pas de lore en ajoutant un enchant
 
-Enchantement => 2 attributs permettant de dï¿½firnir une gausienne => rï¿½partition levels.
-
-
-reload ?
-
-
-Fonction regenerateLore : si on supprime des enchant, mettre le lore à jour.
-
-
-Vérifier qu'on ne supprime pas de lore en ajoutant un enchant
+--------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Notes :
 -------
@@ -46,5 +53,4 @@ Notes :
 Le dév ne peut pas fournir de jar : compliqué de distinguer plugins et dossiers simples.
 Le nom du plugin de l'enchant est son id (unique d'après le système de plugins : tester le message d'erreur)
 L'entrée de l'idTable correspondant à un enchant n'est pas supprimée si le plugin l'est : si on veut le remettre, c'est possible.
-	=> A tester
-Note : le rewrite de la lore se fait lors de l'application du glowing effect.
+Note : le rewrite du lore se fait lors de l'application du glowing effect.

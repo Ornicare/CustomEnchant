@@ -2,11 +2,8 @@ package fr.enchantments.custom.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.server.v1_6_R3.Item;
-
-import org.bukkit.Material;
-
 import fr.enchantments.custom.helper.MathHelper;
+import fr.enchantments.custom.loader.PluginLoader;
 
 
 /**
@@ -51,6 +48,12 @@ public abstract class BaseEnchantment extends EnchantablesItems  implements IEnc
 	 * naturally obtainable enchant ?
 	 */
 	private boolean isLegit;
+	
+	protected static PluginLoader plugin;
+	
+	public static void setParentPlugin(PluginLoader pl) {
+		plugin = pl;
+	}
 	
 	public List<Integer> getAuthorizedItems() {
 		return authorizedItems;

@@ -1,8 +1,6 @@
 package fr.enchantments.custom.model;
 import java.util.List;
 
-import org.bukkit.Material;
-
 
 public interface IEnchantment {
 

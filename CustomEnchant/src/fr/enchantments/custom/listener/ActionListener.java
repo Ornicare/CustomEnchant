@@ -1,7 +1,5 @@
 package fr.enchantments.custom.listener;
 
-import java.util.logging.Level;
-
 import org.bukkit.Material;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
@@ -13,8 +11,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.*;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.EntityCreatePortalEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -154,16 +156,17 @@ public class ActionListener implements Listener {
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onEntityDamage(EntityDamageEvent event) {
 
-		// TODO CraftArrow is not Living !
+		//  CraftArrow is not Living !
 		// 1] Cool fields declarations
 		if (!(event.getEntity() instanceof LivingEntity)) {
 			return;
 		}
 		
-		//TODO enchant on specific damages ?
-		if(event.getCause()==DamageCause.FALL) {
-			ExplosionHelper.playBlackHoleEffect(event.getEntity().getLocation());
-		}
+		// enchant on specific damages ?
+		//Test : play a blackhole effect when hit by fall damage
+//		if(event.getCause()==DamageCause.FALL) {
+//			ExplosionHelper.playBlackHoleEffect(event.getEntity().getLocation());
+//		}
 		
 		LivingEntity entityVictim = (LivingEntity) event.getEntity();
 
