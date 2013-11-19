@@ -49,7 +49,7 @@ public abstract class BaseEnchantment extends EnchantablesItems  implements IEnc
 	 */
 	private boolean isLegit;
 
-	private String iList;
+	private List<String> iList;
 
 	private String pluginName;
 	
@@ -77,12 +77,16 @@ public abstract class BaseEnchantment extends EnchantablesItems  implements IEnc
 	}
 	
 	public void setIncompatibilityList(String pluginName, String iList) {
-		this.iList = iList;
+		String[] temp = iList.split(",");
+		this.iList = new ArrayList<String>();
+		for(String s : temp) {
+			this.iList.add(s.trim().toLowerCase());
+		}
 		this.pluginName = pluginName;
 	}
 	
 	public boolean isCompatibleWith(String pluginName) {
-		return iList!=null && !iList.contains(pluginName);
+		return !iList.contains(pluginName.trim().toLowerCase());
 	}
 	
 	public String getPluginName() {
@@ -90,7 +94,9 @@ public abstract class BaseEnchantment extends EnchantablesItems  implements IEnc
 	}
 	
 	public String getIncompatiblePlugins() {
-		return iList;
+		String result = "";
+		for(String s : iList) result+=s+" -- ";
+		return result;
 	}
 	
 

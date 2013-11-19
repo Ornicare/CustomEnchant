@@ -23,6 +23,7 @@ import org.bukkit.inventory.ItemStack;
 import fr.enchantments.custom.helper.EnchantmentHelper;
 import fr.enchantments.custom.helper.ExplosionHelper;
 import fr.enchantments.custom.loader.PluginLoader;
+import fr.enchantments.custom.model.EnchantablesItems;
 import fr.enchantments.custom.runnables.RunnableDeadProjectileRemover;
 import fr.enchantments.custom.runnables.RunnableDeadSnowBallRemover;
 import fr.enchantments.custom.storage.Storage;
@@ -221,6 +222,20 @@ public class ActionListener implements Listener {
 
 		} else {
 			weaponUsed = entityInflicter.getEquipment().getItemInHand();
+			
+			//Test if the enchant is directly used (with a bow, a direct strike does not apply the enchant)
+			for( int eItem : EnchantablesItems.bow) {
+				if(weaponUsed.getTypeId()==eItem) return;
+			}
+			for( int eItem : EnchantablesItems.armors) {
+				if(weaponUsed.getTypeId()==eItem) return;
+			}
+			for( int eItem : EnchantablesItems.special) {
+				if(weaponUsed.getTypeId()==eItem) return;
+			}
+			for( int eItem : EnchantablesItems.interact) {
+				if(weaponUsed.getTypeId()==eItem) return;
+			}
 		}
 
 		// 4] Verify Enchantment
