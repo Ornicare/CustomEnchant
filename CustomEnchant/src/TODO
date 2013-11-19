@@ -54,3 +54,6 @@ Le dév ne peut pas fournir de jar : compliqué de distinguer plugins et dossiers 
 Le nom du plugin de l'enchant est son id (unique d'après le système de plugins : tester le message d'erreur)
 L'entrée de l'idTable correspondant à un enchant n'est pas supprimée si le plugin l'est : si on veut le remettre, c'est possible.
 Note : le rewrite du lore se fait lors de l'application du glowing effect.
+On gère les incompatibilités entre plugins => les noms d'enchants ne doivent pas contenir de virgule ! /!\ Utiliser le nom du plugin correspondant à l'enchantement voulu !
+
+-Doc : prototypes des hooks

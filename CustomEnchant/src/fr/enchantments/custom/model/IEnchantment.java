@@ -12,7 +12,7 @@ public interface IEnchantment {
 
 	public short getLevel(int cost);
 	
-	public List<IEnchantment> getIncompatibleCombination();
+	public String getIncompatiblePlugins();
 	
 	public boolean isLegit();
 	
@@ -21,5 +21,11 @@ public interface IEnchantment {
 	public short getMaxLevel();
 
 	public void setId(short currentId);
+	
+	public void setIncompatibilityList(String pluginName, String iList);
+	
+	public boolean isCompatibleWith(String pluginName);
+
+	public String getPluginName();
 	
 }

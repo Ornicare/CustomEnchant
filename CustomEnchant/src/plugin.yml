@@ -3,11 +3,11 @@ name: CustomEnchant
 main: fr.enchantments.custom.loader.PluginLoader
 version: 1.6.2
 commands:
-   setitemname:
+   listenchants:
       description: Ceci est une commande demonstration.
-      permission: customenchantdebug.setitemname
-      usage: /setitemname [player]
+      permission: customenchantdebug.listenchants
+      usage: /listenchants
    addenchant:
-      description: Ceci est une commande demonstration.
+      description: Try to add an enchant to the item in hand.
       permission: customenchantdebug.addenchant
-      usage: /addenchant
+      usage: /addenchant [id<given by /listenchants>] [level>0]

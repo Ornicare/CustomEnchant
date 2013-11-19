@@ -6,18 +6,19 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.enchantment.EnchantItemEvent;
 
 import fr.enchantments.custom.factory.EnchantmentFactory;
+import fr.enchantments.custom.loader.PluginLoader;
 
 public class EnchantmentListener implements Listener {
 	
 	private EnchantmentFactory enchantmentFactory;
 
-	public EnchantmentListener(EnchantmentFactory enchantmentFactory) {
-		this.enchantmentFactory = enchantmentFactory;
+	public EnchantmentListener(PluginLoader plugin) {
+		this.enchantmentFactory = plugin.getFactory().getEnchantmentFactory();
 	}
 
-	@EventHandler(priority = EventPriority.NORMAL)
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onEnchantItemEvent(EnchantItemEvent event) {
-		enchantmentFactory.addNewEnchantments(event.getItem(),event.getEnchantsToAdd(),event.getExpLevelCost());
+		enchantmentFactory.addNewEnchantments(event.getItem(), event.getExpLevelCost());
 	}
 
 }

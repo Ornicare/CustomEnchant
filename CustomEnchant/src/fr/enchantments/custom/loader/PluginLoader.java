@@ -32,6 +32,7 @@ import com.space.plugin.PluginExternalizer;
 import com.space.proxy.InstanceHandler;
 
 import fr.enchantments.custom.commands.AddEnchantCommand;
+import fr.enchantments.custom.commands.ListEnchantsCommand;
 import fr.enchantments.custom.factory.ListenerRegistrationFactory;
 import fr.enchantments.custom.helper.ExplosionHelper;
 import fr.enchantments.custom.helper.GlowingHelper;
@@ -177,6 +178,7 @@ public class PluginLoader extends JavaPlugin {
 				short maxLevel = (short)Short.parseShort(config.getProperty("maxLevel"));
 				int weight = (int)Integer.parseInt(config.getProperty("weight"));
 				boolean isLegit = (boolean)Boolean.parseBoolean(config.getProperty("legit"));
+				String compatibilityList = config.getProperty("incompatibleWith");
 		        Proxy proxy = (Proxy)enchantsPluginsloader.getPluginUsingConstructor(enchant, classes, name, maxLevel, weight, isLegit);
 		        InvocationHandler ih = Proxy.getInvocationHandler(proxy);
 				Class<?> handledClass = ((InstanceHandler) ih).getHandledClass();
@@ -204,6 +206,8 @@ public class PluginLoader extends JavaPlugin {
 				else if(interfaces.contains(IZoneEffectEnchantment.class)) {
 					enchantImpl = (IZoneEffectEnchantment) proxy;
 				}
+				
+				enchantImpl.setIncompatibilityList(enchant, compatibilityList);
 				
 //				enchantImpl = test2[0].cast(proxy);
 				
@@ -256,7 +260,7 @@ public class PluginLoader extends JavaPlugin {
 		this.getServer()
 				.getPluginManager()
 				.registerEvents(
-						new EnchantmentListener(factory.getEnchantmentFactory()),
+						new EnchantmentListener(this),
 						this);
 
 		// Register debug commands
@@ -265,6 +269,11 @@ public class PluginLoader extends JavaPlugin {
 			pluginLogger.log(Level.SEVERE,
 					"Fatal error, suspending plugin execution.");
 		this.getCommand("addenchant").setExecutor(new AddEnchantCommand(this));
+		
+		if (this.getCommand("listenchants") == null)
+			pluginLogger.log(Level.SEVERE,
+					"Fatal error, suspending plugin execution.");
+		this.getCommand("listenchants").setExecutor(new ListEnchantsCommand(this));
 	}
 
 	public Logger getPluginLogger() {

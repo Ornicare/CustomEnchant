@@ -119,6 +119,7 @@ public class ActionListener implements Listener {
 
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerInteractEvent(PlayerInteractEvent event) {
+		if(event.getItem()==null) return;
 		if (event.getItem().getType() == Material.SNOW_BALL
 				&& (event.getAction() == Action.RIGHT_CLICK_AIR || event
 						.getAction() == Action.RIGHT_CLICK_BLOCK)) {

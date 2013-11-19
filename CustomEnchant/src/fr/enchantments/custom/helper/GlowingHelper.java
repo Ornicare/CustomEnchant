@@ -19,7 +19,7 @@ public class GlowingHelper
     {
         if ( actualItemStack == null ) { return; }
         
-        if(EnchantmentHelper.getCustomEnchantmentList(actualItemStack, true).size()==0) return;
+        if(EnchantmentHelper.getCustomEnchantmentList(actualItemStack, true).size()==0 || !actualItemStack.getEnchantments().isEmpty()) return;
         
         NbtCompound compound = (NbtCompound) NbtFactory.fromItemTag(actualItemStack);
         compound.put(NbtFactory.ofList("ench"));

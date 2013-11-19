@@ -48,6 +48,10 @@ public abstract class BaseEnchantment extends EnchantablesItems  implements IEnc
 	 * naturally obtainable enchant ?
 	 */
 	private boolean isLegit;
+
+	private String iList;
+
+	private String pluginName;
 	
 	protected static PluginLoader plugin;
 	
@@ -70,6 +74,23 @@ public abstract class BaseEnchantment extends EnchantablesItems  implements IEnc
 	
 	public short getMaxLevel() {
 		return maxLevel;
+	}
+	
+	public void setIncompatibilityList(String pluginName, String iList) {
+		this.iList = iList;
+		this.pluginName = pluginName;
+	}
+	
+	public boolean isCompatibleWith(String pluginName) {
+		return iList!=null && !iList.contains(pluginName);
+	}
+	
+	public String getPluginName() {
+		return pluginName;
+	}
+	
+	public String getIncompatiblePlugins() {
+		return iList;
 	}
 	
 
@@ -105,21 +126,21 @@ public abstract class BaseEnchantment extends EnchantablesItems  implements IEnc
 		return incompatibleCombination;
 	}
 	
-	public BaseEnchantment(String name, short id, short maxLevel) {
-		this.name = name;
-		this.id = id;
-		this.maxLevel = maxLevel;
-		this.weight = 10;
-		this.isLegit = false;
-	}
+//	public BaseEnchantment(String name, short id, short maxLevel) {
+//		this.name = name;
+//		this.id = id;
+//		this.maxLevel = maxLevel;
+//		this.weight = 10;
+//		this.isLegit = false;
+//	}
 	
-	public BaseEnchantment(String name, short id, short maxLevel, int weight, boolean isLegit) {
-		this.name = name;
-		this.id = id;
-		this.maxLevel = maxLevel;
-		this.weight = weight;
-		this.isLegit = isLegit;
-	}
+//	public BaseEnchantment(String name, short id, short maxLevel, int weight, boolean isLegit) {
+//		this.name = name;
+//		this.id = id;
+//		this.maxLevel = maxLevel;
+//		this.weight = weight;
+//		this.isLegit = isLegit;
+//	}
 	
 	public BaseEnchantment(String name, short maxLevel, int weight, boolean isLegit) {
 		this.name = name;
