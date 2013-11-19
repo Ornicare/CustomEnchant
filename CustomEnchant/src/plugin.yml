@@ -9,5 +9,5 @@ commands:
       usage: /setitemname [player]
    addenchant:
       description: Ceci est une commande demonstration.
-      permission: customenchantdebug.setitemname
+      permission: customenchantdebug.addenchant
       usage: /addenchant

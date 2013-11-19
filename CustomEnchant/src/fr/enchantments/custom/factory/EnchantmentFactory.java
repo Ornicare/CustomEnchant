@@ -70,13 +70,14 @@ public class EnchantmentFactory {
 		//TODO tester si l'objet est compatible
 		//TODO d�terminer nb d'enchant � ajouter.
 
-		int nbEnchant = MathHelper.randomize((short) (expLevelCost/5));
-		nbEnchant = nbEnchant > 3 ? 3 : nbEnchant;
+//		int nbEnchant = MathHelper.randomize((short) (expLevelCost/5));
+//		nbEnchant = nbEnchant > 3 ? 3 : nbEnchant;
 		
 		//minecraft enchantment steps.
 		int enchantability = getEnchantability(item);
 		int modifiedEnchantmentLevel = expLevelCost + MathHelper.randomize((short) (enchantability / 4 * 2));
 		int enchantability_2 = enchantability / 2;
+
 		int rand_enchantability = 1 + MathHelper.randomize((short) (enchantability_2 / 2) ) + MathHelper.randomize((short) (enchantability_2 / 2));
 		int k = expLevelCost + rand_enchantability;
 		float rand_bonus_percent = (float) ((Math.random() + Math.random() - 1) * 0.15);
@@ -89,8 +90,14 @@ public class EnchantmentFactory {
 			RandomizerMap possibleEnch = getPossiblesEnchantemnts(item,addEnchantments);
 			IEnchantment enchToAdd = possibleEnch.getRandomEnchantment();
 			addEnchantments.add(enchToAdd);
+
+			//TODO en test
+			double level = (enchToAdd.getMaxLevel()+1)*Math.pow(Math.E, -Math.pow(Math.random(), 2)/(2*Math.pow(expLevelCost/(100*enchantability/25),1/2)));
+			level = level < 1 ? 1 : level;
+			level = level > enchToAdd.getMaxLevel() ? enchToAdd.getMaxLevel() : level;
 			
-			if(enchToAdd !=null) EnchantmentHelper.addCustomEnchantWithLevel(item, enchToAdd, (short) (final_level > enchToAdd.getMaxLevel() ? enchToAdd.getMaxLevel() : final_level));
+//			if(enchToAdd !=null) EnchantmentHelper.addCustomEnchantWithLevel(item, enchToAdd, (short) (final_level > enchToAdd.getMaxLevel() ? enchToAdd.getMaxLevel() : final_level));
+			if(enchToAdd !=null) EnchantmentHelper.addCustomEnchantWithLevel(item, enchToAdd, (short) level);
 			
 			modifiedEnchantmentLevel/=2;
 		} while(Math.random()<((modifiedEnchantmentLevel+1/50)));
